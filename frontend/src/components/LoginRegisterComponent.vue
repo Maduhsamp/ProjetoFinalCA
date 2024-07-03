@@ -2,7 +2,13 @@
 <div class="background">
     <div class="container">
         <div class="content">
-            <h2 class="logo"> 3C+ </h2>
+            <div class="animation-container"> 
+                <div class="animation" id="animation1"></div>
+                <div class="animation" id="animation2"></div>
+            </div>
+            
+
+
 
 
             <div class="text-sci">
@@ -11,8 +17,10 @@
                 <p>Um único login para todos os produtos da 3C Plus</p>
     
 
-                <div class="social-ico">
+                <div class="social-icons">
                     <a href="https://www.instagram.com/3cplusnow/"><i class='bx bxl-instagram'></i></a>
+                    <a href="https://www.tiktok.com/@3cplusnow?_t=8mLHaRJrc3C&_r=1"><i class='bx bxl-tiktok'></i></a>
+                    <a href="https://3cplusnow.com/pt/"><i class='bx bx-receipt' ></i></a>
                 </div>
             </div>
         </div>
@@ -82,24 +90,93 @@
                     </form>
                 </div>
             </div>
-    </div>
-
-
         </div>
+
+
     </div>
+</div>
 </template>
 
 <script>
 export default {
     name: 'LoginRegisterComponent',
-}
+    mounted(){
+        let currentAnimation = 0;
+        const animations = document.querySelectorAll('.animation');
+
+        function showNextAnimation() {
+            animations[currentAnimation].classList.remove('active');
+
+            currentAnimation = (currentAnimation + 1) % animations.length;
+            setTimeout(() => {
+            animations[currentAnimation].classList.add('active'); // Mostra a próxima animação
+            }, 500)
+        }
+        
+        // Inicializa a primeira animação
+        animations[currentAnimation].classList.add('active');
+
+        // Altera a animação a cada 5 segundos
+        setInterval(showNextAnimation, 5000);
+        }
+    }
 </script>
 <style scoped>
+
+.animation-container {
+    position: relative;
+    width: 500px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.animation {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateX(0);
+    transition: transform 0.5s ease-in-out, opacity 0.27s ease-in-out;
+}
+
+.animation.active{
+    opacity: 1;
+    transform: translateY(100%);
+    animation-name: slide-in;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes slide-in{
+    0% {opacity: 0;}
+    45% {opacity: 0;}
+    100% {opacity: 1;}
+
+}
+
+
+#animation1 {
+    background-color: transparent;
+    background-image: url(https://media.glassdoor.com/sqll/2841457/3c-plus-squareLogo-1662652407726.png);
+    width: 200px;
+    top: -115%;
+}
+
+#animation2 {
+    background-color: transparent;
+    background-image: url('../assets/img/IMG.png');
+    background-size: cover;
+    top: -135%;
+    
+}
 
 .background {
     width: 100%;
     height: 100vh;
-    background: #000;
+    background: white;
 }
 
     .container {
@@ -123,20 +200,36 @@ export default {
         left: 0;
         top: 0;
         position: absolute;
+        padding: 80px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding-bottom: 100px;
+
     }
 
-    .content .logo{
-        font-size: 56px;
-        text-align: center;
-    }
 
     .content h2{
         font-size: 40px;
     }
 
-    .content p{
-        font-size: 32px;
+    .social-icons:first-of-type{
+        margin: 15px;
     }
+
+    .social-icons a i{
+        text-decoration: none;
+        color: black;
+        margin: 15px;
+        font-size: 22px;
+        transition: .5s ease;
+    }
+
+    .social-icons a:hover i{
+        transform: scale(1.2);
+    }
+
+
 
     .container .logreg-box{
         position: absolute;
@@ -148,6 +241,7 @@ export default {
     }
 
     .btn{
+
         width: 100%;
         height: 45px;
         background: #c4103d;
@@ -174,8 +268,14 @@ export default {
         color: black;
     }
 
-    .form-box h2{
+    .text-sci h2{
         font-size: 32px;
+        text-align: center;
+    }
+
+    .text-sci p{
+        font-size: 18px;
+        margin: 20px 0;
         text-align: center;
     }
 
