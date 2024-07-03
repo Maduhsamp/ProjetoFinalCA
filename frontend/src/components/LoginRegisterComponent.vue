@@ -18,9 +18,9 @@
     
 
                 <div class="social-icons">
-                    <a href="https://www.instagram.com/3cplusnow/"><i class='bx bxl-instagram'></i></a>
-                    <a href="https://www.tiktok.com/@3cplusnow?_t=8mLHaRJrc3C&_r=1"><i class='bx bxl-tiktok'></i></a>
-                    <a href="https://3cplusnow.com/pt/"><i class='bx bx-receipt' ></i></a>
+                    <a href="https://www.instagram.com/3cplusnow/" target="_blank"><i class='bx bxl-instagram'></i></a>
+                    <a href="https://www.tiktok.com/@3cplusnow?_t=8mLHaRJrc3C&_r=1" target="_blank"><i class='bx bxl-tiktok'></i></a>
+                    <a href="https://3cplusnow.com/pt/" target="_blank"><i class='bx bx-receipt'></i></a>
                 </div>
             </div>
         </div>
