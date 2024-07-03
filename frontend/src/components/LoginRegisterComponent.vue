@@ -91,7 +91,7 @@ export default {
     }
 
     .content p{
-        font-size: 32px-;
+        font-size: 32px;
     }
 
     .container .login-box{
