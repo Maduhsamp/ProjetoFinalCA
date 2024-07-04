@@ -49,10 +49,10 @@
                         <a href="#">Esqueceu a Senha?</a>
                     </div>
 
-                    <button type="submit" class="btn">Entrar</button>
+                    <button type="submit" class="btnSend">Entrar</button>
 
                     <div class="login-register">
-                        <p> Nao tem uma Conta? <a href="#" class="register-link" @click.prevent="showRegister"> Registre-se</a></p>
+                        <p> Não tem uma Conta? <a href="#" class="register-link" @click.prevent="showRegister"> Registre-se</a></p>
                     </div>
                 </form>
             </div>
@@ -94,7 +94,7 @@
                             <label><input type="checkbox">Eu concordo com os termos e condições</label>
                         </div>
                         
-                        <button type="submit" class="btn">Cadastre-se</button>
+                        <button type="submit" class="btnSend">Cadastre-se</button>
 
                         <div class="login-register">
                             <p>Já tem uma conta? <a href="#" class="login-link" @click.prevent="showLogin">Entrar</a></p>
@@ -290,19 +290,26 @@ export default {
         overflow: hidden;
     }
 
-    .btn{
+    .btnSend{
 
         width: 100%;
         height: 45px;
-        background: #c4103d;
+        background: linear-gradient(90deg, #3057F2, #9ADCFF);
         border: none;
         outline: none;
         border-radius: 4px;
         cursor: pointer;
         font-size: 16px;
-        color: #e4e4e4;
+        color: #fff;
         font-weight: 500;
         box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+        transition: .5s;
+    }
+
+    .btnSend:hover {
+        background: linear-gradient(90deg, #FF8AAE, #FFF89A);
+        color: #000;
+        transition: .5s;
     }
     
     .input-box {
