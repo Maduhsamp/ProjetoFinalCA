@@ -201,6 +201,7 @@ export default {
         top: 0;
         position: absolute;
         padding: 80px;
+        opacity: 90%;
         display: flex;
         justify-content: space-between;
         flex-direction: column;
