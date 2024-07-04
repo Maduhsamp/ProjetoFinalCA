@@ -27,7 +27,8 @@
                         <label> Email </label>
                     </div>
                     <div class="input-box">
-                        <input type="password" v-model="password" required>
+                        <input v-if="!showPasswordLogin" type="password" v-model="passwordLogin" required>
+                        <input v-if="showPasswordLogin" type="text" v-model="passwordLogin" required>
                         <label> Senha </label>
                         <span><button class="icon-eye-login" @click="toggleShowPasswordLogin">
                         <img v-if="showPasswordLogin" src="../assets/eye-open.svg" alt="Olho aberto">
@@ -64,7 +65,8 @@
                             <label>Email</label>
                         </div>
                         <div class="input-box">
-                            <input type="password" v-model="password" required>
+                            <input v-if="!showPasswordRegister1" type="password" v-model="passwordRegister1" required>
+                            <input v-if="showPasswordRegister1" type="text" v-model="passwordRegister1" required>
                             <label>Senha</label>
                             <span><button class="icon-eye-register1" @click="toggleShowPasswordRegister1">
                             <img v-if="showPasswordRegister1" src="../assets/eye-open.svg" alt="Olho aberto">
@@ -72,7 +74,8 @@
                             </button></span>
                         </div>
                         <div class="input-box">
-                            <input type="password" v-model="password" required>
+                            <input v-if="!showPasswordRegister2" type="password" v-model="passwordRegister2" required>
+                            <input v-if="showPasswordRegister2" type="text" v-model="passwordRegister2" required>
                             <label>Confirmar Senha</label>
                             <span><button class="icon-eye-register2" @click="toggleShowPasswordRegister2">
                             <img v-if="showPasswordRegister2" src="../assets/eye-open.svg" alt="Olho aberto">
@@ -101,10 +104,12 @@ export default {
     data() {
         return {
             isActive: false,
-            password: '',
+            passwordLogin: '',
+            passwordRegister1: '',
+            passwordRegister2: '',
             showPasswordLogin: false,
             showPasswordRegister1: false,
-            showPasswordRegister2: false
+            showPasswordRegister2: false,
         }
     },
     methods: {
