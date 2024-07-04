@@ -1,5 +1,6 @@
 <template>
 <div class="background">
+    <div class="blob"></div>
     <div class="container">
         <div class="content">
             <div class="animation-container"> 
@@ -148,75 +149,108 @@ export default {
 
             currentAnimation = (currentAnimation + 1) % animations.length;
             setTimeout(() => {
-            animations[currentAnimation].classList.add('active'); // Mostra a próxima animação
+            animations[currentAnimation].classList.add('active');
             }, 500)
         }
-        
-        // Inicializa a primeira animação
+    
         animations[currentAnimation].classList.add('active');
 
-        // Altera a animação a cada 5 segundos
         setInterval(showNextAnimation, 5000);
         }
     }
 </script>
 <style scoped>
 
-.animation-container {
-    position: relative;
-    width: 500px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-}
+    body{
+            overflow: hidden;
+        }
 
-.animation {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transform: translateX(0);
-    transition: transform 0.5s ease-in-out, opacity 0.27s ease-in-out;
-}
+    .blob{
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background:linear-gradient(90deg, #3057F2, #9ADCFF);
+        border-radius: 24% 76% 35% 65% / 27% 36% 64% 73%;
+        transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        transform: translate(-200px, -50px) rotate(-90deg);
+        animation: animateBlob 20s infinite alternate;
+    }
 
-.animation.active{
-    opacity: 1;
-    transform: translateY(100%);
-    animation-name: slide-in;
-    animation-duration: 0.5s;
-    animation-timing-function: ease-in-out;
-}
+    .blob:hover{
+        width: 520px;
+        height: 520px;
+        filter: blur(30px);
+        box-shadow: 
+        inset 0 0 0 5px rgba(255, 255, 255, .6),
+        inset 100px 100px 0 0 #e9fe00,
+        inset 200px 200px 0 0 #ff03ea,
+        inset 300px 300px 0 0 #2b86c5;
+    }
 
-@keyframes slide-in{
-    0% {opacity: 0;}
-    45% {opacity: 0;}
-    100% {opacity: 1;}
+    @keyframes animateBlob {
 
-}
+        100%{
+            transform: translate(300px, 200px) rotate(-10deg);
+            border-radius: 76% 24% 33% 67% / 68% 55% 45% 32%;
+        }
+        
+    }
+
+    .animation-container {
+        position: relative;
+        width: 500px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+    }
+
+    .animation {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transform: translateX(0);
+        transition: transform 0.5s ease-in-out, opacity 0.27s ease-in-out;
+    }
+
+    .animation.active{
+        opacity: 1;
+        transform: translateY(100%);
+        animation-name: slide-in;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
+    }
+
+    @keyframes slide-in{
+        0% {opacity: 0;}
+        45% {opacity: 0;}
+        100% {opacity: 1;}
+
+    }
 
 
-#animation1 {
-    background-color: transparent;
-    background-image: url(https://media.glassdoor.com/sqll/2841457/3c-plus-squareLogo-1662652407726.png);
-    width: 200px;
-    top: -115%;
-}
+    #animation1 {
+        background-color: transparent;
+        background-image: url(https://media.glassdoor.com/sqll/2841457/3c-plus-squareLogo-1662652407726.png);
+        width: 200px;
+        top: -115%;
+    }
 
-#animation2 {
-    background-color: transparent;
-    background-image: url('../assets/img/IMG.png');
-    background-size: cover;
-    top: -135%;
-    
-}
+    #animation2 {
+        background-color: transparent;
+        background-image: url('../assets/img/IMG.png');
+        background-size: cover;
+        top: -135%;
+        
+    }
 
-.background {
-    width: 100%;
-    height: 100vh;
-    background: white;
-}
+    .background {
+        width: 100%;
+        height: 100vh;
+        background: white;
+    }
 
 
     .container {
@@ -232,6 +266,7 @@ export default {
         margin: 0;
         padding: 0;
         border-radius: 10px;
+        opacity: 95%;
     }
 
     .container .content {
@@ -246,12 +281,14 @@ export default {
         justify-content: space-between;
         flex-direction: column;
         padding-bottom: 100px;
+        
 
     }
 
 
     .content h2{
         font-size: 40px;
+        
     }
 
     .social-icons:first-of-type{
