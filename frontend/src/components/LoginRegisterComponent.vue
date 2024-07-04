@@ -104,13 +104,41 @@
             </div>
         </div>
     </div>
-</div>
+
 </template>
 
 <script>
 export default {
     name: 'LoginRegisterComponent',
 
+    data() {
+        return {
+            isActive: false,
+            passwordLogin: '',
+            passwordRegister1: '',
+            passwordRegister2: '',
+            showPasswordLogin: false,
+            showPasswordRegister1: false,
+            showPasswordRegister2: false,
+        }
+    },
+    methods: {
+        showLogin() {
+            this.isActive = false; 
+        },
+        showRegister() {
+            this.isActive = true;
+        },
+        toggleShowPasswordLogin() {
+            this.showPasswordLogin = !this.showPasswordLogin;
+        },
+        toggleShowPasswordRegister1() {
+            this.showPasswordRegister1 = !this.showPasswordRegister1;
+        },
+        toggleShowPasswordRegister2() {
+            this.showPasswordRegister2 = !this.showPasswordRegister2;
+        }
+    },
     mounted(){
         let currentAnimation = 0;
         const animations = document.querySelectorAll('.animation');
@@ -190,43 +218,6 @@ export default {
     background: white;
 }
 
-    data() {
-        return {
-            isActive: false,
-            passwordLogin: '',
-            passwordRegister1: '',
-            passwordRegister2: '',
-            showPasswordLogin: false,
-            showPasswordRegister1: false,
-            showPasswordRegister2: false,
-        }
-    },
-    methods: {
-        showLogin() {
-            this.isActive = false; 
-        },
-        showRegister() {
-            this.isActive = true;
-        },
-        toggleShowPasswordLogin() {
-            this.showPasswordLogin = !this.showPasswordLogin;
-        },
-        toggleShowPasswordRegister1() {
-            this.showPasswordRegister1 = !this.showPasswordRegister1;
-        },
-        toggleShowPasswordRegister2() {
-            this.showPasswordRegister2 = !this.showPasswordRegister2;
-        }
-    }
-}
-</script>
-<style scoped>
-
-    .background {
-        width: 100%;
-        height: 100vh;
-        background: #fff;
-    }
 
     .container {
         position: absolute;
@@ -350,8 +341,6 @@ export default {
         border-bottom-right-radius: 10px;
         color: black;
     }
-
-    .text-sci h2{
 
     .logreg-box .form-box.login {
         transform: translateX(0);
