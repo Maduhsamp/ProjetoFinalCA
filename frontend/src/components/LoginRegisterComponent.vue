@@ -270,7 +270,16 @@ export default {
         transform: scale(1.2);
     }
 
+    .text-sci h2{
+        font-size: 32px;
+        text-align: center;
+    }
 
+    .text-sci p{
+        font-size: 18px;
+        margin: 20px 0;
+        text-align: center;
+    }
 
     .container .logreg-box{
         position: absolute;
