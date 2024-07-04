@@ -25,74 +25,84 @@
             </div>
         </div>
 
-
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <div class ="logreg-box">
+        <div class ="logreg-box" :class="{ 'active': isActive }">
             <div class="form-box login">
                 <form action="#">
-                    <h2> Entrar na Conta </h2>
+                    <h2> Entrar </h2>
                     <div class="input-box">
-                        <span class="icon"><i class='bx bx-envelope'></i></span>
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
                         <input type="email" required>
                         <label> Email </label>
                     </div>
                     <div class="input-box">
-                        <span class="icon"><i class='bx bxs-lock-alt' ></i></span>
-                        <input type="password" required>
+                        <input v-if="!showPasswordLogin" type="password" v-model="passwordLogin" required>
+                        <input v-if="showPasswordLogin" type="text" v-model="passwordLogin" required>
                         <label> Senha </label>
+                        <span><button class="icon-eye-login" @click="toggleShowPasswordLogin">
+                        <img v-if="showPasswordLogin" src="../assets/eye-open.svg" alt="Olho aberto">
+                        <img v-else src="../assets/eye-closed.svg" alt="Olho fechado">
+                        </button></span>
                     </div>
 
                     <div class="remember-forgot">
-                        <label><input type="checkbox">Lembrar Senha</label>
-                        <a href="#"> Esqueceu a Senha?</a>
+                        <label><input type="checkbox">Lembrar de mim</label>
+                        <a href="#">Esqueceu a Senha?</a>
                     </div>
 
-                    <button type="submit" class="btn"> Entrar </button>
+                    <button type="submit" class="btn">Entrar</button>
 
                     <div class="login-register">
-                        <p> Nao tem uma Conta? <a href="#" class="register-link"> Registre-se</a></p>
+                        <p> Nao tem uma Conta? <a href="#" class="register-link" @click.prevent="showRegister"> Registre-se</a></p>
                     </div>
-                    
                 </form>
             </div>
 
+            <div class="form-box register">
+                <form action="#">
+                    <h2>Cadastre-se</h2>
 
-            <div class="logreg-box">
-                <div class="form-box register">
-                    <form action="#">
-                        <h2>Sign Up</h2>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-user'></i></span>
+                        <input type="text" required>
+                        <label>Nome</label>
+                    </div>
 
-                        <div class="input-box">
-                            <span class="icon"><i class='bx bxs-user'></i></span>
-                            <input type="text" required>
-                            <label>Name</label>
-                        </div>
-
-                        <div class="input-box">
-                            <span class="icon"><i class='bx bxs-envelope'></i></span>
-                            <input type="email" required>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <input type="email" required>
                             <label>Email</label>
                         </div>
                         <div class="input-box">
-                            <span class="icon"><i class='bx bxs-lock-alt'></i></span>
-                            <input type="password" required>
-                            <label>Password</label>
+                            <input v-if="!showPasswordRegister1" type="password" v-model="passwordRegister1" required>
+                            <input v-if="showPasswordRegister1" type="text" v-model="passwordRegister1" required>
+                            <label>Senha</label>
+                            <span><button class="icon-eye-register1" @click="toggleShowPasswordRegister1">
+                            <img v-if="showPasswordRegister1" src="../assets/eye-open.svg" alt="Olho aberto">
+                            <img v-else src="../assets/eye-closed.svg" alt="Olho fechado">
+                            </button></span>
+                        </div>
+                        <div class="input-box">
+                            <input v-if="!showPasswordRegister2" type="password" v-model="passwordRegister2" required>
+                            <input v-if="showPasswordRegister2" type="text" v-model="passwordRegister2" required>
+                            <label>Confirmar Senha</label>
+                            <span><button class="icon-eye-register2" @click="toggleShowPasswordRegister2">
+                            <img v-if="showPasswordRegister2" src="../assets/eye-open.svg" alt="Olho aberto">
+                            <img v-else src="../assets/eye-closed.svg" alt="Olho fechado">
+                            </button></span>
                         </div>
                         <div class="remember-forgot">
-                            <label><input type="checkbox">I agree to the terms and conditions</label>
+                            <label><input type="checkbox">Eu concordo com os termos e condições</label>
                         </div>
                         
-                        <button type="submit" class="btn">Sign Up</button>
+                        <button type="submit" class="btn">Cadastre-se</button>
 
                         <div class="login-register">
-                            <p>Already have an account? <a href="#" class="login-link">Sign in</a></p>
+                            <p>Já tem uma conta? <a href="#" class="login-link" @click.prevent="showLogin">Entrar</a></p>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
 </template>
@@ -100,6 +110,7 @@
 <script>
 export default {
     name: 'LoginRegisterComponent',
+
     mounted(){
         let currentAnimation = 0;
         const animations = document.querySelectorAll('.animation');
@@ -179,6 +190,44 @@ export default {
     background: white;
 }
 
+    data() {
+        return {
+            isActive: false,
+            passwordLogin: '',
+            passwordRegister1: '',
+            passwordRegister2: '',
+            showPasswordLogin: false,
+            showPasswordRegister1: false,
+            showPasswordRegister2: false,
+        }
+    },
+    methods: {
+        showLogin() {
+            this.isActive = false; 
+        },
+        showRegister() {
+            this.isActive = true;
+        },
+        toggleShowPasswordLogin() {
+            this.showPasswordLogin = !this.showPasswordLogin;
+        },
+        toggleShowPasswordRegister1() {
+            this.showPasswordRegister1 = !this.showPasswordRegister1;
+        },
+        toggleShowPasswordRegister2() {
+            this.showPasswordRegister2 = !this.showPasswordRegister2;
+        }
+    }
+}
+</script>
+<style scoped>
+
+    .background {
+        width: 100%;
+        height: 100vh;
+        background: #fff;
+    }
+
     .container {
         position: absolute;
         top: 50%;
@@ -186,7 +235,7 @@ export default {
         transform: translate(-50%, -50%);
         width: 75%;
         height: 550px;
-        background: #dedbdb;
+        background: #e4e4e4;
         background-size: cover;
         background-position: center;
         margin: 0;
@@ -238,7 +287,7 @@ export default {
         right: 0;
         width: calc(100% - 58%);
         height: 100%;
-        
+        overflow: hidden;
     }
 
     .btn{
@@ -255,21 +304,79 @@ export default {
         font-weight: 500;
         box-shadow: 0 0 10px rgba(0, 0, 0, .5);
     }
+    
+    .input-box {
+        display: flex;
+    }
+
+    .input-box .icon-eye-login {
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-top: 40%;
+        margin-left: 15%;
+    }
+
+    .input-box .icon-eye-register1 {
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-top: 40%;
+        margin-left: 15%;
+    }
+
+    .input-box .icon-eye-register2 {
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-top: 40%;
+        margin-left: 15%;
+    }
+
+    .input-box img {
+        width: 24px;
+        height: 24px;
+    }
 
     .logreg-box .form-box{
+        position: absolute;
         display: flex;
         justify-content: center;
         align-items: center;
-        background: transparent;
         width: 100%;
         height: 100%;
-        backdrop-filter: blur(20px);
+        background: transparent;
         border-top-right-radius: 10px;
-        border-left-right-radius: 10px;
+        border-bottom-right-radius: 10px;
         color: black;
     }
 
     .text-sci h2{
+
+    .logreg-box .form-box.login {
+        transform: translateX(0);
+        transition: transform .6s ease;
+        transition-delay: .7s;
+    }
+
+    .logreg-box.active .form-box.login {
+        transform: translateX(430px);
+        transition-delay: 0s;
+    }
+
+    .logreg-box .form-box.register {
+        transform: translateX(430px);
+        transition: transform .6s ease;
+        transition-delay: 0s;
+    }
+
+    .logreg-box.active .form-box.register {
+        transform: translateX(0);
+        transition-delay: .7s;
+    }
+
+    .form-box h2{
+
         font-size: 32px;
         text-align: center;
     }
@@ -322,35 +429,44 @@ export default {
         font-size: 19px;
     }
 
-    .form-register-box .remember-forgot {
-    font-size: 14.5px;
-    font-weight: 500;
-    margin: -15px 0 15px;
-    display: flex;
-    justify-content: space-between;
-}
+    .form-box .remember-forgot {
+        font-size: 14.5px;
+        font-weight: 500;
+        margin: -15px 0 15px;
+        display: flex;
+        justify-content: space-between;
+    }
 
-.remember-forgot label input {
-    accent-color: #e4e4e4;
-    margin-right: 3px;
-}
+    .remember-forgot label input {
+        accent-color: #e4e4e4;
+        margin-right: 3px;
+    }
 
+    .remember-forgot a {
+        color: #000;
+        font-weight: 600;
+        text-decoration: none;
+    }
 
-.form-register-box .login-register {
-    font-size: 14.5px;
-    font-weight: 500;
-    text-align: center;
-    margin-top: 25px;
-}
+    .remember-forgot a:hover {
+        text-decoration: underline;
+    }
 
-.login-register p a {
-    color: #e4e4e4;
-    font-weight: 600;
-    text-decoration: none;
-}
+    .form-box .login-register {
+        font-size: 14.5px;
+        font-weight: 500;
+        text-align: center;
+        margin-top: 25px;
+    }
 
-.login-register p a:hover {
-    text-decoration: underline;
-}
+    .login-register p a {
+        color: #000;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .login-register p a:hover {
+        text-decoration: underline;
+    }
 
 </style>
