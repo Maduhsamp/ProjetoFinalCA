@@ -1,6 +1,4 @@
 <template>
-    <div class="body">
-
         <div id="nav">
             <div id="logo">
                 <router-link to="#">
@@ -13,7 +11,6 @@
                 <i class='bx bx-user' ></i>
             </div>
         </div>
-    </div>
 </template>
 
 
@@ -25,8 +22,13 @@ export default {
 
 
 <style scoped>
+    *{
+        max-width: 72px;
+    }
+
     #nav{
         max-width: 72px;
+        border-right: #E1E9F4 1px solid;
     }
 
     #logo{
@@ -64,11 +66,6 @@ export default {
         background: #E1E9F4;
     }
 
-
-    .body{
-        background: #E1E9F4;
-
-    }
 
 
     
