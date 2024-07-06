@@ -91,9 +91,6 @@
                             <img v-else src="../assets/eye-closed.svg" alt="Olho fechado">
                             </button></span>
                         </div>
-                        <div class="remember-forgot">
-                            <label><input type="checkbox">Eu concordo com os termos e condições</label>
-                        </div>
                         
                         <button type="submit" class="btnSend">Cadastre-se</button>
 
