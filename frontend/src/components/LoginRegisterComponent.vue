@@ -266,7 +266,7 @@ export default {
         margin: 0;
         padding: 0;
         border-radius: 10px;
-        opacity: 95%;
+        opacity: 90%;
     }
 
     .container .content {
