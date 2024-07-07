@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\FunilController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -13,18 +15,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::get('/forgot-password', function () {
-    return view('auth.forgot-password');
-})->middleware('guest')->name('password.request');
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
+Route::post('/user/verify-email', [UserController::class, 'sendVerificationEmail']);
+Route::get('/user/verify-email/{id}/{token}', [UserController::class, 'verifyEmail']);
 
-Route::post('/forgot-password', function (Request $request) {
-    $request->validate(['email' => 'required|email']);
+//funis
 
-    $status = Password::sendResetLink(
-        $request->only('email')
-    );
-
-    return $status === Password::RESET_LINK_SENT
-                ? back()->with(['status' => __($status)])
-                : back()->withErrors(['email' => __($status)]);
-})->middleware('guest')->name('password.email');
+Route::get('/funil', [FunilController::class, 'index']); //aqui mostra todos os funis 
+Route::post('/funil/create', [FunilController::class, 'store']); //pra criar funis novos apenas nome neles
+Route::put('funil/update/{id}', [FunilController::class, 'update']); //atualiza o nome 
+Route::delete('/funil/{id}', [FunilController::class, 'destroy']);//para excluir o funil
