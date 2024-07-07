@@ -46,7 +46,6 @@
                     </div>
 
                     <div class="remember-forgot">
-                        <label><input type="checkbox">Lembrar de mim</label>
                         <a href="#">Esqueceu a Senha?</a>
                     </div>
 
