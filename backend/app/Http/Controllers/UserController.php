@@ -32,4 +32,3 @@ class UserController extends Controller
 
         return response()->error('O token de verificação é inválido.');
     }
-}

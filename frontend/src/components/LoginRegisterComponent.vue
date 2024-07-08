@@ -2,16 +2,13 @@
 <div class="background">
     <div class="blob"></div>
     <div class="container">
+        <pre>
+        </pre>
         <div class="content">
             <div class="animation-container"> 
                 <div class="animation" id="animation1"></div>
                 <div class="animation" id="animation2"></div>
             </div>
-            
-
-
-
-
             <div class="text-sci">
                 <h2> Sua jornada começa aqui </h2>
     
@@ -27,25 +24,24 @@
         </div>
 
         <div class ="logreg-box" :class="{ 'active': isActive }">
-            <div class="form-box login">
-                <form action="#">
+            <div class="form-box login" v-if="!isActive">
+                <form @submit.prevent="submitLoginForm">
                     <h2> Entrar </h2>
                     <div class="input-box">
                         <span class="icon"><i class='bx bxs-envelope'></i></span>
-                        <input type="email" required>
+                        <input type="email"v-model="formData.email" required>
                         <label> Email </label>
                     </div>
                     <div class="input-box">
-                        <input v-if="!showPasswordLogin" type="password" v-model="passwordLogin" required>
-                        <input v-if="showPasswordLogin" type="text" v-model="passwordLogin" required>
+                        <input v-if="!showPasswordLogin" type="password" v-model="formData.password" required>
+                        <input v-if="showPasswordLogin" type="text" v-model="formData.password" required>
                         <label> Senha </label>
                         <span><button class="icon-eye-login" @click="toggleShowPasswordLogin">
                         <img v-if="showPasswordLogin" src="../assets/eye-open.svg" alt="Olho aberto">
                         <img v-else src="../assets/eye-closed.svg" alt="Olho fechado">
                         </button></span>
                     </div>
-
-                    <div class="remember-forgot">
+                    <div class="remember-forgot">   
                         <a href="#">Esqueceu a Senha?</a>
                     </div>
 
@@ -57,24 +53,24 @@
                 </form>
             </div>
 
-            <div class="form-box register">
-                <form action="#">
+            <div class="form-box register" v-if="isActive">
+                <form @submit.prevent="submitRegisterForm">
                     <h2>Cadastre-se</h2>
 
                     <div class="input-box">
                         <span class="icon"><i class='bx bxs-user'></i></span>
-                        <input type="text" required>
+                        <input type="text" v-model="formData.name"required>
                         <label>Nome</label>
                     </div>
 
                     <div class="input-box">
                         <span class="icon"><i class='bx bxs-envelope'></i></span>
-                        <input type="email" required>
+                        <input type="email"v-model="formData.email" required>
                             <label>Email</label>
                         </div>
                         <div class="input-box">
-                            <input v-if="!showPasswordRegister1" type="password" v-model="passwordRegister1" required>
-                            <input v-if="showPasswordRegister1" type="text" v-model="passwordRegister1" required>
+                            <input v-if="!showPasswordRegister1" type="password" v-model="formData.password" required>
+                            <input v-if="showPasswordRegister1" type="text" v-model="formData.password" required>
                             <label>Senha</label>
                             <span><button class="icon-eye-register1" @click="toggleShowPasswordRegister1">
                             <img v-if="showPasswordRegister1" src="../assets/eye-open.svg" alt="Olho aberto">
@@ -82,8 +78,8 @@
                             </button></span>
                         </div>
                         <div class="input-box">
-                            <input v-if="!showPasswordRegister2" type="password" v-model="passwordRegister2" required>
-                            <input v-if="showPasswordRegister2" type="text" v-model="passwordRegister2" required>
+                            <input v-if="!showPasswordRegister2" type="password" v-model="formData.password_confirmation"  required>
+                            <input v-if="showPasswordRegister2" type="text" v-model="formData.password_confirmation" required>
                             <label>Confirmar Senha</label>
                             <span><button class="icon-eye-register2" @click="toggleShowPasswordRegister2">
                             <img v-if="showPasswordRegister2" src="../assets/eye-open.svg" alt="Olho aberto">
@@ -105,6 +101,7 @@
 </template>
 
 <script>
+import HttpService from '@/services/HttpService';
 export default {
     name: 'LoginRegisterComponent',
 
@@ -117,6 +114,12 @@ export default {
             showPasswordLogin: false,
             showPasswordRegister1: false,
             showPasswordRegister2: false,
+            formData: {
+                email: '',
+                name: '',
+                password: '',
+                password_confirmation: ''
+            },
         }
     },
     methods: {
@@ -134,25 +137,50 @@ export default {
         },
         toggleShowPasswordRegister2() {
             this.showPasswordRegister2 = !this.showPasswordRegister2;
-        }
-    },
-    mounted(){
-        let currentAnimation = 0;
-        const animations = document.querySelectorAll('.animation');
+        },
+        async submitLoginForm() {
+            try {
+                const response = await HttpService.post('/api/login', {
+                email: this.formData.email,
+                password: this.formData.password
+                });
+                this.$router.push('/dashboard'); 
+                } catch (error) {
+                    console.error('Login error:', error);
+            }
+         },
+        async submitRegisterForm() {
+            try {
+                const response = await HttpService.post('/api/register', {
+                name: this.formData.name,
+                email: this.formData.email,
+                password: this.formData.password,
+                password_confirmation: this.formData.password_confirmation
+                });
+                console.log('Registration successful:', response.data);
+                    this.isActive = false;
+                } catch (error) {
+                console.error('Registration error:', error);
+            }
+        },
+        mounted(){
+            let currentAnimation = 0;
+            const animations = document.querySelectorAll('.animation');
 
-        function showNextAnimation() {
-            animations[currentAnimation].classList.remove('active');
+            function showNextAnimation() {
+                animations[currentAnimation].classList.remove('active');
 
-            currentAnimation = (currentAnimation + 1) % animations.length;
-            setTimeout(() => {
+                currentAnimation = (currentAnimation + 1) % animations.length;
+                setTimeout(() => {
+                animations[currentAnimation].classList.add('active');
+                }, 500)
+            }
+        
             animations[currentAnimation].classList.add('active');
-            }, 500)
-        }
-    
-        animations[currentAnimation].classList.add('active');
 
-        setInterval(showNextAnimation, 5000);
-        }
+            setInterval(showNextAnimation, 5000);
+            }
+        },
     }
 </script>
 <style scoped>

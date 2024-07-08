@@ -1,7 +1,7 @@
 <template>
     <div class="header">
             <div class="Title">
-                <h2> Dashboard </h2>
+                <h2> Dashboard</h2>
             </div>
             <div class="inputs">
                     <input type="text" placeholder="Pesquisar" > 
@@ -14,7 +14,7 @@
 <script>
 
 export default{
-    name: 'HeaderDashboard'
+    name: 'HeaderDashboard',
 }
 </script>
 <style scoped>
