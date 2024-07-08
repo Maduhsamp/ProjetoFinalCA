@@ -50,14 +50,17 @@ class FunilController extends Controller
 
 
     public function destroy(){
-         $funil = Funil::where('id', $id)->where('user_id', auth()->user()->id)->first();
+            $funil = Funil::where('user_id', auth()->user()->id);
 
-         if (!$funil) {
-             return response()->json(['error' => 'Funil não encontrado.'], 404);
-         }
- 
-         $funil->delete();
- 
-         return response()->json(['message' => 'Funil deletado com sucesso.']);
+            if (!$funil) {
+                return response()->json(['error' => 'Funil não encontrado.'], 404);
+            }
+            else{
+                $funil->delete();
+                
+                return response()->json(['message' => 'Funil deletado com sucesso.']);
+            }
+    
+    
     }
 }

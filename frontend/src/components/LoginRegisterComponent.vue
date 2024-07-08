@@ -2,6 +2,8 @@
 <div class="background">
     <div class="blob"></div>
     <div class="container">
+        <pre>
+        </pre>
         <div class="content">
             <div class="animation-container"> 
                 <div class="animation" id="animation1"></div>
