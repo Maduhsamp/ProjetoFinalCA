@@ -102,6 +102,8 @@
 
 <script>
 import HttpService from '@/services/HttpService';
+import { useToast } from 'vue-toastification';
+
 export default {
     name: 'LoginRegisterComponent',
 
@@ -139,49 +141,60 @@ export default {
             this.showPasswordRegister2 = !this.showPasswordRegister2;
         },
         async submitLoginForm() {
+            const toast = useToast();
             try {
                 const response = await HttpService.post('/api/login', {
                 email: this.formData.email,
                 password: this.formData.password
                 });
+                toast.success('Login realizado com sucesso!');
                 this.$router.push('/dashboard'); 
-                } catch (error) {
-                    console.error('Login error:', error);
+            } catch (error) {
+                toast.error('Falha ao realizar login. Verifique suas credenciais!');
+                console.error('Login error:', error);
             }
-         },
+        },
         async submitRegisterForm() {
+            const toast = useToast();
+            if (this.formData.password !== this.formData.password_confirmation) {
+                toast.error('As senhas não coincidem!');
+                return;
+            }
+
             try {
                 const response = await HttpService.post('/api/register', {
-                name: this.formData.name,
-                email: this.formData.email,
-                password: this.formData.password,
-                password_confirmation: this.formData.password_confirmation
+                    name: this.formData.name,
+                    email: this.formData.email,
+                    password: this.formData.password,
+                    password_confirmation: this.formData.password_confirmation
                 });
+                toast.success('Registro realizado com sucesso!');
                 console.log('Registration successful:', response.data);
-                    this.isActive = false;
-                } catch (error) {
+                this.isActive = false;
+            } catch (error) {
+                toast.error('Falha ao realizar registro. Tente novamente.');
                 console.error('Registration error:', error);
             }
-        },
-        mounted(){
-            let currentAnimation = 0;
-            const animations = document.querySelectorAll('.animation');
+        }
+    },
+    mounted() {
+        let currentAnimation = 0;
+        const animations = document.querySelectorAll('.animation');
 
-            function showNextAnimation() {
-                animations[currentAnimation].classList.remove('active');
+        function showNextAnimation() {
+            animations[currentAnimation].classList.remove('active');
 
-                currentAnimation = (currentAnimation + 1) % animations.length;
-                setTimeout(() => {
-                animations[currentAnimation].classList.add('active');
-                }, 500)
-            }
-        
+            currentAnimation = (currentAnimation + 1) % animations.length;
+            setTimeout(() => {
             animations[currentAnimation].classList.add('active');
+            }, 500)
+        }
 
-            setInterval(showNextAnimation, 5000);
-            }
-        },
+        animations[currentAnimation].classList.add('active');
+
+        setInterval(showNextAnimation, 5000);
     }
+}
 </script>
 <style scoped>
 
