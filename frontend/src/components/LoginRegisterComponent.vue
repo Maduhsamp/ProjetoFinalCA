@@ -41,7 +41,6 @@
                         <img v-else src="../assets/eye-closed.svg" alt="Olho fechado">
                         </button></span>
                     </div>
-
                     <div class="remember-forgot">   
                         <a href="#">Esqueceu a Senha?</a>
                     </div>
@@ -353,7 +352,6 @@ export default {
     }
 
     .btnSend{
-
         width: 100%;
         height: 45px;
         background: linear-gradient(90deg, #3057F2, #9ADCFF);

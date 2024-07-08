@@ -23,6 +23,3 @@ Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkE
 Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
 Route::post('/user/verify-email', [UserController::class, 'sendVerificationEmail']);
 Route::get('/user/verify-email/{id}/{token}', [UserController::class, 'verifyEmail']);
-
-
-
