@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="remember-forgot">   
-                        <a href="#">Esqueceu a Senha?</a>
+                        <router-link to="/forgotpassword"><a href="">Esqueceu a Senha?</a></router-link> 
                     </div>
 
                     <button type="submit" class="btnSend">Entrar</button>
@@ -149,7 +149,7 @@ export default {
                 } catch (error) {
                     console.error('Login error:', error);
             }
-         },
+        },
         async submitRegisterForm() {
             try {
                 const response = await HttpService.post('/api/register', {

@@ -13,6 +13,15 @@ const router = createRouter({
       }
     },
     {
+
+      path: '/forgotpassword',
+      name: 'forgotpassword',
+      component: () => import ('../views/ForgotPassword.vue'),
+      meta:{
+        title: 'ForgotPassword'
+      }
+    },
+    {
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('../views/Dashboard.vue'),
