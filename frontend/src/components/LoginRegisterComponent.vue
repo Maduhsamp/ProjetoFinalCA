@@ -324,7 +324,6 @@ export default {
     }
 
     .btnSend{
-
         width: 100%;
         height: 45px;
         background: linear-gradient(90deg, #3057F2, #9ADCFF);
