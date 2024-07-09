@@ -87,6 +87,7 @@ export default {
         margin-top: 580px;
         height: 40px;
         width: 40px;
+        cursor: pointer;
     }
 
     .btnLogOut i{
