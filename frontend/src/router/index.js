@@ -26,7 +26,8 @@ const router = createRouter({
       name: 'dashboard',
       component: () => import('../views/Dashboard.vue'),
       meta: {
-        title: 'Dashboard'
+        title: 'Dashboard',
+        needsAuth: true
       }
     },
     {
@@ -41,8 +42,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title;
-  next();
+  if(to.meta.needsAuth) {
+    next('/');
+  } else {
+    next();
+  }
 });
 
 export default router
