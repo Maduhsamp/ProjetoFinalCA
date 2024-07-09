@@ -18,6 +18,7 @@
 
 <script>
 import HttpService from '@/services/HttpService';
+import { mapActions } from 'vuex';
 export default {
     name: "Navbar",
     data(){
@@ -26,10 +27,13 @@ export default {
         }
     },
     methods:{
+        ...mapActions(['LogOut']),
         async LogOut() {
                 try {
                     const response = await HttpService.post('/api/logout', {
                     });
+                    this.LogOut();
+                    this.$router.push('/'); 
                     console.log('Logout', response.data);
                     } catch (error) {
                     console.error('Logout error:', error);
