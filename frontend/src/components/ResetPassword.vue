@@ -72,6 +72,7 @@ export default {
                 password_confirmation: this.password_confirmation
                 });
                 console.log('Senha Alterada:', response.data);
+                this.$router.push('/'); 
                 } catch (error) {
                 console.error('Registration error:', error);
             }

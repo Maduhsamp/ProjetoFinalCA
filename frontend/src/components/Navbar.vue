@@ -8,16 +8,34 @@
             <div class="icons">
                 <i class='bx bx-phone'/>
                 <i class='bx bx-bar-chart-square bx-rotate-180' />
-                <i class='bx bx-log-out' color="red"></i>
-                <i class='bx bx-user' ></i>
+                <form @submit.prevent="LogOut">
+                    <button class="btnLogOut"><i class='bx bx-log-out'></i></button>
+                </form>
             </div>
         </div>
 </template>
 
 
 <script>
+import HttpService from '@/services/HttpService';
 export default {
-    name: "Navbar"
+    name: "Navbar",
+    data(){
+        return{
+
+        }
+    },
+    methods:{
+        async LogOut() {
+                try {
+                    const response = await HttpService.post('/api/logout', {
+                    });
+                    console.log('Logout', response.data);
+                    } catch (error) {
+                    console.error('Logout error:', error);
+                }
+            },
+    }
 }
 </script>
 
@@ -51,7 +69,7 @@ export default {
         display: flex;
         flex-direction: column;
         max-width: 72px;
-        height: 720px;
+        height: 700px;
         align-items: center;
     }
 
@@ -61,14 +79,21 @@ export default {
         justify-content: center;
     }
 
-    i:last-of-type{
-        margin-top: 500px;
-        border: #E1E9F4 solid 10px;
-        border-radius:16px;
+    .btnLogOut{
+        color: red;
         background: #E1E9F4;
+        border: none;
+        border-radius: 10px;
+        margin-top: 580px;
+        height: 40px;
+        width: 40px;
     }
 
+    .btnLogOut i{
+        margin: 0 auto;
+        display: flex;
 
+    }
 
     
 

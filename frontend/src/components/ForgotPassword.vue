@@ -4,7 +4,7 @@
     <div class="container">
 
         <div class ="logreg-box">
-            <div class="form-box login" v-if="!isActive">
+            <div class="form-box login">
                 <form @submit.prevent="submitForgotPass">
                     <h2> Esqueceu a Senha </h2>
                     <div class="input-box">
