@@ -8,6 +8,7 @@
             <div class="icons">
                 <i class='bx bx-phone'/>
                 <i class='bx bx-bar-chart-square bx-rotate-180' />
+                <i class='bx bx-log-out' color="red"></i>
                 <i class='bx bx-user' ></i>
             </div>
         </div>
@@ -55,12 +56,13 @@ export default {
     }
 
     i{
-        margin-top: 20px;
         font-size: 1.3em;
+        margin-top: 20px;
+        justify-content: center;
     }
 
     i:last-of-type{
-        margin-top: 600px;
+        margin-top: 500px;
         border: #E1E9F4 solid 10px;
         border-radius:16px;
         background: #E1E9F4;

@@ -215,7 +215,7 @@ export default {
     @keyframes animateBlob {
 
         100%{
-            transform: translate(300px, 200px) rotate(-10deg);
+            transform: translate(800px, 400px) rotate(-10deg);
             border-radius: 76% 24% 33% 67% / 68% 55% 45% 32%;
         }
         

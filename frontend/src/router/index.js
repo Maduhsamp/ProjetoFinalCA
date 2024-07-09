@@ -28,6 +28,14 @@ const router = createRouter({
       meta: {
         title: 'Dashboard'
       }
+    },
+    {
+      path: '/password-reset/:token',
+      name: 'reset',
+      component: () => import('../views/ResetPasswordView.vue'),
+      meta: {
+        title: 'ResetPassword'
+      }
     }
   ]
 })

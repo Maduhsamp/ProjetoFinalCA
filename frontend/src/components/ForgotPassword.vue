@@ -3,7 +3,7 @@
     <div class="blob"></div>
     <div class="container">
 
-        <div class ="logreg-box" :class="{ 'active': isActive }">
+        <div class ="logreg-box">
             <div class="form-box login" v-if="!isActive">
                 <form @submit.prevent="submitForgotPass">
                     <h2> Esqueceu a Senha </h2>
@@ -84,7 +84,7 @@ export default {
     @keyframes animateBlob {
 
         100%{
-            transform: translate(300px, 200px) rotate(-10deg);
+            transform: translate(800px, 400px) rotate(-10deg);
             border-radius: 76% 24% 33% 67% / 68% 55% 45% 32%;
         }
         
