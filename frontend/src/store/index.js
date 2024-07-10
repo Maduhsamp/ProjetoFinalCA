@@ -16,8 +16,9 @@ export default createStore({
       localStorage.setItem('access_token', JSON.stringify(accessToken));
     },
     destroyToken(state){
-      state.accessToken = null;
+      state.accessToken = '';
       localStorage.removeItem('access_token');
+      console.log('Token removido');
     }
   },
   actions: {
@@ -36,13 +37,11 @@ export default createStore({
       if (context.getters.Logged) {
         try {
           await HttpService.post('/api/logout');
-          context.commit('destroyToken'); 
+          context.commit('destroyToken');
           console.log('Logout bem-sucedido');
         } catch (error) {
           console.log('Erro ao fazer logout:', error);
         }
-      }else {
-        console.log('Usuário não está logado');
       }
     }
   },

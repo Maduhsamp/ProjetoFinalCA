@@ -4,7 +4,8 @@
             <h2>Dashboard</h2>
         </div>
         <div class="inputs">
-            <input type="text" placeholder="Pesquisar"> 
+                <i class='bx bx-search-alt'></i>
+                <input type="text" placeholder="Pesquisar"> 
             <button class="btnNew">
                 <h3>Novo Funil</h3>
             </button>
@@ -34,11 +35,20 @@ export default{
         background:#f8f8f8;
     }
 
+
     .header{
         padding: 8px;
         max-height: 56px;
     }
 
+    .inputs i{
+        position: absolute;
+        background: transparent;
+        padding-top: 12px;
+        margin-right: 300px;
+        width: 5PX;
+        height: 5px;
+    }
 
     .btnNew{
         width: 241px;
@@ -67,6 +77,7 @@ export default{
         margin-right: 24px;
         font-size: 16px;
         background: white;
+        cursor: text;
     }
 
     h3{
