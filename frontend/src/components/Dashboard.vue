@@ -5,16 +5,30 @@
             </div>
             <div class="inputs">
                     <input type="text" placeholder="Pesquisar" > 
-                <button class="btnNew">
+                <button class="btnNew" @click="createFunil(funil)">
+                    <i class='bx bx-plus-circle'></i>
                     <h3>Novo Funil</h3>
                 </button>
             </div>
     </div>
 </template>
 <script>
+import axios from 'axios';
 
 export default{
     name: 'HeaderDashboard',
+    methods: {
+        createFunil(funil) {
+                axios.post('/api/funis', funil)
+                    .then(response => {
+                        this.funis.push(response.data);
+                        this.showModal = false;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+        }
+    }
 }
 </script>
 <style scoped>
