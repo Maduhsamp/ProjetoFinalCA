@@ -7,7 +7,7 @@ export default createStore({
   },
   getters: {
     Logged(state){
-      return state.accessToken != null;
+      return state.accessToken != null && state.accessToken !== '';
     }
   },
   mutations: {
@@ -26,7 +26,6 @@ export default createStore({
         try {
           const response = await HttpService.post('/api/login', user);
           context.commit('updateStorage', response.data.access_token);
-          console.log(response);
           resolve();
         } catch (error) {
           reject(error);
@@ -34,8 +33,16 @@ export default createStore({
       });
     },
     async LogOut(context){
-      if(context.getters.Logged){
-        context.commit('destroyToken')
+      if (context.getters.Logged) {
+        try {
+          await HttpService.post('/api/logout');
+          context.commit('destroyToken'); 
+          console.log('Logout bem-sucedido');
+        } catch (error) {
+          console.log('Erro ao fazer logout:', error);
+        }
+      }else {
+        console.log('Usuário não está logado');
       }
     }
   },

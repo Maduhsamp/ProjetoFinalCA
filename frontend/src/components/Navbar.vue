@@ -8,7 +8,7 @@
             <div class="icons">
                 <i class='bx bx-phone'/>
                 <i class='bx bx-bar-chart-square bx-rotate-180' />
-                <form @submit.prevent="LogOut">
+                <form @submit.prevent="logout">
                     <button class="btnLogOut"><i class='bx bx-log-out'></i></button>
                 </form>
             </div>
@@ -28,13 +28,12 @@ export default {
     },
     methods:{
         ...mapActions(['LogOut']),
-        async LogOut() {
+        async logout() {
                 try {
-                    const response = await HttpService.post('/api/logout', {
-                    });
+                    await HttpService.post('/api/logout');
                     this.LogOut();
-                    this.$router.push('/'); 
-                    console.log('Logout', response.data);
+                    console.log('Logout');
+                    this.$router.push('/');
                     } catch (error) {
                     console.error('Logout error:', error);
                 }

@@ -30,7 +30,6 @@ const router = createRouter({
       },
       beforeEnter: (to, from, next) => {
         if (store.getters.Logged) {
-          console.log('a')
           next();
         } else {
           next({ name: 'login' });
