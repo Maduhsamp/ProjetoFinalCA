@@ -5,22 +5,7 @@
                 <h2>Funil</h2>
                 <button class="btnDelete"><i class='bx bxs-trash' ></i></button>
             </div>
-            <div class="card">
-                <h2>Funil</h2>
-                <button class="btnDelete"><i class='bx bxs-trash' ></i></button>
-            </div>
-            <div class="card">
-                <h2>Funil</h2>
-                <button class="btnDelete"><i class='bx bxs-trash' ></i></button>
-            </div>
-            <div class="card">
-                <h2>Funil</h2>
-                <button class="btnDelete"><i class='bx bxs-trash' ></i></button>
-            </div>
-            <div class="card">
-                <h2>Funil</h2>
-                <button class="btnDelete"><i class='bx bxs-trash' ></i></button>
-            </div>
+
             
         </div>
         </template>

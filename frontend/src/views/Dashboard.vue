@@ -1,12 +1,19 @@
 <script>
 import Navbar from '../components/Navbar.vue';
 import HeaderDashboard from '@/components/Dashboard.vue';
-import CardFunil from '@/components/CardFunil.vue'
+import CardFunil from '@/components/CardFunil.vue';
+import { mapGetters } from 'vuex';
 export default {
     components: {
         Navbar,
         HeaderDashboard,
         CardFunil
+    },
+    computed: {
+    ...mapGetters(['Logged']),
+        isLogged() {
+        return this.Logged;
+        }
     }
 }
 </script>
@@ -16,12 +23,16 @@ export default {
 
         <Navbar />
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>    
-        <div class="coluna">
-            <div class="dashboard">
-                <HeaderDashboard />
+
+
+            <div class="coluna">
+                <div class="dashboard">
+                    <HeaderDashboard />
+                </div>
+                <CardFunil />
             </div>
-            <CardFunil />
-        </div>
+
+
     </div>
     </template>
 

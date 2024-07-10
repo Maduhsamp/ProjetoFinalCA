@@ -4,7 +4,7 @@ const HttpService = axios.create({
   baseURL: "http://localhost:8000/",
   headers: {
     "Content-type": "application/json",
-    "Accept": "application/json"
+    Accept: "application/json"
   },
 });
 
@@ -25,5 +25,13 @@ export const getUser = () => {
   return HttpService.get('user', { headers });
 }
 
+
+HttpService.interceptors.request.use(config => {
+  const token = JSON.parse(localStorage.getItem('access_token'));
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 export default HttpService;

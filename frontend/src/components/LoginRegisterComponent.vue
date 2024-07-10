@@ -103,6 +103,7 @@
 <script>
 import HttpService from '@/services/HttpService';
 import { useToast } from 'vue-toastification';
+import { mapActions } from 'vuex';
 
 export default {
     name: 'LoginRegisterComponent',
@@ -125,6 +126,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['Login']),
         showLogin() {
             this.isActive = false; 
         },
@@ -143,9 +145,9 @@ export default {
         async submitLoginForm() {
             const toast = useToast();
             try {
-                const response = await HttpService.post('/api/login', {
-                email: this.formData.email,
-                password: this.formData.password
+                await this.Login({
+                    email: this.formData.email,
+                    password: this.formData.password
                 });
                 toast.success('Login realizado com sucesso!');
                 this.$router.push('/dashboard'); 

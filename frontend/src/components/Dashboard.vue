@@ -1,20 +1,30 @@
 <template>
-    <div class="header">
-            <div class="Title">
-                <h2> Dashboard</h2>
-            </div>
-            <div class="inputs">
-                    <input type="text" placeholder="Pesquisar" > 
-                <button class="btnNew">
-                    <h3>Novo Funil</h3>
-                </button>
-            </div>
+    <div v-if="isLoggedIn" class="header">
+        <div class="Title">
+            <h2>Dashboard</h2>
+        </div>
+        <div class="inputs">
+            <input type="text" placeholder="Pesquisar"> 
+            <button class="btnNew">
+                <h3>Novo Funil</h3>
+            </button>
+        </div>
+    </div>
+    <div v-else>
+        <p>Você precisa estar logado para ver o conteúdo do dashboard.</p>
     </div>
 </template>
 <script>
-
+import { mapGetters } from 'vuex';
 export default{
     name: 'HeaderDashboard',
+    computed: {
+        ...mapGetters(['Logged']),
+        isLoggedIn() {
+            console.log('Logged getter:', this.Logged);
+            return this.Logged;
+        }
+    }
 }
 </script>
 <style scoped>

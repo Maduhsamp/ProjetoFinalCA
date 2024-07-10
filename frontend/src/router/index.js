@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import store from '@/store';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView,
+      name: 'login',
+      component: () => import('../views/HomeView.vue'),
       meta: {
-        title: 'Home'
+        title: 'Login'
       }
     },
     {
@@ -25,8 +25,15 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('../views/Dashboard.vue'),
-      meta: {
+      meta:{
         title: 'Dashboard'
+      },
+      beforeEnter: (to, from, next) => {
+        if (store.getters.Logged) {
+          next();
+        } else {
+          next({ name: 'login' });
+        }
       }
     },
     {
