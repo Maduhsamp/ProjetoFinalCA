@@ -1,5 +1,5 @@
 <template>
-    <div class="header">
+    <div v-if="isLoggedIn" class="header">
             <div class="Title">
                 <h2> Dashboard</h2>
             </div>
@@ -11,12 +11,23 @@
                 </button>
             </div>
     </div>
+     <div v-else>
+        <p>Você precisa estar logado para ver o conteúdo do dashboard.</p>
+    </div>
 </template>
 <script>
 import axios from 'axios';
+import { mapGetters } from 'vuex';
 
 export default{
     name: 'HeaderDashboard',
+    computed: {
+        ...mapGetters(['Logged']),
+        isLoggedIn() {
+            console.log('Logged getter:', this.Logged);
+            return this.Logged;
+        }
+     },
     methods: {
         createFunil(funil) {
                 axios.post('/api/funis', funil)

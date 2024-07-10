@@ -8,7 +8,7 @@
             <div class="icons">
                 <i class='bx bx-phone'/>
                 <i class='bx bx-bar-chart-square bx-rotate-180' />
-                <form @submit.prevent="LogOut">
+                <form @submit.prevent="logout">
                     <button class="btnLogOut"><i class='bx bx-log-out'></i></button>
                 </form>
             </div>
@@ -18,6 +18,7 @@
 
 <script>
 import HttpService from '@/services/HttpService';
+import { mapActions } from 'vuex';
 export default {
     name: "Navbar",
     data(){
@@ -26,11 +27,13 @@ export default {
         }
     },
     methods:{
-        async LogOut() {
+        ...mapActions(['LogOut']),
+        async logout() {
                 try {
-                    const response = await HttpService.post('/api/logout', {
-                    });
-                    console.log('Logout', response.data);
+                    await HttpService.post('/api/logout');
+                    this.LogOut();
+                    console.log('Logout');
+                    this.$router.push('/');
                     } catch (error) {
                     console.error('Logout error:', error);
                 }
