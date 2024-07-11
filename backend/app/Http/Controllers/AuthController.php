@@ -72,4 +72,12 @@ class AuthController extends Controller
             'message' => 'Logout successful'
         ]);
     }
+
+    public function getName()
+    {
+        $user = auth()->user();
+        return response()->json([
+            'user' => $user
+        ]);
+    }
 }

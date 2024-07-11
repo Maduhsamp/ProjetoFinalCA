@@ -1,7 +1,7 @@
 <template>
     <div v-if="isLoggedIn" class="header">
         <div class="Title">
-            <h2>Dashboard</h2>
+            <h2>Dashboard de {{ name }}</h2>
         </div>
         <div class="inputs">
                 <i class='bx bx-search-alt'></i>
@@ -17,8 +17,18 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import { getName } from '@/services/HttpService';
+
 export default{
     name: 'HeaderDashboard',
+    data(){
+        return{
+            name: ''
+        }
+    },
+    async created(){
+        this.name = await getName()
+    },
     computed: {
         ...mapGetters(['Logged']),
         isLoggedIn() {
