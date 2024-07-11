@@ -84,6 +84,7 @@ export default {
 .header {
     padding: 8px;
     max-height: 56px;
+    display: flex;
 }
 
 .btnNew {
@@ -105,16 +106,6 @@ export default {
     background: #1339cf;
 }
 
-input {
-    width: 241px;
-    height: 40px;
-    border: 1px #E1E9F4 solid;
-    border-radius: 10px;
-    margin-right: 24px;
-    font-size: 16px;
-    background: white;
-}
-
 h3 {
     background: transparent;
     font-size: 16px;
@@ -126,6 +117,36 @@ h3 {
     justify-content: flex-end;
     align-items: center;
     width: 100%;
+
+    input {
+        width: 241px;
+        height: 40px;
+        border: 1px #E1E9F4 solid;
+        border-radius: 10px;
+        margin-right: 24px;
+        font-size: 16px;
+        background: white;
+        padding-left: 10px;
+    }
+
+    .bx-search-alt {
+        position: absolute;
+        display: flex;
+        justify-content: end;
+        right: -5px;
+        top: 1.3%;
+        font-size: 1.1em;
+        color: #75758B;
+    }
+
+    button i {
+        position: absolute;
+        display: flex;
+        right: -15.7%;
+        top: 1.3%;
+        font-size: 1.1em;
+        color: #fff;
+    }
 }
 
 h2 {
@@ -209,9 +230,10 @@ h2 {
     i {
         width: 0;
         display: flex;
-        
-    input{
-        width: 241px;
+    }
+    
+    input {
+        width: 100%;
         height: 40px;
         border: 1px #E1E9F4 solid;
         border-radius: 10px;
@@ -219,21 +241,17 @@ h2 {
         font-size: 16px;
         background: white;
         cursor: text;
-    }
-    
-    input {
-        width: 100%;
         padding-left: 10px;
     }
+
     .bx-add-to-queue {
         position: absolute;
         display: flex;
         justify-content: end;
         right: 12%;
-        top: 13.2%;
+        top: 12.8%;
         font-size: 1.1em;
         color: #75758B;
     }
 }
-
 </style>
