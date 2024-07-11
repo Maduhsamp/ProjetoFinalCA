@@ -25,6 +25,11 @@ export const getUser = () => {
   return HttpService.get('user', { headers });
 }
 
+export const getName = async() => {
+  const {data} = await HttpService.get(`api/login/name`);
+  return data.user.name;
+};
+
 
 HttpService.interceptors.request.use(config => {
   const token = JSON.parse(localStorage.getItem('access_token'));

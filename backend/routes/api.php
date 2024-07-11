@@ -12,6 +12,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/login/name', [AuthController::class, 'getName']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/funil', [FunilController::class, 'index']); //aqui mostra todos os funis 
     Route::post('/funil/create', [FunilController::class, 'store']); //pra criar funis novos apenas nome neles

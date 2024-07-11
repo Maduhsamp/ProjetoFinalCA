@@ -45,7 +45,7 @@
                         <router-link to="/forgotpassword"><a href="">Esqueceu a Senha?</a></router-link> 
                     </div>
 
-                    <button type="submit" class="btnSend">Entrar</button>
+                    <button type="submit" class="btnSend" >Entrar</button>
 
                     <div class="login-register">
                         <p> Não tem uma Conta? <a href="#" class="register-link" @click.prevent="showRegister"> Registre-se</a></p>

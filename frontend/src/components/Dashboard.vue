@@ -1,9 +1,11 @@
 <template>
     <div v-if="isLoggedIn" class="header">
+
         <div class="Title">
-            <h2>Dashboard</h2>
+            <h2>Dashboard de {{ name }}</h2>
         </div>
         <div class="inputs">
+            <i class='bx bx-search-alt'></i>
             <input type="text" placeholder="Pesquisar"> 
             <button class="btnNew" @click.prevent="openSidebar">
                 <h3>Novo Funil</h3>
@@ -26,16 +28,23 @@
 </template>
 
 <script>
+
 import { mapGetters } from 'vuex';
+import { getName } from '@/services/HttpService';
 import HttpService from '@/services/HttpService';
+
 
 export default {
     name: 'HeaderDashboard',
     data() {
         return {
             isActive: false,
-            nome: ''
+            nome: '',
+            name: ''
         }
+    },
+    async created(){
+        this.name = await getName()
     },
     computed: {
         ...mapGetters(['Logged']),
@@ -132,6 +141,15 @@ h2 {
     font-size: 1.1em;
 }
 
+.inputs i{
+    position: absolute;
+    background: transparent;
+    padding-top: 12px;
+    margin-right: 300px;
+    width: 5PX;
+    height: 5px;
+}
+
 .go-back {
     background: #E1E9F4;
     border: none;
@@ -191,7 +209,18 @@ h2 {
     i {
         width: 0;
         display: flex;
+        
+    input{
+        width: 241px;
+        height: 40px;
+        border: 1px #E1E9F4 solid;
+        border-radius: 10px;
+        margin-right: 24px;
+        font-size: 16px;
+        background: white;
+        cursor: text;
     }
+    
     input {
         width: 100%;
         padding-left: 10px;
