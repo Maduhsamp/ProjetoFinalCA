@@ -1,15 +1,17 @@
 <template>
     <div v-if="isLoggedIn" class="header">
-            <div class="Title">
-                <h2> Dashboard</h2>
-            </div>
-            <div class="inputs">
-                    <input type="text" placeholder="Pesquisar" > 
-                <button class="btnNew" @click="createFunil(funil)">
-                    <i class='bx bx-plus-circle'></i>
-                    <h3>Novo Funil</h3>
-                </button>
-            </div>
+
+        <div class="Title">
+            <h2>Dashboard de {{ name }}</h2>
+        </div>
+        <div class="inputs">
+                <i class='bx bx-search-alt'></i>
+                <input type="text" placeholder="Pesquisar"> 
+            <button class="btnNew" @click="createFunil(funil)">
+              <i class='bx bx-plus-circle'></i>
+                <h3>Novo Funil</h3>
+            </button>
+        </div>
     </div>
      <div v-else>
         <p>Você precisa estar logado para ver o conteúdo do dashboard.</p>
@@ -17,10 +19,19 @@
 </template>
 <script>
 import axios from 'axios';
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
+import { getName } from '@/services/HttpService';
 
 export default{
     name: 'HeaderDashboard',
+    data(){
+        return{
+            name: ''
+        }
+    },
+    async created(){
+        this.name = await getName()
+    },
     computed: {
         ...mapGetters(['Logged']),
         isLoggedIn() {
@@ -49,11 +60,20 @@ export default{
         background:#f8f8f8;
     }
 
+
     .header{
         padding: 8px;
         max-height: 56px;
     }
 
+    .inputs i{
+        position: absolute;
+        background: transparent;
+        padding-top: 12px;
+        margin-right: 300px;
+        width: 5PX;
+        height: 5px;
+    }
 
     .btnNew{
         width: 241px;
@@ -82,6 +102,7 @@ export default{
         margin-right: 24px;
         font-size: 16px;
         background: white;
+        cursor: text;
     }
 
     h3{

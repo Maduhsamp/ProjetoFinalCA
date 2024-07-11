@@ -17,20 +17,13 @@
 
 
 <script>
-import HttpService from '@/services/HttpService';
 import { mapActions } from 'vuex';
 export default {
     name: "Navbar",
-    data(){
-        return{
-
-        }
-    },
     methods:{
         ...mapActions(['LogOut']),
         async logout() {
                 try {
-                    await HttpService.post('/api/logout');
                     this.LogOut();
                     console.log('Logout');
                     this.$router.push('/');
