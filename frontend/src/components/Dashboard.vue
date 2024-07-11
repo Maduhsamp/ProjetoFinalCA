@@ -1,38 +1,61 @@
 <template>
     <div v-if="isLoggedIn" class="header">
-            <div class="Title">
-                <h2> Dashboard</h2>
-            </div>
-            <div class="inputs">
-                    <input type="text" placeholder="Pesquisar" > 
-                <button class="btnNew" @click="createFunil(funil)">
-                    <i class='bx bx-plus-circle'></i>
-                    <h3>Novo Funil</h3>
-                </button>
-            </div>
+        <div class="Title">
+            <h2>Dashboard</h2>
+        </div>
+        <div class="inputs">
+            <input type="text" placeholder="Pesquisar"> 
+            <button class="btnNew" @click.prevent="openSidebar">
+                <h3>Novo Funil</h3>
+                <i class='bx bx-plus-circle'></i>
+            </button>
+        </div>
+        <div class="sidebar" :class="{ 'sidebar-active': isActive }">
+            <form @submit.prevent="createFunil">
+                <div class="input-funil">
+                    <button class="go-back" @click.prevent="closeSidebar"><i class='bx bx-arrow-back'></i></button>
+                    <input type="text" v-model="nome" placeholder="Nome do Funil"><i class='bx bx-add-to-queue'></i>
+                </div>
+                <button type="submit" class="btnSend">Adicionar Funil</button>
+            </form>
+        </div>
     </div>
-     <div v-else>
+    <div v-else>
         <p>Você precisa estar logado para ver o conteúdo do dashboard.</p>
     </div>
 </template>
-<script>
-import axios from 'axios';
-import { mapGetters } from 'vuex';
 
-export default{
+<script>
+import { mapGetters } from 'vuex';
+import HttpService from '@/services/HttpService';
+
+export default {
     name: 'HeaderDashboard',
+    data() {
+        return {
+            isActive: false,
+            nome: ''
+        }
+    },
     computed: {
         ...mapGetters(['Logged']),
         isLoggedIn() {
-            console.log('Logged getter:', this.Logged);
             return this.Logged;
         }
-     },
+    },
     methods: {
-        createFunil(funil) {
-                axios.post('/api/funis', funil)
+        openSidebar() {
+            this.isActive = !this.isActive;
+        },
+        closeSidebar() {
+            this.isActive = false;
+        },
+        async createFunil() {
+                await HttpService.post('/api/funil/create', {
+                    nome: this.nome
+                })
                     .then(response => {
-                        this.funis.push(response.data);
+                        this.nome.push(response.data);
                         this.showModal = false;
                     })
                     .catch(error => {
@@ -42,61 +65,146 @@ export default{
     }
 }
 </script>
+
 <style scoped>
-    *{
+* {
+    width: 100%;
+    background: #f8f8f8;
+}
+
+.header {
+    padding: 8px;
+    max-height: 56px;
+}
+
+.btnNew {
+    width: 241px;
+    height: 40px;
+    background: #3057F2;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 500;
+    transition: .5s;
+    margin-right: 10px;
+    padding: 10px;
+}
+
+.btnNew:hover {
+    background: #1339cf;
+}
+
+input {
+    width: 241px;
+    height: 40px;
+    border: 1px #E1E9F4 solid;
+    border-radius: 10px;
+    margin-right: 24px;
+    font-size: 16px;
+    background: white;
+}
+
+h3 {
+    background: transparent;
+    font-size: 16px;
+    text-align: center;
+}
+
+.inputs {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+h2 {
+    margin-left: 20px;
+}
+
+.btnNew i {
+    position: absolute;
+    width: 0;
+    display: flex;
+    right: 7%;
+    top: 10.8%;
+    font-size: 1.1em;
+}
+
+.go-back {
+    background: #E1E9F4;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    width: 35px;
+    height: 30px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease;
+    transform: translateX(100%);
+}
+
+.sidebar-active {
+    transform: translateX(0);
+}
+
+.sidebar form {
+    background: transparent;
+    .btnSend {
         display: flex;
-        width: 100%;
-        background:#f8f8f8;
-    }
-
-    .header{
-        padding: 8px;
-        max-height: 56px;
-    }
-
-
-    .btnNew{
-        width: 241px;
-        height: 40px;   
+        justify-content: center;
+        white-space: nowrap;
+        font-size: 0.9em;
+        width: 70%;
+        height: 40px;
         background: #3057F2;
         border: none;
         border-radius: 10px;
-        outline: none;
         cursor: pointer;
         color: #fff;
         font-weight: 500;
         transition: .5s;
-        margin-right: 10px;
+        margin-top: 10px;
+        margin-left: 15%;
         padding: 10px;
     }
-
-    .btnNew:hover{
+    .btnSend:hover {
         background: #1339cf;
     }
+}
 
-    input{
-        width: 241px;
-        height: 40px;
-        border: 1px #E1E9F4 solid;
-        border-radius: 10px;
-        margin-right: 24px;
-        font-size: 16px;
-        background: white;
+.input-funil {
+    background: transparent;
+    i {
+        width: 0;
+        display: flex;
     }
+    input {
+        width: 100%;
+        padding-left: 10px;
+    }
+    .bx-add-to-queue {
+        position: absolute;
+        display: flex;
+        justify-content: end;
+        right: 12%;
+        top: 13.2%;
+        font-size: 1.1em;
+        color: #75758B;
+    }
+}
 
-    h3{
-        background: transparent;
-        font-size: 16px;
-        text-align: center;
-        justify-content: center;
-        align-content: center;
-    }
-
-    .inputs{
-        justify-content: flex-end;
-    }
-
-    h2{
-        margin-left: 20px;
-    }
 </style>

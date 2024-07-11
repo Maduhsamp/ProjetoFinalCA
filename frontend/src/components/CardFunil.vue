@@ -1,7 +1,7 @@
     <template>
         <div class="card-container">
             <div class="card" v-for="funil in funis" :key="funil.id">
-                {{ funil.name }}
+                {{ funil.nome }}
                 <button @click="updateFunil(funil)"><i class='bx bxs-pencil'></i></button>
                 <button class="btnDelete" @click="deleteFunil(funil)"><i class='bx bxs-trash'></i></button>
             </div>
@@ -9,12 +9,21 @@
     </template>
     <script>
     import axios from 'axios';
+    import HttpService from '@/services/HttpService';
 
     export default{
         name: 'CardFunil',
+        data() {
+            return {
+                funis: [],
+                nome: ''
+            }
+        },
         methods: {
-            getFunis() {
-                axios.get('/api/funis')
+            async getFunis() {
+                await HttpService.get('/api/funil', {
+                    nome: this.nome
+                })
                     .then(response => {
                         this.funis = response.data;
                     })
