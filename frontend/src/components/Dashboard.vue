@@ -1,22 +1,25 @@
 <template>
     <div v-if="isLoggedIn" class="header">
+
         <div class="Title">
             <h2>Dashboard de {{ name }}</h2>
         </div>
         <div class="inputs">
                 <i class='bx bx-search-alt'></i>
                 <input type="text" placeholder="Pesquisar"> 
-            <button class="btnNew">
+            <button class="btnNew" @click="createFunil(funil)">
+              <i class='bx bx-plus-circle'></i>
                 <h3>Novo Funil</h3>
             </button>
         </div>
     </div>
-    <div v-else>
+     <div v-else>
         <p>Você precisa estar logado para ver o conteúdo do dashboard.</p>
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import axios from 'axios';
+import { mapGetters } from 'vuex'
 import { getName } from '@/services/HttpService';
 
 export default{
@@ -34,6 +37,18 @@ export default{
         isLoggedIn() {
             console.log('Logged getter:', this.Logged);
             return this.Logged;
+        }
+     },
+    methods: {
+        createFunil(funil) {
+                axios.post('/api/funis', funil)
+                    .then(response => {
+                        this.funis.push(response.data);
+                        this.showModal = false;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
         }
     }
 }

@@ -1,18 +1,52 @@
     <template>
         <div class="card-container">
-
-            <div class="card">
-                <h2>Funil</h2>
-                <button class="btnDelete"><i class='bx bxs-trash' ></i></button>
+            <div class="card" v-for="funil in funis" :key="funil.id">
+                {{ funil.name }}
+                <button @click="updateFunil(funil)"><i class='bx bxs-pencil'></i></button>
+                <button class="btnDelete" @click="deleteFunil(funil)"><i class='bx bxs-trash'></i></button>
             </div>
-
-            
         </div>
-        </template>
+    </template>
     <script>
+    import axios from 'axios';
 
     export default{
-        name: 'CardFunil'
+        name: 'CardFunil',
+        methods: {
+            getFunis() {
+                axios.get('/api/funis')
+                    .then(response => {
+                        this.funis = response.data;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            },
+            updateFunil(funil) {
+                axios.put(`/api/funis/${funil.id}`, funil)
+                    .then(response => {
+                        this.funis.forEach(f => {
+                            if (f.id === funil.id) {
+                                Object.assign(f, funil);
+                            }
+                        });
+                        this.showModal = false;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            },
+
+            deleteFunil(funil) {
+                axios.delete(`/api/funis/${funil.id}`)
+                    .then(() => {
+                        this.funis = this.funis.filter(f => f.id !== funil.id);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+        }
     }
     </script>
     <style scoped>
