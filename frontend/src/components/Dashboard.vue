@@ -32,7 +32,7 @@
 import { mapGetters } from 'vuex';
 import { getName } from '@/services/HttpService';
 import HttpService from '@/services/HttpService';
-
+import { useToast } from 'vue-toastification';
 
 export default {
     name: 'HeaderDashboard',
@@ -60,16 +60,21 @@ export default {
             this.isActive = false;
         },
         async createFunil() {
+            const toast = useToast();
                 await HttpService.post('/api/funil/create', {
                     nome: this.nome
                 })
                     .then(response => {
-                        this.nome.push(response.data);
+                        this.nome = (response.data);
                         this.showModal = false;
-                        this.isActive = false;
+                        this.closeSidebar();
                         toast.success('Funil adicionado com sucesso!');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 3000);
                     })
                     .catch(error => {
+                        toast.error('Erro ao adicionar funil!');
                         console.error(error);
                     });
         }
@@ -102,6 +107,7 @@ export default {
     transition: .5s;
     margin-right: 10px;
     padding: 10px;
+    position: relative; 
 }
 
 .btnNew:hover {
@@ -118,6 +124,7 @@ h3 {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    position: relative;
     width: 100%;
 
     input {
@@ -134,10 +141,8 @@ h3 {
 
     .bx-search-alt {
         position: absolute;
-        display: flex;
-        justify-content: end;
-        right: -5px;
-        top: 1.3%;
+        top: 17%;
+        transform: translateY(-50%); 
         font-size: 1.1em;
         color: #75758B;
     }
@@ -157,13 +162,12 @@ h2 {
 }
 
 .btnNew i {
-    position: absolute;
-    width: 0;
-    display: flex;
-    right: 7%;
-    top: 10.8%;
-    font-size: 1.1em;
-}
+        position: absolute;
+        left: 68%;
+        margin-top: 2.3%; 
+        transform: translateY(-50%);
+        font-size: 1.1em;
+    }
 
 .inputs i{
     position: absolute;
@@ -231,6 +235,8 @@ h2 {
 
 .input-funil {
     background: transparent;
+    position: relative;
+
     i {
         width: 0;
         display: flex;
@@ -251,10 +257,9 @@ h2 {
 
     .bx-add-to-queue {
         position: absolute;
-        display: flex;
-        justify-content: end;
-        right: 12%;
-        top: 12.8%;
+        right: 12%; 
+        top: 79%; 
+        transform: translateY(-50%); 
         font-size: 1.1em;
         color: #75758B;
     }

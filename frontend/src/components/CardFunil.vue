@@ -19,8 +19,7 @@
             }
         },
         async created(){
-            this.funil = await getFunil()
-            console.log(getFunil());
+            this.funil = await getFunil();
         },
         // methods: {
         //     updateFunil(funil) {
