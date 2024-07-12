@@ -30,6 +30,10 @@ export const getName = async() => {
   return data.user.name;
 };
 
+export const getFunil = async() => {
+  const {data} = await HttpService.get(`api/funil`);
+  return data.funis;
+};
 
 HttpService.interceptors.request.use(config => {
   const token = JSON.parse(localStorage.getItem('access_token'));

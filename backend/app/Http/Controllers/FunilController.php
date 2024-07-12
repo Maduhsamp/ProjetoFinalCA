@@ -11,7 +11,9 @@ class FunilController extends Controller
     public function index()
     {
         $funis = Funil::where('user_id', auth()->user()->id)->get();
-        return response()->json($funis);
+        return response()->json([
+            'funis' => $funis
+        ]);
     }
 
     public function store(Request $request)
@@ -57,10 +59,10 @@ class FunilController extends Controller
             }
             else{
                 $funil->delete();
-                
+
                 return response()->json(['message' => 'Funil deletado com sucesso.']);
             }
-    
-    
+
+
     }
 }
