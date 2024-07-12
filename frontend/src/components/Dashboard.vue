@@ -64,7 +64,7 @@ export default {
                     nome: this.nome
                 })
                     .then(response => {
-                        this.nome.push(response.data);
+                        this.nome = (response.data);
                         this.showModal = false;
                         this.isActive = false;
                         toast.success('Funil adicionado com sucesso!');
@@ -154,6 +154,8 @@ h3 {
 
 h2 {
     margin-left: 20px;
+    font-size: 20px;
+    padding: 10px;
 }
 
 .btnNew i {
