@@ -159,6 +159,8 @@ h3 {
 
 h2 {
     margin-left: 20px;
+    font-size: 20px;
+    padding: 10px;
 }
 
 .btnNew i {
