@@ -66,6 +66,8 @@ export default {
                     .then(response => {
                         this.nome.push(response.data);
                         this.showModal = false;
+                        this.isActive = false;
+                        toast.success('Funil adicionado com sucesso!');
                     })
                     .catch(error => {
                         console.error(error);
@@ -127,6 +129,7 @@ h3 {
         font-size: 16px;
         background: white;
         padding-left: 10px;
+        padding-right: 35px;
     }
 
     .bx-search-alt {
@@ -167,7 +170,7 @@ h2 {
     background: transparent;
     padding-top: 12px;
     margin-right: 300px;
-    width: 5PX;
+    width: 5px;
     height: 5px;
 }
 
@@ -194,6 +197,7 @@ h2 {
     padding: 20px;
     transition: transform 0.3s ease;
     transform: translateX(100%);
+    z-index: 1;
 }
 
 .sidebar-active {
@@ -242,6 +246,7 @@ h2 {
         background: white;
         cursor: text;
         padding-left: 10px;
+        padding-right: 40px;
     }
 
     .bx-add-to-queue {
