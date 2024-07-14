@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import { useToast } from 'vue-toastification';
 import HttpService from '@/services/HttpService';
 
 export default createStore({
@@ -34,13 +35,14 @@ export default createStore({
       });
     },
     async LogOut(context){
+      const toast = useToast();
       if (context.getters.Logged) {
         try {
           await HttpService.post('/api/logout');
           context.commit('destroyToken');
-          console.log('Logout bem-sucedido');
+          toast.success('Logout realizado com sucesso!');
         } catch (error) {
-          console.log('Erro ao fazer logout:', error);
+          toast.error('Erro ao fazer logout, tente novamente!', error);
         }
       }
     }

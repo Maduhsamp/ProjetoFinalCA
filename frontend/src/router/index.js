@@ -42,6 +42,13 @@ const router = createRouter({
       component: () => import ('../views/FunilView.vue'),
       meta:{
         title: 'Funil'
+      },
+      beforeEnter: (to, from, next) => {
+        if (store.getters.Logged) {
+          next();
+        } else {
+          next({ name: 'login' });
+        }
       }
     },
     {
