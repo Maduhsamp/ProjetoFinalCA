@@ -37,6 +37,14 @@ const router = createRouter({
       }
     },
     {
+      path: '/funil',
+      name: 'funil',
+      component: () => import ('../views/FunilView.vue'),
+      meta:{
+        title: 'Funil'
+      }
+    },
+    {
       path: '/password-reset/:token',
       name: 'reset',
       component: () => import('../views/ResetPasswordView.vue'),
