@@ -16,6 +16,19 @@ class FunilController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        $funil = Funil::where('user_id', auth()->user()->id)->find($id);
+
+        if(!$funil) {
+            return response()->json(['error' => 'Funil não encontrado.'], 404);
+        }
+
+        return response()->json([
+            'funil' => $funil
+        ]);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
