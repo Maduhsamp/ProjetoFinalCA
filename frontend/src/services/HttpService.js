@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const HttpService = axios.create({
-  baseURL: "http://localhost:8000/",
+  baseURL: "http://localhost:8000/api",
   headers: {
     "Content-type": "application/json",
     Accept: "application/json"
@@ -26,13 +26,18 @@ export const getUser = () => {
 }
 
 export const getName = async() => {
-  const {data} = await HttpService.get(`api/login/name`);
+  const {data} = await HttpService.get(`login/name`);
   return data.user.name;
 };
 
 export const getFunil = async() => {
-  const {data} = await HttpService.get(`api/funil`);
+  const {data} = await HttpService.get(`funil`);
   return data.funis;
+};
+
+export const show = async(id) => {
+  const {data} = await HttpService.get(`funil/${id}`);
+  return data.funil;
 };
 
 HttpService.interceptors.request.use(config => {

@@ -3,7 +3,7 @@
         <div class="card" v-for="funis in funil" :key="funis.id">
             <div class="nome">{{ funis.nome }}</div>
             <div class="acessar">
-                <button class="btnAccess">Visualizar</button>
+                <button class="btnAccess" @click="funilPage(funis.id)">Visualizar</button>
             </div>
         </div>
     </div>
@@ -21,32 +21,11 @@
         async created(){
             this.funil = await getFunil();
         },
-        // methods: {
-        //     updateFunil(funil) {
-        //         axios.put(`/api/funis/${funil.id}`, funil)
-        //             .then(response => {
-        //                 this.funis.forEach(f => {
-        //                     if (f.id === funil.id) {
-        //                         Object.assign(f, funil);
-        //                     }
-        //                 });
-        //                 this.showModal = false;
-        //             })
-        //             .catch(error => {
-        //                 console.error(error);
-        //             });
-        //     },
-
-        //     deleteFunil(funil) {
-        //         axios.delete(`/api/funis/${funil.id}`)
-        //             .then(() => {
-        //                 this.funis = this.funis.filter(f => f.id !== funil.id);
-        //             })
-        //             .catch(error => {
-        //                 console.error(error);
-        //             });
-        //     }
-        // }
+        methods: {
+            funilPage(id) {
+                this.$router.push({ name: 'funil', params: { id } });
+            }
+        }
     }
     </script>
     <style scoped>

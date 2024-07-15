@@ -1,31 +1,57 @@
 <template>
     <div class="header">
-        <div class="funil">
-            <label>Funil</label>
-        </div>
-        <div class="nome-funil">
-            <label>Nome</label>
-        </div>
-        <div class="inputs">
-            <i class='bx bx-search-alt'></i>
-            <input type="text" placeholder="Pesquisar"> 
-            <button class="btnNew" @click.prevent="openSidebar">
-                <h3>Novo Contato</h3>
-                <i class='bx bx-user-plus'></i>
+      <div class="funil">
+        <label>Funil</label>
+      </div>
+      <div class="nome-funil">
+        <label>{{ funil.nome }}</label>
+      </div>
+      <div class="editar">
+        <button class="reset-button" @click.prevent="openModal">
+          <i class="bx bxs-pencil"></i>
+        </button>
+      </div>
+      <div class="excluir">
+        <button class="reset-button" @click="deleteFunil">
+          <i class="bx bxs-trash"></i>
+        </button>
+      </div>
+      <div class="inputs">
+        <i class="bx bx-search-alt"></i>
+        <input type="text" placeholder="Pesquisar" />
+        <button class="btnNew" @click.prevent="openSidebar">
+          <h3>Novo Contato</h3>
+          <i class="bx bx-user-plus"></i>
+        </button>
+      </div>
+      <div class="sidebar" :class="{ 'sidebar-active': isActive }">
+        <form @submit.prevent="createContato">
+          <div class="input-contato">
+            <button class="go-back" @click.prevent="closeSidebar">
+              <i class="bx bx-arrow-back"></i>
             </button>
-        </div>
-        <div class="sidebar" :class="{ 'sidebar-active': isActive }">
-            <form @submit.prevent="createContato">
-                <div class="input-contato">
-                    <button class="go-back" @click.prevent="closeSidebar"><i class='bx bx-arrow-back'></i></button>
-                    <input type="text" v-model="nome" placeholder="Nome do Contato"><i class='bx bx-user'></i>
-                </div>
-                <button type="submit" class="btnSend">Adicionar Contato</button>
+            <input type="text" v-model="name" placeholder="Nome do Contato" />
+            <i class="bx bx-user"></i>
+          </div>
+          <button type="submit" class="btnSend">Adicionar Contato</button>
+        </form>
+      </div>
+      <div v-if="isModalActive" class="modal">
+        <div class="modal-content">
+            <span class="close" @click="closeModal">&times;</span>
+            <label>Editar Funil</label>
+            <form @submit.prevent="updateFunil">
+                <input type="text" v-model="funil.nome" placeholder="Nome"><i class='bx bxs-edit-alt'></i>
+                <button class="btnSave" type="submit">Salvar Alterações</button>
             </form>
         </div>
     </div>
+    </div>
 </template>
+  
 <script>
+import { show } from '@/services/HttpService';
+import HttpService from '@/services/HttpService';
 import { useToast } from 'vue-toastification';
 
 export default {
@@ -33,8 +59,14 @@ export default {
     data() {
         return {
             isActive: false,
-            nome: ''
+            isModalActive: false,
+            funil: {},
+            name: '',
+            id: this.$route.params.id
         }
+    },
+    async created() {
+        this.funil = await show(this.$route.params.id);
     },
     methods: {
         openSidebar() {
@@ -42,6 +74,41 @@ export default {
         },
         closeSidebar() {
             this.isActive = false;
+        },
+        openModal() {
+            this.isModalActive = true; 
+        },
+        closeModal() {
+            this.isModalActive = false;
+        },
+        async updateFunil() {
+            const toast = useToast();
+                await HttpService.put(`funil/update/${this.id}`, {
+                    nome: this.nome
+                })
+                .then(response => {
+                        this.nome = (response.data);
+                        toast.success('Funil atualizado com sucesso!');
+                        this.closeModal();
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 3000);
+                    })
+                    .catch(error => {
+                        toast.error('Erro ao tentar atualizar funil!');
+                        console.error(error);
+                    });
+        },
+        async deleteFunil() {
+            const toast = useToast();
+            try {
+                await HttpService.delete(`funil/delete/${this.id}`);
+                toast.success('Funil deletado com sucesso!');
+                this.$router.push('/dashboard');
+            } catch (error) {
+                toast.error('Erro ao tentar deletar funil!');
+                console.error(error);
+            }
         }
     }
 }
@@ -71,6 +138,28 @@ export default {
     margin-top: 35px;
     margin-left: -28px;
     font-size: 1.7em;
+}
+
+.reset-button {
+    all: unset; 
+    cursor: pointer; 
+}
+
+.editar {
+    width: 20px;
+    height: 20px;
+    margin-top: 2.7%;
+    margin-right: 3%;
+    font-size: 1.3em;
+}
+
+.excluir {
+    width: 20px;
+    height: 20px;
+    margin-top: 2.7%;
+    margin-right: 5%;
+    color: rgb(223, 3, 3);
+    font-size: 1.3em;
 }
 
 .btnNew {
@@ -239,5 +328,105 @@ h3 {
         font-size: 1.1em;
         color: #75758B;
     }
+}
+
+.modal {
+    display: flex; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5); 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border: none;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+}
+
+.modal-content label {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    background: transparent;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.modal-content form {
+    background: transparent;
+}
+
+.modal-content input {
+    width: 80%;
+    height: 40px;
+    border: 1px #E1E9F4 solid;
+    border-radius: 10px;
+    font-size: 16px;
+    background: white;
+    cursor: text;
+    padding-left: 10px;
+    padding-right: 40px;
+    margin-left: 50px;
+}
+
+.bxs-edit-alt {
+    background: transparent;
+    position: absolute;
+    left: 81%;
+    top: 58.5%; 
+    transform: translateY(-50%); 
+    font-size: 1.3em;
+    color: #757575;
+}
+
+.btnSave {
+    width: 241px;
+    height: 40px;
+    background: #3057F2;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 500;
+    transition: .5s;
+    padding: 10px;
+    margin-left: 115px;
+    margin-top: 10px;
+    position: relative; 
+}
+
+.btnSave:hover {
+    background: #1339cf;
+}
+
+.close {
+    background: #E1E9F4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 33px;
+    height: 33px;
+    border-radius: 10px;
+    color: #aaa;
+    float: right;
+    font-size: 25px;
+}
+
+.close:hover,
+.close:focus {
+    text-decoration: none;
+    cursor: pointer;
 }
 </style>
