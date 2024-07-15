@@ -61,7 +61,7 @@ export default {
         },
         async createFunil() {
             const toast = useToast();
-                await HttpService.post('/api/funil/create', {
+                await HttpService.post('funil/create', {
                     nome: this.nome
                 })
                     .then(response => {

@@ -37,7 +37,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/funil',
+      path: '/funil/:id',
       name: 'funil',
       component: () => import ('../views/FunilView.vue'),
       meta:{
