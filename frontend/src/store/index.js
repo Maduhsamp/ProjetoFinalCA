@@ -26,7 +26,7 @@ export default createStore({
     async Login(context, user) {
       return new Promise(async (resolve, reject) => {
         try {
-          const response = await HttpService.post('/api/login', user);
+          const response = await HttpService.post('/login', user);
           context.commit('updateStorage', response.data.access_token);
           resolve();
         } catch (error) {
@@ -38,7 +38,7 @@ export default createStore({
       const toast = useToast();
       if (context.getters.Logged) {
         try {
-          await HttpService.post('/api/logout');
+          await HttpService.post('/logout');
           context.commit('destroyToken');
           toast.success('Logout realizado com sucesso!');
         } catch (error) {
