@@ -27,13 +27,52 @@
       <div class="sidebar" :class="{ 'sidebar-active': isActive }">
         <form @submit.prevent="createContato">
           <div class="input-contato">
-            <button class="go-back" @click.prevent="closeSidebar">
-              <i class="bx bx-arrow-back"></i>
-            </button>
-            <input type="text" v-model="name" placeholder="Nome do Contato" />
-            <i class="bx bx-user"></i>
+            <div class="flex">
+                <div class="flex2">
+                    <button class="go-back" @click.prevent="closeSidebar">
+                        <i class='bx bx-chevron-left'></i>
+                    </button>
+                    <p>
+                        Voltar
+                    </p>
+                </div>
+                <button type="submit" class="btnSend">
+                    Criar Contato
+                </button>
+            </div>
+            <div class="card-nome">
+                <input type="text" v-model="name" placeholder="Nome do Contato" />  
+                <div class="borderr">
+                    <hr>
+                </div>
+                <div class="etapas">
+                    <h2>Nome do Funil</h2>
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                        <label class="btn btn-outline-primary" for="btnradio1">Sem Etapa</label>
+
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio2">Prospecção</label>
+                            
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio3">Contato</label>
+
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio4">Proposta</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-formaContato">
+                
+            </div>
+
+
+
+
+
+
           </div>
-          <button type="submit" class="btnSend">Adicionar Contato</button>
         </form>
       </div>
       <div v-if="isModalActive" class="modal">
@@ -62,7 +101,8 @@ export default {
             isModalActive: false,
             funil: {},
             name: '',
-            id: this.$route.params.id
+            id: this.$route.params.id,
+            nome: ''
         }
     },
     async created() {
@@ -84,15 +124,12 @@ export default {
         async updateFunil() {
             const toast = useToast();
                 await HttpService.put(`funil/update/${this.id}`, {
-                    nome: this.nome
+                    nome: this.funil.nome
                 })
                 .then(response => {
                         this.nome = (response.data);
                         toast.success('Funil atualizado com sucesso!');
                         this.closeModal();
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 3000);
                     })
                     .catch(error => {
                         toast.error('Erro ao tentar atualizar funil!');
@@ -244,43 +281,125 @@ h3 {
 }
 
 .go-back {
-    background: #E1E9F4;
+    background: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 30px;
     display: flex;
     align-items: center;
+    justify-content: start;
     width: 35px;
-    height: 30px;
+    height: 35px;
     padding-left: 10px;
-    margin-bottom: 20px;
+    border: #72869A 1px solid;
+}
+
+.go-back i{
+    font-size: 25px;
+    margin-left: -7px;
 }
 
 .sidebar {
     position: fixed;
     top: 0;
     right: 0;
-    width: 300px;
+    width: 719px;
     height: 100%;
     background: #fff;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 40px;
+    padding-top: 20px;
     transition: transform 0.3s ease;
     transform: translateX(100%);
     z-index: 1;
+    border-radius: 20px 0 0 20px;
 }
+
+/* AQUI FICA O MODAL DE CRIACAO DE CONTATOS */
+
+.flex{
+    display: flex;
+    align-content: center;
+    padding: 10px;
+    justify-content: center;
+    background: transparent;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.flex2 {
+    display: flex;
+    align-items: center;
+    background: transparent;
+}
+
+.flex p{
+    margin-top: 20px;
+    background: transparent;
+    margin-left: 10px;
+}
+
+.card-nome{
+    background: white;
+    border: 1px solid #E1E9F4;
+    height: 178px;
+    border-radius: 10px;
+    padding: 10px;
+
+}
+
+.etapas{
+    background: white;
+}
+
+
+.etapas h2{
+    font-size: 16px;
+    padding: 10px;
+    background: white;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: #626262;
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #7036e4;
+    --bs-btn-hover-border-color: #0b0b0b;
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #7036e4;
+    --bs-btn-active-border-color: #7036e4;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #111111;
+    --bs-btn-disabled-bg: black;
+    --bs-btn-disabled-border-color: #7036e4;
+    --bs-gradient: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background: #d4d4d4;
+    height: 26px;
+    align-content: center;
+    font-size: 13px;
+}
+
+/* AQUI TERMINA O A ESTILIZACAO DE DENTRO DO MODAL */
 
 .sidebar-active {
     transform: translateX(0);
+    background: #f1f5fb;
 }
 
 .sidebar form {
     background: transparent;
-    .btnSend {
+}
+
+.btnSend {
         display: flex;
         justify-content: center;
         white-space: nowrap;
         font-size: 0.9em;
-        width: 70%;
+        width: 500px;
         height: 40px;
         background: #3057F2;
         border: none;
@@ -289,14 +408,12 @@ h3 {
         color: #fff;
         font-weight: 500;
         transition: .5s;
-        margin-top: 10px;
-        margin-left: 15%;
+
         padding: 10px;
     }
     .btnSend:hover {
         background: #1339cf;
     }
-}
 
 .input-contato {
     background: transparent;
@@ -429,4 +546,6 @@ h3 {
     text-decoration: none;
     cursor: pointer;
 }
+
+
 </style>
