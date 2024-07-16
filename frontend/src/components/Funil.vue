@@ -63,16 +63,33 @@
                 </div>
 
             </div>
-            <div class="card-formaContato">
-                
-            </div>
+            <div @click="toggleDropdown('contatos')" class="formaContato">
+                <h2>Contatos</h2>
+                <div :class="{'dropdown-content': true, 'show': dropdowns.contatos}">
+                    <label>Telefone</label>
+                    <input type="text">
+                    <label>Email</label>
+                    <input type="email">
+                </div>
+                </div>
+
+                <div @click="toggleDropdown('dados')" class="dados">
+                <h2>Dados</h2>
+                <div :class="{'dropdown-content': true, 'show': dropdowns.dados}">
+                    <label>CPF</label>
+                    <input type="text">
+                    <label>Data de Nascimento</label>
+                    <input type="email">
+                    <label>Endereço</label>
+                    <input type="text">
+                    <label>Valor</label>
+                    <input type="email">
+                </div>
+                </div>
 
 
 
-
-
-
-          </div>
+        </div>
         </form>
       </div>
       <div v-if="isModalActive" class="modal">
@@ -102,7 +119,11 @@ export default {
             funil: {},
             name: '',
             id: this.$route.params.id,
-            nome: ''
+            nome: '',
+            dropdowns: {
+                contatos: false,
+                dados: false
+            }
         }
     },
     async created() {
@@ -146,7 +167,11 @@ export default {
                 toast.error('Erro ao tentar deletar funil!');
                 console.error(error);
             }
+        },
+        toggleDropdown(section) {
+            this.dropdowns[section] = !this.dropdowns[section];
         }
+
     }
 }
 </script>
@@ -381,6 +406,30 @@ h3 {
     height: 26px;
     align-content: center;
     font-size: 13px;
+}
+
+.formaContato, .dados {
+    margin-top: 10px;
+    background: white;
+    border: 1px solid #E1E9F4;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.formaContato h2, .dados h2 {
+    background: transparent;
+    font-size: 20px;
+}
+
+.dropdown-content {
+    display: none;
+    padding: 10px;
+    border-top: 1px solid #E1E9F4;
+}
+
+.show {
+    display: block;
 }
 
 /* AQUI TERMINA O A ESTILIZACAO DE DENTRO DO MODAL */
