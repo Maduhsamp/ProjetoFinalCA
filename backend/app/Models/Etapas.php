@@ -10,4 +10,9 @@ class Etapas extends Model
     use HasFactory;
 
     protected $fillable = ['nome'];
+
+    public function contato()
+    {
+        return $this->hasMany(Contato::class);
+    }
 }
