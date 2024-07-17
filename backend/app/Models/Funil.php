@@ -15,5 +15,10 @@ class Funil extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
+    public function contato()
+    {
+        return $this->hasMany(Contato::class);
+    }
+
 }
