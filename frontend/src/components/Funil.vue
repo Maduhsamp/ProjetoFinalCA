@@ -46,18 +46,18 @@
                     <hr>
                 </div>
                 <div class="etapas">
-                    <h2>Nome do Funil</h2>
+                    <h2>{{ funil.nome }}</h2>
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" v-model="etapa_id" value="1" autocomplete="off" checked>
                         <label class="btn btn-outline-primary" for="btnradio1">Sem Etapa</label>
 
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" v-model="etapa_id" value="2" autocomplete="off">
                         <label class="btn btn-outline-primary" for="btnradio2">Prospecção</label>
                             
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" v-model="etapa_id" value="3" autocomplete="off">
                         <label class="btn btn-outline-primary" for="btnradio3">Contato</label>
 
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" v-model="etapa_id" value="4" autocomplete="off">
                         <label class="btn btn-outline-primary" for="btnradio4">Proposta</label>
                     </div>
                 </div>
@@ -74,11 +74,11 @@
                 <div class="accordion-body">
                     <div class="telefone">
                         <label>Telefone</label>
-                        <input type="text" placeholder="(99)99999-9999">
+                        <input type="text" placeholder="(99)99999-9999" v-model="phone_number">
                     </div>
                     <div class="email-contato">
                         <label>Email</label>
-                        <input type="email" placeholder="example@example.com">
+                        <input type="email" placeholder="example@example.com" v-model="email">
                     </div>
                 </div>
                 </div>
@@ -93,19 +93,19 @@
                 <div class="accordion-body">
                     <div class="cpf">
                         <label>CPF</label>
-                        <input  type="text" placeholder="000.000.000-00">
+                        <input  type="text" placeholder="000.000.000-00" v-model="cpf">
                     </div>
                     <div class="birthday">
                         <label>Data de Nascimento</label>
-                        <input  type="date">
+                        <input  type="date" v-model="birth_date">
                     </div>
                     <div class="endereco">
                         <label>Endereço</label>
-                        <input type="text" placeholder="Rua: nome exemplo - N999">
+                        <input type="text" placeholder="Rua: nome exemplo - N999" v-model="address">
                     </div>
                     <div class="value">
                         <label>Valor</label>
-                        <input type="text" placeholder="R$: 0,00">
+                        <input type="text" placeholder="R$: 0,00" v-model="value">
                     </div>
 
                 </div>
@@ -146,6 +146,14 @@ export default {
             name: '',
             id: this.$route.params.id,
             nome: '',
+            name: '',
+            address: '',
+            value: '',
+            email: '',
+            phone_number: '',
+            cpf: '',
+            birth_date: '',
+            etapa_id: '',
             dropdowns: {
                 contatos: false,
                 dados: false
@@ -168,6 +176,40 @@ export default {
         closeModal() {
             this.isModalActive = false;
         },
+        async createContato() {
+            const toast = useToast();
+                await HttpService.post(`funil/${this.id}/contato`, {
+                    name: this.name,
+                    etapa_id: this.etapa_id,
+                    phone_number: this.phone_number,
+                    email: this.email,
+                    cpf: this.cpf,
+                    birth_date: this.birth_date,
+                    address: this.address,
+                    value: this.value
+                })
+                    .then(response => {
+                        this.name = (response.data);
+                        this.etapa_id = (response.data);
+                        this.phone_number = (response.data);
+                        this.email = (response.data);
+                        this.cpf = (response.data);
+                        this.birth_date = (response.data);
+                        this.address = (response.data);
+                        this.value = (response.data);
+
+                        this.closeSidebar();
+                        toast.success('Contato adicionado com sucesso!');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 3000);
+                    })
+                    .catch(error => {
+                        toast.error('Erro ao adicionar contato!');
+                        console.error(error);
+                    });
+                }
+            },
         async updateFunil() {
             const toast = useToast();
                 await HttpService.put(`funil/update/${this.id}`, {
@@ -199,7 +241,7 @@ export default {
         }
 
     }
-}
+
 </script>
 <style scoped>
 * {

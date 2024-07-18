@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class ContatoController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $contatos = Contato::where('funil_id', auth()->user()->id)->get();
+        $contatos = Contato::where('funil_id', $id)->get();
         return response()->json([
             'contatos:' => $contatos
         ]);
@@ -17,7 +17,7 @@ class ContatoController extends Controller
 
     public function show($id)
     {
-        $contato = Contato::where('funil_id', auth()->user()->id)->find($id);
+        $contato = Contato::find($id);
 
         if(!$contato) {
             return response()->json(['error' => 'Contato não encontrado.'], 404);
