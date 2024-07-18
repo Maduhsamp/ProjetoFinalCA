@@ -96,6 +96,7 @@ export default {
     overflow: auto;
     margin-bottom: 10px;
     font-size: 16px;
+    max-width: 185px;
 }
 
 .name::-webkit-scrollbar {
