@@ -2,21 +2,36 @@
     <div class="scroll-container">
         <div class="colunas">
             <div class="se">
-                <label>Sem etapa</label>
-                <button class="reset-button"><i class='bx bx-plus'></i></button>
-                <CardContato />
+                <div class="linha">
+                    <label>Sem etapa</label>
+                    <button class="reset-button"><i class='bx bx-plus'></i></button>
+                </div>
+                <CardContato :etapaId="1" />
+                
             </div>
             <div class="pc">
-                <label>Prospecção</label>
-                <button class="reset-button spacing-pc"><i class='bx bx-plus'></i></button>
+                <div class="linha">
+                    <label>Prospecção</label>
+                    <button class="reset-button"><i class='bx bx-plus'></i></button>
+                </div>
+                <CardContato :etapaId="2"/>
+                
             </div>
             <div class="c extra-padding-c">
-                <label>Contato</label>
-                <button class="reset-button spacing-c"><i class='bx bx-plus'></i></button>
+                <div class="linha">
+                    <label>Contato</label>
+                    <button class="reset-button"><i class='bx bx-plus'></i></button>
+                </div>
+                <CardContato :etapaId="3"/>
+                
             </div>
             <div class="p extra-padding-p">
-                <label>Proposta</label>
-                <button class="reset-button spacing-p"><i class='bx bx-plus'></i></button>
+                <div class="linha">
+                    <label>Proposta</label>
+                    <button class="reset-button "><i class='bx bx-plus'></i></button>
+                </div>
+                <CardContato :etapaId="4"/>
+                
             </div>
         </div>
     </div>
@@ -30,6 +45,11 @@ export default {
     components:{
         CardContato
     },
+    data(){
+        return{
+            etapa_id: 1
+        }
+    }
     
 }
 </script>
@@ -66,8 +86,7 @@ export default {
         align-items: center;
         background: #E1E9F4;
         color: #72869A;
-        margin-left: 41%;
-        top: 28%;
+        top: 20px;
     }
 }
 
@@ -77,6 +96,7 @@ export default {
     padding-left: 8px; 
     padding-right: 130px;
     margin-left: 15px; 
+    width: 240px;
 }
 
 .se::before, .pc::before, .c::before, .p::before {
@@ -89,7 +109,7 @@ export default {
 }
 
 .se::before {
-    width: 100%;
+    width: 240px;
     background: #D2DDEC;
 }
 
@@ -108,48 +128,11 @@ export default {
     background: #7036E4;
 }
 
-.extra-padding-c::before {
-    width: 103%; 
-}
-
-.extra-padding-p::before {
-    width: 101%; 
-}
-
-.spacing-pc {
-    margin-left: 97%;
-}
-
-.spacing-c {
-    margin-left: 125%;
-}
-
-.spacing-p {
-    margin-left: 113%;
-}
-
-.p {
-    margin-left: 20px; 
-}
-
-.se:hover {
+.se:hover, .pc:hover, .c:hover, .p:hover {
     background-color: #F0F4FA;
     border-radius: 5px;
-}
-
-.pc:hover {
-    background-color: #F0F4FA;
-    border-radius: 5px;
-}
-
-.c:hover {
-    background-color: #F0F4FA;
-    border-radius: 5px;
-}
-
-.p:hover {
-    background-color: #F0F4FA;
-    border-radius: 5px;
+    padding-bottom: 20px;
+;
 }
 
 .scroll-container::-webkit-scrollbar {
@@ -169,5 +152,12 @@ export default {
 
 .scroll-container::-webkit-scrollbar-thumb:hover {
     background-color: #83a8e0; 
+}
+
+.linha{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 195px;
 }
 </style>
