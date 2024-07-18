@@ -26,7 +26,7 @@
       </div>
       <div class="sidebar" :class="{ 'sidebar-active': isActive }">
         <form @submit.prevent="createContato">
-          <div class="input-contato">
+          <div class="input-contato ">
             <div class="flex">
                 <div class="flex2">
                     <button class="go-back" @click.prevent="closeSidebar">
@@ -63,16 +63,59 @@
                 </div>
 
             </div>
-            <div class="card-formaContato">
-                
+            <div class="accordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Contatos
+                </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="telefone">
+                        <label>Telefone</label>
+                        <input type="text" placeholder="(99)99999-9999">
+                    </div>
+                    <div class="email-contato">
+                        <label>Email</label>
+                        <input type="email" placeholder="example@example.com">
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Dados
+                </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="cpf">
+                        <label>CPF</label>
+                        <input  type="text" placeholder="000.000.000-00">
+                    </div>
+                    <div class="birthday">
+                        <label>Data de Nascimento</label>
+                        <input  type="date">
+                    </div>
+                    <div class="endereco">
+                        <label>Endereço</label>
+                        <input type="text" placeholder="Rua: nome exemplo - N999">
+                    </div>
+                    <div class="value">
+                        <label>Valor</label>
+                        <input type="text" placeholder="R$: 0,00">
+                    </div>
+
+                </div>
+                </div>
+            </div>
+
             </div>
 
 
-
-
-
-
-          </div>
+        </div>
         </form>
       </div>
       <div v-if="isModalActive" class="modal">
@@ -102,7 +145,11 @@ export default {
             funil: {},
             name: '',
             id: this.$route.params.id,
-            nome: ''
+            nome: '',
+            dropdowns: {
+                contatos: false,
+                dados: false
+            }
         }
     },
     async created() {
@@ -146,7 +193,11 @@ export default {
                 toast.error('Erro ao tentar deletar funil!');
                 console.error(error);
             }
+        },
+        toggleDropdown(section) {
+            this.dropdowns[section] = !this.dropdowns[section];
         }
+
     }
 }
 </script>
@@ -296,6 +347,7 @@ h3 {
 .go-back i{
     font-size: 25px;
     margin-left: -7px;
+    background: transparent;
 }
 
 .sidebar {
@@ -345,7 +397,12 @@ h3 {
     height: 178px;
     border-radius: 10px;
     padding: 10px;
+    margin-bottom: 10px;
 
+}
+
+.card-nome input{
+    width: 100%;;
 }
 
 .etapas{
@@ -383,6 +440,77 @@ h3 {
     font-size: 13px;
 }
 
+.formaContato, .dados {
+    margin-top: 10px;
+    background: white;
+    border: 1px solid #E1E9F4;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.accordion-body input{
+    width: 90%;
+}
+
+.accordion-item{
+    margin-bottom: 10px;
+}
+
+.accordion{
+    background: transparent;    
+}
+
+.accordion-body{
+    display: inline-block;
+}
+
+.telefone{
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.email-contato{
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cpf{
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.birthday{
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.endereco{
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.value{
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.birthday label{
+    font-size: 11px;
+}
+
+.accordion-body label{
+    width: 80px;
+}
+
+
+
 /* AQUI TERMINA O A ESTILIZACAO DE DENTRO DO MODAL */
 
 .sidebar-active {
@@ -419,32 +547,18 @@ h3 {
     background: transparent;
     position: relative;
 
-    i {
-        width: 0;
-        display: flex;
-    }
-    
-    input {
-        width: 100%;
+}
+
+.input-contato input{
         height: 40px;
         border: 1px #E1E9F4 solid;
-        border-radius: 10px;
-        margin-right: 24px;
+        border-radius: 10px;    
         font-size: 16px;
         background: white;
         cursor: text;
         padding-left: 10px;
         padding-right: 40px;
-    }
-
-    .bx-user {
-        position: absolute;
-        right: 12%; 
-        top: 79%; 
-        transform: translateY(-50%); 
-        font-size: 1.1em;
-        color: #75758B;
-    }
+    
 }
 
 .modal {

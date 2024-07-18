@@ -1,23 +1,23 @@
 <template>
     <div class="card-container">
         <div class="card" v-for="contatos in contato" :key="contatos.id">
-            <div class="nome">{{ contatos.nome }}</div>
+            <div class="name">{{ contatos.name }}</div>
         </div>
     </div>
     </template>
     <script>
-    import HttpService, { getContato } from '@/services/HttpService';
+    // import HttpService, { getContato } from '@/services/HttpService';    
 
     export default{
-        name: 'CardContato',
-        data() {
-            return {
-                contato: ''
-            }
-        },
-        async created(){
-            this.contato = await getContato();
-        },
+        name: 'CardContato'
+        // data() {
+        //     return {
+        //         contato: ''
+        //     }
+        // },
+        // async created(){
+        //     this.contato = await getContato();
+        // },
         // methods: {
         //     updateContato(contato) {
         //         axios.put(`/api/contatos/${contato.id}`, contato)
