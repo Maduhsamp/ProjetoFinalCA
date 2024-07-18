@@ -11,7 +11,7 @@ class ContatoController extends Controller
     {
         $contatos = Contato::where('funil_id', $id)->get();
         return response()->json([
-            'contatos:' => $contatos
+            'contatos' => $contatos
         ]);
     }
 
@@ -24,7 +24,7 @@ class ContatoController extends Controller
         }
 
         return response()->json([
-            'contato:' => $contato
+            'contato' => $contato
         ]);
     }
 

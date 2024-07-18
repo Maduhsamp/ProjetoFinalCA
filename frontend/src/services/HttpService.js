@@ -35,6 +35,11 @@ export const getFunil = async() => {
   return data.funis;
 };
 
+export const getContato = async(id) => {
+  const {data} = await HttpService.get(`funil/${id}/contato`);
+  return data.contatos;
+};
+
 export const show = async(id) => {
   const {data} = await HttpService.get(`funil/${id}`);
   return data.funil;
