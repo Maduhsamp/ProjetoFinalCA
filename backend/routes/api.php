@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/funil/create', [FunilController::class, 'store']);
     Route::put('funil/update/{id}', [FunilController::class, 'update']);
     Route::delete('/funil/delete/{id}', [FunilController::class, 'destroy']);
-    Route::get('/contato', [ContatoController::class, 'index']);
+    Route::get('funil/{id}/contato', [ContatoController::class, 'index']);
     Route::get('/contato/{id}', [ContatoController::class, 'show']);
     Route::post('/funil/{id}/contato', [ContatoController::class, 'store']);
     Route::patch('contato/{id}', [ContatoController::class, 'update']);
