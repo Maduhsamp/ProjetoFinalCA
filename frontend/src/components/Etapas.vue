@@ -4,6 +4,7 @@
             <div class="se">
                 <label>Sem etapa</label>
                 <button class="reset-button"><i class='bx bx-plus'></i></button>
+                <CardContato />
             </div>
             <div class="pc">
                 <label>Prospecção</label>
@@ -22,8 +23,13 @@
 </template>
 
 <script>
+import CardContato from './CardContato.vue';
+
 export default {
-    name: 'ColunasEtapas'
+    name: 'ColunasEtapas',
+    components:{
+        CardContato
+    }
 }
 </script>
 
