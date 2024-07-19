@@ -7,7 +7,7 @@
                         <div class="editName">
                             <div class="name"> {{ contatos.name }}</div>
                             <div class="editar">
-                                <button class="btnEdit" @click.prevent="openSidebar">
+                                <button class="btnEdit" @click.prevent="openSidebar(contatos.id)">
                                     <i class="bx bxs-pencil"></i>
                                 </button>
                             </div>
@@ -40,23 +40,25 @@
                         </div>
                         <div class="etapas">
                             <h2>{{ funil.nome }}</h2>
+                          
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" v-model="etapa_id"
+                                <input type="radio" class="btn-check" name="btnradio" :id="'1' + contatoUnico.id" v-model="contatoUnico.etapa_id"
                                     value="1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btnradio1">Sem Etapa</label>
+                                <label class="btn btn-outline-primary" :for="'1' + contatoUnico.id">Sem Etapa</label>
 
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" v-model="etapa_id"
+                                <input type="radio" class="btn-check" name="btnradio" :id="'2' + contatoUnico.id" v-model="contatoUnico.etapa_id"
                                     value="2" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradio2">Prospecção</label>
+                                <label class="btn btn-outline-primary" :for="'2' + contatoUnico.id">Prospecção</label>
 
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" v-model="etapa_id"
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" v-model="contatoUnico.etapa_id"
                                     value="3" autocomplete="off">
                                 <label class="btn btn-outline-primary" for="btnradio3">Contato</label>
 
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio4" v-model="etapa_id"
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio4" v-model="contatoUnico.etapa_id"
                                     value="4" autocomplete="off">
                                 <label class="btn btn-outline-primary" for="btnradio4">Proposta</label>
                             </div>
+
                         </div>
 
                     </div>
@@ -115,7 +117,7 @@
                 </div>
             </form>
             <div class="excluir">
-                <button class="delete" @click="Contato">
+                <button class="delete" @click="deleteContato(contato.id)">
                     <i class='bx bx-trash-alt' ></i>
                     <label>Excluir Contato</label>
                 </button>
@@ -146,6 +148,7 @@ export default {
             cpf: '',
             birth_date: '',
             etapa_id: '',
+            contatoAtualId: null
         }
     },
     props: {
@@ -157,13 +160,16 @@ export default {
         this.contatoUnico = await showContato(this.$route.params.id);
     },
     methods: {
-        openSidebar() {
+        async openSidebar(contatoId) {
             this.isActive = !this.isActive;
-            console.log(this.isActive)
+            console.log(contatoId)
+            this.contatoAtualId = contatoId;
+            this.contatoUnico = await showContato(this.$route.params.id, contatoId);
         },
         closeSidebar() {
             this.isActive = false;
-        }   
+            this.contatoAtualId = null;
+        },
     //     updateContato(contato) {
     //         axios.put(`/api/contatos/${contato.id}`, contato)
     //             .then(response => {
@@ -179,15 +185,20 @@ export default {
     //             });
     //     },
 
-    //     deleteContato(contato) {
-    //         axios.delete(`/api/contatos/${contato.id}`)
-    //             .then(() => {
-    //                 this.contatos = this.contatos.filter(c => c.id !== contato.id);
-    //             })
-    //             .catch(error => {
-    //                 console.error(error);
-    //             });
-    //     }
+        async deleteContato() {
+            const toast = useToast();
+            try {
+                await HttpService.delete(`/contato/${this.contatoAtualId}`);
+                this.closeSidebar();
+                toast.success('Contato deletado com sucesso!');
+                setTimeout(() => {
+                        window.location.reload();
+                }, 3000);
+            } catch (error) {
+                toast.error('Erro ao deletar o Contato!');
+                console.error(error);
+            }
+        },
     }
 }
 </script>

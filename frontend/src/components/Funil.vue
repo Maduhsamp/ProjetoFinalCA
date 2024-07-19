@@ -223,9 +223,9 @@ export default {
                 toast.error('Erro ao tentar atualizar funil!');
                 console.error(error);
             });
+            
         },
         async deleteFunil() {
-            console.log(1)
             const toast = useToast();
             try {
                 await HttpService.delete(`funil/delete/${this.id}`);

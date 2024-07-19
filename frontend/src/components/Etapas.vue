@@ -97,6 +97,7 @@ export default {
     padding-right: 130px;
     margin-left: 15px; 
     width: 240px;
+    height: 680px;
 }
 
 .se::before, .pc::before, .c::before, .p::before {
