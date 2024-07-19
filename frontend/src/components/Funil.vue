@@ -392,6 +392,7 @@ h3 {
     background: transparent;
 }
 
+/* AQUI COMEÇA A ESTILIZAÇÃO DA SIDEBAR DE CRIACÃO DE CONTATOS */
 .sidebar {
     position: fixed;
     top: 0;
@@ -407,8 +408,6 @@ h3 {
     z-index: 1;
     border-radius: 20px 0 0 20px;
 }
-
-/* AQUI FICA O MODAL DE CRIACAO DE CONTATOS */
 
 .flex{
     display: flex;
@@ -551,10 +550,7 @@ h3 {
     width: 80px;
 }
 
-
-
-/* AQUI TERMINA O A ESTILIZACAO DE DENTRO DO MODAL */
-
+/* AQUI TERMINA A ESTILIZACÃO DE DENTRO DA SIDEBAR */
 .sidebar-active {
     transform: translateX(0);
     background: #f1f5fb;
@@ -603,6 +599,7 @@ h3 {
     
 }
 
+/* AQUI FICA A ESTILIZACÃO DO MODAL DO LOGOUT */
 .modal {
     display: flex; 
     position: fixed; 
@@ -702,6 +699,4 @@ h3 {
     text-decoration: none;
     cursor: pointer;
 }
-
-
 </style>

@@ -1,60 +1,60 @@
 <script>
 import Navbar from '../components/Navbar.vue';
+import ModalLogout from '@/components/ModalLogout.vue';
 import HeaderDashboard from '@/components/Dashboard.vue';
 import CardFunil from '@/components/CardFunil.vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
     components: {
         Navbar,
+        ModalLogout,
         HeaderDashboard,
         CardFunil
     },
+    methods: {
+        ...mapActions(['hideModal'])
+    },
     computed: {
-    ...mapGetters(['Logged']),
+        ...mapGetters(['Logged', 'isModalVisible']),
         isLogged() {
-        return this.Logged;
-        }
+            return this.Logged;
+        },
     }
 }
 </script>
 
 <template>
     <div class="flex">
-
         <Navbar />
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>    
-
-
-            <div class="coluna">
-                <div class="dashboard">
-                    <HeaderDashboard />
-                </div>
-                <CardFunil />
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <div class="coluna">
+            <div class="dashboard">
+                <HeaderDashboard />
+                <ModalLogout v-if="isModalVisible" />
             </div>
-
-
+            <CardFunil />
+        </div>
     </div>
-    </template>
+</template>
 
 <style scoped>
+* {
+    background: #f8f8f8;
+}
 
-    *{
-        background: #f8f8f8;
-    }
+.dashboard {
+    max-height: 56px;
+    width: 100%;
+}
 
-    .dashboard{
-        max-height: 56px;
-        width: 100%;
-    }
+.flex {
+    display: flex;
 
-    .flex{
-        display: flex;
+}
 
-    }
-
-    .coluna{
-        width: 100%;
-        height: 100%;
-    }
-
+.coluna {
+    width: 100%;
+    height: 100%;
+}
 </style>
