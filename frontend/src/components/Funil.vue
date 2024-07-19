@@ -150,7 +150,6 @@ export default {
             name: '',
             id: this.$route.params.id,
             nome: '',
-            name: '',
             address: '',
             value: '',
             email: '',
@@ -158,10 +157,6 @@ export default {
             cpf: '',
             birth_date: '',
             etapa_id: '',
-            dropdowns: {
-                contatos: false,
-                dados: false
-            }
         }
     },
     async created() {

@@ -45,6 +45,12 @@ export const show = async(id) => {
   return data.funil;
 };
 
+export const showContato = async(id) => {
+  const {data} = await HttpService.get(`contato/${id}`);
+  return data.contato;  
+  console.log(contato)
+};
+
 HttpService.interceptors.request.use(config => {
   const token = JSON.parse(localStorage.getItem('access_token'));
   if (token) {
