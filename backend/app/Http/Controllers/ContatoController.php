@@ -15,8 +15,9 @@ class ContatoController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show($funil_id, $id)
     {
+        $funil_id = Contato::where('funil_id', $funil_id)->get();
         $contato = Contato::find($id);
 
         if(!$contato) {

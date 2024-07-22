@@ -164,7 +164,7 @@ export default {
             }
 
             try {
-                const response = await HttpService.post('/api/register', {
+                const response = await HttpService.post('register', {
                     name: this.formData.name,
                     email: this.formData.email,
                     password: this.formData.password,

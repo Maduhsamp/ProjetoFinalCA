@@ -42,7 +42,7 @@ export default {
     methods: {
         async submitForgotPass() {
             try {
-                const response = await HttpService.post('/api/forgot-password', {
+                const response = await HttpService.post('forgot-password', {
                 email: this.formData.email,
                 });
                 console.log('Email Enviado:', response.data);

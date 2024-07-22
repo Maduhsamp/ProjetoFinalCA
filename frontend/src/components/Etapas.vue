@@ -17,7 +17,7 @@
                 <CardContato :etapaId="2"/>
                 
             </div>
-            <div class="c extra-padding-c">
+            <div class="c">
                 <div class="linha">
                     <label>Contato</label>
                     <button class="reset-button"><i class='bx bx-plus'></i></button>
@@ -25,7 +25,7 @@
                 <CardContato :etapaId="3"/>
                 
             </div>
-            <div class="p extra-padding-p">
+            <div class="p">
                 <div class="linha">
                     <label>Proposta</label>
                     <button class="reset-button "><i class='bx bx-plus'></i></button>
@@ -97,6 +97,7 @@ export default {
     padding-right: 130px;
     margin-left: 15px; 
     width: 240px;
+    height: 680px;
 }
 
 .se::before, .pc::before, .c::before, .p::before {
