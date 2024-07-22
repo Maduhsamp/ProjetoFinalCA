@@ -214,7 +214,6 @@ export default {
                 });
         },
         async updateFunil() {
-            console.log('hello word')
             const toast = useToast();
             await HttpService.put(`funil/update/${this.id}`, {
                 nome: this.funil.nome
@@ -228,7 +227,6 @@ export default {
                 toast.error('Erro ao tentar atualizar funil!');
                 console.error(error);
             });
-            
         },
         async deleteFunil() {
             const toast = useToast();
