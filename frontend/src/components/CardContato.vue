@@ -280,6 +280,17 @@ input:focus {
     background: transparent;
 }
 
+.accordion-button:not(.collapsed) {
+    color: black; 
+    background-color: transparent; 
+    box-shadow: black;
+}
+
+.accordion-button:focus {
+    box-shadow: none; 
+}
+
+
 .delete {
     background: #E1E9F4;
     border-radius: 8px;
