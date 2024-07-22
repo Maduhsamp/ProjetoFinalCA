@@ -13,12 +13,29 @@
             </button>
         </div>
         <div class="sidebar" :class="{ 'sidebar-active': isActive }">
+            
             <form @submit.prevent="createFunil">
-                <div class="input-funil">
-                    <button class="go-back" @click.prevent="closeSidebar"><i class='bx bx-arrow-back'></i></button>
-                    <input type="text" v-model="nome" placeholder="Nome do Funil"><i class='bx bx-add-to-queue'></i>
+                <div class="input-funil ">
+                    <div class="flex">
+                        <div class="flex2">
+                            <button class="go-back" @click.prevent="closeSidebar">
+                                <i class='bx bx-chevron-left'></i>
+                            </button>
+                            <p>
+                                Voltar
+                            </p>
+                        </div>
+                        <button type="submit" class="btnSend">
+                            Adicionar Funil
+                        </button>
+                    </div>
                 </div>
-                <button type="submit" class="btnSend">Adicionar Funil</button>
+                <div class="card-nome">
+                        <h2> Bem-Vindo de volta {{ name }}</h2>
+                        <input type="text" v-model="nome" placeholder="Nome do Funil">
+                        <!-- <i class='bx bx-add-to-queue'></i> -->
+                </div>
+
             </form>
         </div>
     </div>
@@ -92,6 +109,28 @@ export default {
     padding: 8px;
     max-height: 56px;
     display: flex;
+}
+
+.flex{
+    display: flex;
+    align-content: center;
+    padding: 10px;
+    justify-content: center;
+    background: transparent;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex2 {
+    display: flex;
+    align-items: center;
+    background: transparent;
+}
+
+.flex p {
+    margin-top: 20px;
+    background: transparent;
+    margin-left: 10px;
 }
 
 .btnNew {
@@ -181,33 +220,43 @@ h2 {
 }
 
 .go-back {
-    background: #E1E9F4;
+    background: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 30px;
     display: flex;
     align-items: center;
-    width: 35px;
-    height: 30px;
+    justify-content: start;
+    width: 37px;
+    height: 35px;
     padding-left: 10px;
-    margin-bottom: 20px;
+    border: #72869A 1px solid;
+}
+
+.go-back i {
+    font-size: 25px;
+    margin-left: -6px;
+    background: transparent;
 }
 
 .sidebar {
     position: fixed;
     top: 0;
     right: 0;
-    width: 300px;
+    width: 719px;
     height: 100%;
     background: #fff;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 40px;
+    padding-top: 20px;
     transition: transform 0.3s ease;
     transform: translateX(100%);
     z-index: 1;
+    border-radius: 20px 0 0 20px;
 }
 
 .sidebar-active {
     transform: translateX(0);
+    background: #f1f5fb;
 }
 
 .sidebar form {
@@ -265,5 +314,29 @@ h2 {
         font-size: 1.1em;
         color: #75758B;
     }
+}
+
+.card-nome {
+    background: #f8f8f8;
+    border: 1px solid #E1E9F4;
+    height: 115px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+}
+
+.card-nome input {
+    width: 95%;
+    margin: 10px;
+    border: 0px;
+    background: #f8f8f8;
+    font-size: 24px;
+    
+}
+
+.card-nome h2{
+    margin: 0;
+    background: transparent;
 }
 </style>

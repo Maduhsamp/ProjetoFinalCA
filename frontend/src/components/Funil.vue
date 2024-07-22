@@ -131,7 +131,7 @@
             <div class="modal-content">
                 <span class="close" @click="closeModal">&times;</span>
                 <label>Editar Funil</label>
-                <form @submit.prevent="updateFunil">
+                <form @submit.prevent="updateFunilModal">
                     <input type="text" v-model="funil.nome" placeholder="Nome"><i class='bx bxs-edit-alt'></i>
                     <button class="btnSave" type="submit" @click="updateFunil">Salvar Alterações</button>
                 </form>
