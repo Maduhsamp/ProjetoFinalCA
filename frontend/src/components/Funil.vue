@@ -48,6 +48,11 @@
                         <div class="etapas">
                             <h2>{{ funil.nome }}</h2>
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+
+
+
+
+
                                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" v-model="etapa_id"
                                     value="1" autocomplete="off" checked>
                                 <label class="btn btn-outline-primary" for="btnradio1">Sem Etapa</label>
@@ -216,8 +221,8 @@ export default {
         })
             .then(response => {
                 this.nome = (response.data);
-                toast.success('Funil atualizado com sucesso!');
                 this.closeModal();
+                toast.success('Funil atualizado com sucesso!');
             })
             .catch(error => {
                 toast.error('Erro ao tentar atualizar funil!');
@@ -380,7 +385,7 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: start;
-    width: 35px;
+    width: 37px;
     height: 35px;
     padding-left: 10px;
     border: #72869A 1px solid;
@@ -388,7 +393,7 @@ h3 {
 
 .go-back i {
     font-size: 25px;
-    margin-left: -7px;
+    margin-left: -6px;
     background: transparent;
 }
 
@@ -434,7 +439,7 @@ h3 {
 }
 
 .card-nome {
-    background: white;
+    background: #f8f8f8;
     border: 1px solid #E1E9F4;
     height: 178px;
     border-radius: 10px;
@@ -459,6 +464,10 @@ h3 {
     background: white;
 }
 
+.birthday input{
+    color: #707070;
+}
+
 .btn-outline-primary {
     --bs-btn-color: #626262;
     --bs-btn-border-color: transparent;
@@ -481,6 +490,16 @@ h3 {
     height: 26px;
     align-content: center;
     font-size: 13px;
+}
+
+.accordion-button:not(.collapsed) {
+    color: black; 
+    background-color: transparent; 
+    box-shadow: black;
+}
+
+.accordion-button:focus {
+    box-shadow: none; 
 }
 
 .formaContato,
@@ -553,6 +572,41 @@ h3 {
     width: 80px;
 }
 
+.input-contato input[data-v-928e62a3] {
+    height: 40px;
+    border: 0px;
+    border-radius: 10px;
+    font-size: 16px;
+    background: #f8f8f8;
+    cursor: text;
+    padding-left: 10px;
+    padding-right: 40px;
+}
+
+.card-nome input {
+    border: 0px;
+    background: #f8f8f8;
+    font-size: 24px;
+    ;
+}
+
+input:focus {
+    opacity: 100%;
+    border: 0 none;
+    outline: 0;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.input-contato input {
+    border: none;
+    background: transparent;
+}
 
 
 /* AQUI TERMINA O A ESTILIZACAO DE DENTRO DO MODAL */

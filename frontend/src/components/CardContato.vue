@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="sidebar" :class="{ 'sidebar-active': isActive }">
-            <form @submit.prevent="updateContato">
+            <form @submit.prevent="updateContato(contatoUnico.id)">
                 <div class="input-contato ">
                     <div class="flex">
                         <div class="flex2">
@@ -34,29 +34,29 @@
                         </button>
                     </div>
                     <div class="card-nome">
-                        <input type="text" v-model="contatoUnico.name" placeholder="Nome do Contato" />
+                        <input type="text" v-model="contatoUnico.name" placeholder="Nome do Contato*" />
                         <div class="borderr">
                             <hr>
                         </div>
                         <div class="etapas">
                             <h2>{{ funil.nome }}</h2>
-                          
+
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check" name="btnradio" :id="'1' + contatoUnico.id" v-model="contatoUnico.etapa_id"
-                                    value="1" autocomplete="off" checked>
+                                <input type="radio" class="btn-check" name="btnradio" :id="'1' + contatoUnico.id"
+                                    v-model="contatoUnico.etapa_id" value="1" autocomplete="off" checked>
                                 <label class="btn btn-outline-primary" :for="'1' + contatoUnico.id">Sem Etapa</label>
 
-                                <input type="radio" class="btn-check" name="btnradio" :id="'2' + contatoUnico.id" v-model="contatoUnico.etapa_id"
-                                    value="2" autocomplete="off">
+                                <input type="radio" class="btn-check" name="btnradio" :id="'2' + contatoUnico.id"
+                                    v-model="contatoUnico.etapa_id" value="2" autocomplete="off">
                                 <label class="btn btn-outline-primary" :for="'2' + contatoUnico.id">Prospecção</label>
 
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" v-model="contatoUnico.etapa_id"
-                                    value="3" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradio3">Contato</label>
+                                <input type="radio" class="btn-check" name="btnradio" :id="'3' + contatoUnico.id"
+                                    v-model="contatoUnico.etapa_id" value="3" autocomplete="off">
+                                <label class="btn btn-outline-primary" :for="'3' + contatoUnico.id">Contato</label>
 
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio4" v-model="contatoUnico.etapa_id"
-                                    value="4" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradio4">Proposta</label>
+                                <input type="radio" class="btn-check" name="btnradio" :id="'4' + contatoUnico.id"
+                                    v-model="contatoUnico.etapa_id" value="4" autocomplete="off">
+                                <label class="btn btn-outline-primary" :for="'4' + contatoUnico.id">Proposta</label>
                             </div>
 
                         </div>
@@ -74,12 +74,14 @@
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <div class="telefone">
-                                        <label>Telefone</label>
-                                        <input type="text" placeholder="(99)99999-9999" v-model="phone_number">
+                                        <label>Telefone:*</label>
+                                        <input type="text" placeholder="(99)99999-9999"
+                                            v-model="contatoUnico.phone_number">
                                     </div>
                                     <div class="email-contato">
-                                        <label>Email</label>
-                                        <input type="email" placeholder="example@example.com" v-model="email">
+                                        <label>Email:</label>
+                                        <input type="email" placeholder="example@example.com"
+                                            v-model="contatoUnico.email">
                                     </div>
                                 </div>
                             </div>
@@ -95,20 +97,21 @@
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <div class="cpf">
-                                        <label>CPF</label>
-                                        <input type="text" placeholder="000.000.000-00" v-model="cpf">
+                                        <label>CPF:</label>
+                                        <input type="text" placeholder="000.000.000-00" v-model="contatoUnico.cpf">
                                     </div>
                                     <div class="birthday">
-                                        <label>Data de Nascimento</label>
-                                        <input type="date" v-model="birth_date">
+                                        <label>Data de Nascimento:</label>
+                                        <input type="date" v-model="contatoUnico.birth_date">
                                     </div>
                                     <div class="endereco">
-                                        <label>Endereço</label>
-                                        <input type="text" placeholder="Rua: nome exemplo - N999" v-model="contato.address">
+                                        <label>Endereço:</label>
+                                        <input type="text" placeholder="Rua: nome exemplo - N999"
+                                            v-model="contatoUnico.address">
                                     </div>
                                     <div class="value">
-                                        <label>Valor</label>
-                                        <input type="text" placeholder="R$: 0,00" v-model="value">
+                                        <label>Valor:</label>
+                                        <input type="text" placeholder="R$: 0,00" v-model="contatoUnico.value">
                                     </div>
                                 </div>
                             </div>
@@ -117,8 +120,8 @@
                 </div>
             </form>
             <div class="excluir">
-                <button class="delete" @click="deleteContato(contato.id)">
-                    <i class='bx bx-trash-alt' ></i>
+                <button class="delete" @click="deleteContato(contatoUnico.id)">
+                    <i class='bx bx-trash-alt'></i>
                     <label>Excluir Contato</label>
                 </button>
             </div>
@@ -130,14 +133,14 @@
 import HttpService, { getContato, showContato, show } from '@/services/HttpService';
 import { useToast } from 'vue-toastification';
 
-export default {    
+export default {
     name: 'CardContato',
     data() {
         return {
             isActive: false,
             contato: [],
             nome: '',
-            funil:{},
+            funil: {},
             contatoUnico: {},
             name: '',
             id: this.$route.params.id,
@@ -161,8 +164,8 @@ export default {
     },
     methods: {
         async openSidebar(contatoId) {
-            this.isActive = !this.isActive;
             console.log(contatoId)
+            this.isActive = !this.isActive;
             this.contatoAtualId = contatoId;
             this.contatoUnico = await showContato(this.$route.params.id, contatoId);
         },
@@ -170,29 +173,47 @@ export default {
             this.isActive = false;
             this.contatoAtualId = null;
         },
-    //     updateContato(contato) {
-    //         axios.put(`/api/contatos/${contato.id}`, contato)
-    //             .then(response => {
-    //                 this.contatos.forEach(c => {
-    //                     if (c.id === contato.id) {
-    //                         Object.assign(c, contato);
-    //                     }
-    //                 });
-    //                 this.showModal = false;
-    //             })
-    //             .catch(error => {
-    //                 console.error(error);
-    //             });
-    //     },
+        async updateContato(contatoId) {
+            const toast = useToast();
+            await HttpService.patch(`contato/${contatoId}`, {
+                name: this.contatoUnico.name,
+                etapa_id: this.contatoUnico.etapa_id,
+                phone_number: this.contatoUnico.phone_number,
+                email: this.contatoUnico.email,
+                cpf: this.contatoUnico.cpf,
+                birth_date: this.contatoUnico.birth_date,
+                address: this.contatoUnico.address,
+                value: this.contatoUnico.value
+            })
+                .then(response => {
+                    this.name = (response.data);
+                    this.etapa_id = (response.data);
+                    this.phone_number = (response.data);
+                    this.email = (response.data);
+                    this.cpf = (response.data);
+                    this.birth_date = (response.data);
+                    this.address = (response.data);
+                    this.value = (response.data);
+                    this.closeSidebar();
+                    toast.success('Contato adicionado com sucesso!');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                })
+                .catch(error => {
+                    toast.error('Erro ao tentar atualizar o contato!');
+                    console.error(error);
+                });
 
-        async deleteContato() {
+        },
+        async deleteContato(contatoId) {
             const toast = useToast();
             try {
-                await HttpService.delete(`/contato/${this.contatoAtualId}`);
+                await HttpService.delete(`/contato/${contatoId}`);
                 this.closeSidebar();
                 toast.success('Contato deletado com sucesso!');
                 setTimeout(() => {
-                        window.location.reload();
+                    window.location.reload();
                 }, 3000);
             } catch (error) {
                 toast.error('Erro ao deletar o Contato!');
@@ -209,39 +230,79 @@ export default {
 
 }
 
-.editar{
+.input-contato input[data-v-1278cc91] {
+    height: 40px;
+    border: 0px;
+    border-radius: 10px;
+    font-size: 16px;
+    background: #f8f8f8;
+    cursor: text;
+    padding-left: 10px;
+    padding-right: 40px;
+}
+
+.birthday input{
+    color: #707070;
+}
+
+.card-nome input {
+    border: 0px;
+    background: #f8f8f8;
+    font-size: 24px;
+    ;
+}
+
+input:focus {
+    opacity: 100%;
+    border: 0 none;
+    outline: 0;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.input-contato input {
+    border: none;
+    background: transparent;
+}
+
+.editar {
     width: 20px;
     background: white;
 }
 
-.editName{
+.editName {
     display: flex;
     background: transparent;
 }
 
-.delete{
+.delete {
     background: #E1E9F4;
     border-radius: 8px;
     border: none;
-    height: 40px; 
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: .5s;
 }
 
-.delete:hover{
+.delete:hover {
     background: #D2DDEC;
 }
 
-.delete i{
+.delete i {
     background: transparent;
     color: #677C92;
     width: 10px;
     font-size: 20px;
 }
 
-.delete label{
+.delete label {
     background: transparent;
     color: #677C92;
     width: 160px;
@@ -278,7 +339,7 @@ export default {
     background: transparent;
     height: 60px;
     max-height: 60px;
-    overflow: auto; 
+    overflow: auto;
     font-size: 16px;
     max-width: 185px;
 }
@@ -389,7 +450,7 @@ h2 {
     background: white;
 }
 
-.btnEdit i{
+.btnEdit i {
     background: white;
     cursor: pointer;
 }
@@ -402,7 +463,7 @@ h2 {
     background: #f8f8f8;
 }
 
-.cardsContato{
+.cardsContato {
     width: 220px;
 }
 
@@ -442,7 +503,7 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: start;
-    width: 35px;
+    width: 37px;
     height: 35px;
     padding-left: 10px;
     border: #72869A 1px solid;
@@ -450,7 +511,7 @@ h2 {
 
 .go-back i {
     font-size: 25px;
-    margin-left: -7px;
+    margin-left: -6px;
     background: transparent;
 }
 
@@ -496,7 +557,7 @@ h2 {
 }
 
 .card-nome {
-    background: white;
+    background: #f8f8f8;
     border: 1px solid #E1E9F4;
     height: 178px;
     border-radius: 10px;
@@ -619,7 +680,7 @@ h2 {
 .sidebar-active {
     transform: translateX(0);
     background: #f1f5fb;
-    
+
 }
 
 .sidebar form {
@@ -668,5 +729,4 @@ h2 {
     padding-right: 40px;
 
 }
-
 </style>
