@@ -200,10 +200,73 @@ export default {
 </script>
 <style scoped>
 
-    body{
-            overflow: hidden;
-        }
+@media screen and (max-width: 1920px){
+    .blob{
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background:linear-gradient(90deg, #3057F2, #9ADCFF);
+        border-radius: 24% 76% 35% 65% / 27% 36% 64% 73%;
+        transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        transform: translate(-200px, -50px) rotate(-90deg);
+        animation: animateBlob 20s infinite alternate;
+    } 
 
+    .blob:hover{
+        width: 520px;
+        height: 520px;
+        filter: blur(30px);
+        box-shadow: 
+        inset 0 0 0 5px rgba(255, 255, 255, .6),
+        inset 100px 100px 0 0 #e9fe00,
+        inset 200px 200px 0 0 #ff03ea,
+        inset 300px 300px 0 0 #2b86c5;
+    }
+
+    @keyframes animateBlob {
+
+        100%{
+            transform: translate(1350px, 500px) rotate(-10deg);
+            border-radius: 76% 24% 33% 67% / 68% 55% 45% 32%;
+        }
+        
+    }
+}
+
+@media screen and (max-width: 1450px){
+    .blob{
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background:linear-gradient(90deg, #3057F2, #9ADCFF);
+        border-radius: 24% 76% 35% 65% / 27% 36% 64% 73%;
+        transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        transform: translate(-200px, -50px) rotate(-90deg);
+        animation: animateBlob 20s infinite alternate;
+    } 
+
+    .blob:hover{
+        width: 520px;
+        height: 520px;
+        filter: blur(30px);
+        box-shadow: 
+        inset 0 0 0 5px rgba(255, 255, 255, .6),
+        inset 100px 100px 0 0 #e9fe00,
+        inset 200px 200px 0 0 #ff03ea,
+        inset 300px 300px 0 0 #2b86c5;
+    }
+
+    @keyframes animateBlob {
+
+        100%{
+            transform: translate(800px, 220px) rotate(-10deg);
+            border-radius: 76% 24% 33% 67% / 68% 55% 45% 32%;
+        }
+        
+    }
+}
+
+@media screen and (max-width: 1368px){
     .blob{
         position: absolute;
         width: 500px;
@@ -229,11 +292,19 @@ export default {
     @keyframes animateBlob {
 
         100%{
-            transform: translate(800px, 400px) rotate(-10deg);
+            transform: translate(800px, 80px) rotate(-10deg);
             border-radius: 76% 24% 33% 67% / 68% 55% 45% 32%;
         }
         
     }
+}
+
+
+
+    body{
+            overflow: hidden;
+        }
+
 
     .animation-container {
         position: relative;

@@ -74,12 +74,12 @@
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <div class="telefone">
-                                        <label>Telefone:*</label>
+                                        <label>Telefone:<font color="red">*</font></label>
                                         <input type="text" placeholder="(99)99999-9999"
                                             v-model="contatoUnico.phone_number">
                                     </div>
                                     <div class="email-contato">
-                                        <label>Email:</label>
+                                        <label>Email:<font color="red">*</font></label>
                                         <input type="email" placeholder="example@example.com"
                                             v-model="contatoUnico.email">
                                     </div>
@@ -151,7 +151,7 @@ export default {
             cpf: '',
             birth_date: '',
             etapa_id: '',
-            contatoAtualId: null
+            contatoAtualId: null,
         }
     },
     props: {
