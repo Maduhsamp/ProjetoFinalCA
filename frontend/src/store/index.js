@@ -9,36 +9,36 @@ export default createStore({
     isModalDeleteVisible: false
   },
   getters: {
-    Logged(state){
+    Logged(state) {
       return state.accessToken != null && state.accessToken !== '';
     },
-    isModalVisible(state){
+    isModalVisible(state) {
       return state.isModalVisible;
     },
-    isModalDeleteVisible(state){
+    isModalDeleteVisible(state) {
       return state.isModalDeleteVisible;
     }
   },
   mutations: {
-    updateStorage(state, accessToken){
+    updateStorage(state, accessToken) {
       state.accessToken = accessToken;
       localStorage.setItem('access_token', JSON.stringify(accessToken));
     },
-    destroyToken(state){
+    destroyToken(state) {
       state.accessToken = '';
       localStorage.removeItem('access_token');
       console.log('Token removido');
     },
-    show_modal(state){
+    show_modal(state) {
       state.isModalVisible = true;
     },
-    hide_modal(state){
+    hide_modal(state) {
       state.isModalVisible = false;
     },
-    show_delete_modal(state){
+    show_delete_modal(state) {
       state.isModalDeleteVisible = true;
     },
-    hide_delete_modal(state){
+    hide_delete_modal(state) {
       state.isModalDeleteVisible = false;
     }
   },
@@ -54,7 +54,7 @@ export default createStore({
         }
       });
     },
-    async LogOut(context){
+    async LogOut(context) {
       const toast = useToast();
       if (context.getters.Logged) {
         try {
@@ -66,16 +66,16 @@ export default createStore({
         }
       }
     },
-    showModal({commit}){
+    showModal({ commit }) {
       commit('show_modal');
     },
-    hideModal({commit}){
+    hideModal({ commit }) {
       commit('hide_modal');
     },
-    showDeleteModal({commit}){
+    showDeleteModal({ commit }) {
       commit('show_delete_modal');
     },
-    hideDeleteModal({commit}){
+    hideDeleteModal({ commit }) {
       commit('hide_delete_modal');
     }
   },

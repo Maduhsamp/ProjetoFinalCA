@@ -1,15 +1,15 @@
 <template>
-<div class="flex">
-<Navbar />
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>    
-    <div class="coluna">
-        <div class="funil">
-            <FunilInfos />
+    <div class="flex">
+        <Navbar />
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <div class="coluna">
+            <div class="funil">
+                <FunilInfos />
+            </div>
+            <ModalLogout v-if="isModalVisible" />
+            <ColunasEtapas />
         </div>
-        <ModalLogout v-if="isModalVisible" />
-        <ColunasEtapas />
     </div>
-</div>
 </template>
 <script>
 import Navbar from '../components/Navbar.vue';
@@ -29,30 +29,30 @@ export default {
         ...mapActions(['hideModal'])
     },
     computed: {
-    ...mapGetters(['Logged', 'isModalVisible']),
+        ...mapGetters(['Logged', 'isModalVisible']),
         isLogged() {
-        return this.Logged;
+            return this.Logged;
         }
     }
 }
 </script>
 <style scoped>
-    *{
-        background: #f8f8f8;
-    }
+* {
+    background: #f8f8f8;
+}
 
-    .funil{
-        max-height: 56px;
-        width: 100%;
-    }
+.funil {
+    max-height: 56px;
+    width: 100%;
+}
 
-    .flex{
-        display: flex;
+.flex {
+    display: flex;
 
-    }
+}
 
-    .coluna{
-        width: 100%;
-        height: 100vh;
-    }
+.coluna {
+    width: 100%;
+    height: 100vh;
+}
 </style>

@@ -16,8 +16,8 @@ const router = createRouter({
 
       path: '/forgotpassword',
       name: 'forgotpassword',
-      component: () => import ('../views/ForgotPassword.vue'),
-      meta:{
+      component: () => import('../views/ForgotPassword.vue'),
+      meta: {
         title: 'ForgotPassword'
       }
     },
@@ -25,7 +25,7 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('../views/Dashboard.vue'),
-      meta:{
+      meta: {
         title: 'Dashboard'
       },
       beforeEnter: (to, from, next) => {
@@ -39,8 +39,8 @@ const router = createRouter({
     {
       path: '/funil/:id',
       name: 'funil',
-      component: () => import ('../views/FunilView.vue'),
-      meta:{
+      component: () => import('../views/FunilView.vue'),
+      meta: {
         title: 'Funil'
       },
       beforeEnter: (to, from, next) => {

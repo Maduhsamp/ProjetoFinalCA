@@ -1,5 +1,5 @@
 <script>
-    import ForgotPassword from '@/components/ForgotPassword.vue';
+import ForgotPassword from '@/components/ForgotPassword.vue';
 export default {
     components: {
         ForgotPassword
@@ -8,7 +8,7 @@ export default {
 </script>
 
 <template>
-<div>
-    <ForgotPassword />
-</div>
+    <div>
+        <ForgotPassword />
+    </div>
 </template>

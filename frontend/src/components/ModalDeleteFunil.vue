@@ -96,7 +96,8 @@ export default {
     font-size: 19px;
 }
 
-.btnYes, .btnNo {
+.btnYes,
+.btnNo {
     width: 328px;
     height: 40px;
     margin-left: 23%;

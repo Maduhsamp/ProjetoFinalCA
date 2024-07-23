@@ -25,29 +25,29 @@ export const getUser = () => {
   return HttpService.get('user', { headers });
 }
 
-export const getName = async() => {
-  const {data} = await HttpService.get(`login/name`);
+export const getName = async () => {
+  const { data } = await HttpService.get(`login/name`);
   return data.user.name;
 };
 
-export const getFunil = async() => {
-  const {data} = await HttpService.get(`funil`);
+export const getFunil = async () => {
+  const { data } = await HttpService.get(`funil`);
   return data.funis;
 };
 
-export const getContato = async(id) => {
-  const {data} = await HttpService.get(`funil/${id}/contato`);
+export const getContato = async (id) => {
+  const { data } = await HttpService.get(`funil/${id}/contato`);
   return data.contatos;
 };
 
-export const show = async(id) => {
-  const {data} = await HttpService.get(`funil/${id}`);
+export const show = async (id) => {
+  const { data } = await HttpService.get(`funil/${id}`);
   return data.funil;
 };
 
-export const showContato = async(funilId, contatoId) => {
-  const {data} = await HttpService.get(`funil/${funilId}/contato/${contatoId}`);
-  return data.contato;  
+export const showContato = async (funilId, contatoId) => {
+  const { data } = await HttpService.get(`funil/${funilId}/contato/${contatoId}`);
+  return data.contato;
 };
 
 HttpService.interceptors.request.use(config => {

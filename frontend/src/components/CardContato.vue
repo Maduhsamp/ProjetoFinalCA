@@ -241,7 +241,7 @@ export default {
     padding-right: 40px;
 }
 
-.birthday input{
+.birthday input {
     color: #707070;
 }
 
@@ -281,13 +281,13 @@ input:focus {
 }
 
 .accordion-button:not(.collapsed) {
-    color: black; 
-    background-color: transparent; 
+    color: black;
+    background-color: transparent;
     box-shadow: black;
 }
 
 .accordion-button:focus {
-    box-shadow: none; 
+    box-shadow: none;
 }
 
 

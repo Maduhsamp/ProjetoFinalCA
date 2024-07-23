@@ -75,7 +75,8 @@ export default {
     background: transparent;
 }
 
-.btnYes, .btnNo {
+.btnYes,
+.btnNo {
     width: 328px;
     height: 40px;
     margin-left: 23%;

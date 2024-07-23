@@ -6,14 +6,14 @@
         </div>
         <div class="inputs">
             <i class='bx bx-search-alt'></i>
-            <input type="text" placeholder="Pesquisar"> 
+            <input type="text" placeholder="Pesquisar">
             <button class="btnNew" @click.prevent="openSidebar">
                 <h3>Novo Funil</h3>
                 <i class='bx bx-plus-circle'></i>
             </button>
         </div>
         <div class="sidebar" :class="{ 'sidebar-active': isActive }">
-            
+
             <form @submit.prevent="createFunil">
                 <div class="input-funil ">
                     <div class="flex">
@@ -31,10 +31,10 @@
                     </div>
                 </div>
                 <div class="card-nome">
-                        <h2> Bem-Vindo de volta {{ name }}</h2>
-                        <hr>
-                        <input type="text" v-model="nome" placeholder="Nome do Funil">
-                        <!-- <i class='bx bx-add-to-queue'></i> -->
+                    <h2> Bem-Vindo de volta {{ name }}</h2>
+                    <hr>
+                    <input type="text" v-model="nome" placeholder="Nome do Funil">
+                    <!-- <i class='bx bx-add-to-queue'></i> -->
                 </div>
 
             </form>
@@ -61,7 +61,7 @@ export default {
             name: ''
         }
     },
-    async created(){
+    async created() {
         this.name = await getName()
     },
     computed: {
@@ -79,22 +79,22 @@ export default {
         },
         async createFunil() {
             const toast = useToast();
-                await HttpService.post('funil/create', {
-                    nome: this.nome
+            await HttpService.post('funil/create', {
+                nome: this.nome
+            })
+                .then(response => {
+                    this.nome = (response.data);
+                    this.showModal = false;
+                    this.closeSidebar();
+                    toast.success('Funil adicionado com sucesso!');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
                 })
-                    .then(response => {
-                        this.nome = (response.data);
-                        this.showModal = false;
-                        this.closeSidebar();
-                        toast.success('Funil adicionado com sucesso!');
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 3000);
-                    })
-                    .catch(error => {
-                        toast.error('Erro ao adicionar funil!');
-                        console.error(error);
-                    });
+                .catch(error => {
+                    toast.error('Erro ao adicionar funil!');
+                    console.error(error);
+                });
         }
     }
 }
@@ -112,7 +112,7 @@ export default {
     display: flex;
 }
 
-.flex{
+.flex {
     display: flex;
     align-content: center;
     padding: 10px;
@@ -147,7 +147,7 @@ export default {
     transition: .5s;
     margin-right: 10px;
     padding: 10px;
-    position: relative; 
+    position: relative;
 }
 
 .btnNew:hover {
@@ -182,7 +182,7 @@ h3 {
     .bx-search-alt {
         position: absolute;
         top: 17%;
-        transform: translateY(-50%); 
+        transform: translateY(-50%);
         font-size: 1.1em;
         color: #75758B;
     }
@@ -204,14 +204,14 @@ h2 {
 }
 
 .btnNew i {
-        position: absolute;
-        left: 68%;
-        margin-top: 2.3%; 
-        transform: translateY(-50%);
-        font-size: 1.1em;
-    }
+    position: absolute;
+    left: 68%;
+    margin-top: 2.3%;
+    transform: translateY(-50%);
+    font-size: 1.1em;
+}
 
-.inputs i{
+.inputs i {
     position: absolute;
     background: transparent;
     padding-top: 12px;
@@ -262,6 +262,7 @@ h2 {
 
 .sidebar form {
     background: transparent;
+
     .btnSend {
         display: flex;
         justify-content: center;
@@ -280,6 +281,7 @@ h2 {
         margin-left: 15%;
         padding: 10px;
     }
+
     .btnSend:hover {
         background: #1339cf;
     }
@@ -293,7 +295,7 @@ h2 {
         width: 0;
         display: flex;
     }
-    
+
     input {
         width: 100%;
         height: 40px;
@@ -309,9 +311,9 @@ h2 {
 
     .bx-add-to-queue {
         position: absolute;
-        right: 12%; 
-        top: 79%; 
-        transform: translateY(-50%); 
+        right: 12%;
+        top: 79%;
+        transform: translateY(-50%);
         font-size: 1.1em;
         color: #75758B;
     }
@@ -334,11 +336,11 @@ h2 {
     background: #f8f8f8;
     font-size: 24px;
     transition: color 0.3s ease;
-    
+
 }
 
 
-.card-nome input:focus{
+.card-nome input:focus {
     opacity: 100%;
     border: 0 none;
     outline: 0;
@@ -349,7 +351,7 @@ h2 {
     transition: color 0.3s ease;
 }
 
-.card-nome h2{
+.card-nome h2 {
     margin: 0;
     background: transparent;
 }

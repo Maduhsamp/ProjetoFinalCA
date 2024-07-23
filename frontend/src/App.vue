@@ -4,13 +4,13 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-<div>
+  <div>
 
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <main>
-    <RouterView />
-  </main>
-</div>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <main>
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <style>
@@ -18,10 +18,6 @@ import { RouterLink, RouterView } from 'vue-router'
   margin: 0;
   padding: 0;
   font-family: "Poppins", sans-serif;
-  
+
 }
-
-
-
-
 </style>

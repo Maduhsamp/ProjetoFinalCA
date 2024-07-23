@@ -1,30 +1,30 @@
 <template>
     <div class="header">
-      <div class="funil">
-        <label>Funil</label>
-      </div>
-      <div class="nome-funil">
-        <label>{{ funil.nome }}</label>
-      </div>
-      <div class="editar">
-        <button class="reset-button" @click.prevent="openModal">
-          <i class="bx bxs-pencil"></i>
-        </button>
-      </div>
-      <div class="excluir">
-        <button class="reset-button" @click="showDeleteModal">
-          <i class="bx bxs-trash"></i>
-        </button>
-        <ModalDeleteFunil v-if="isModalDeleteVisible" />
-      </div>
-      <div class="inputs">
-        <i class="bx bx-search-alt"></i>
-        <input type="text" placeholder="Pesquisar" />
-        <button class="btnNew" @click.prevent="openSidebar">
-          <h3>Novo Contato</h3>
-          <i class="bx bx-user-plus"></i>
-        </button>
-      </div>
+        <div class="funil">
+            <label>Funil</label>
+        </div>
+        <div class="nome-funil">
+            <label>{{ funil.nome }}</label>
+        </div>
+        <div class="editar">
+            <button class="reset-button" @click.prevent="openModal">
+                <i class="bx bxs-pencil"></i>
+            </button>
+        </div>
+        <div class="excluir">
+            <button class="reset-button" @click="showDeleteModal">
+                <i class="bx bxs-trash"></i>
+            </button>
+            <ModalDeleteFunil v-if="isModalDeleteVisible" />
+        </div>
+        <div class="inputs">
+            <i class="bx bx-search-alt"></i>
+            <input type="text" placeholder="Pesquisar" />
+            <button class="btnNew" @click.prevent="openSidebar">
+                <h3>Novo Contato</h3>
+                <i class="bx bx-user-plus"></i>
+            </button>
+        </div>
         <div class="sidebar" :class="{ 'sidebar-active': isActive }">
             <form @submit.prevent="createContato">
                 <div class="input-contato ">
@@ -123,15 +123,18 @@
             </form>
         </div>
         <div v-if="isModalActive" class="modal">
-        <div class="modal-content">
-            <div class="top">
-                <p>Editar funil</p>
-                <span class="close" @click="closeModal"><i class='bx bx-x'></i></span>
+            <div class="modal-content">
+                <div class="top">
+                    <p>Editar funil</p>
+                    <span class="close" @click="closeModal"><i class='bx bx-x'></i></span>
+                </div>
+                <span class="bar"></span>
+                <form @submit.prevent="updateFunil">
+                    <input type="text" v-model="funil.nome" placeholder="Nome"><i class='bx bxs-edit-alt'></i>
+                    <button class="btnSave" type="submit">Salvar</button>
+                </form>
             </div>
-            <span class="bar"></span>
-            <form @submit.prevent="updateFunil">
-                <input type="text" v-model="funil.nome" placeholder="Nome"><i class='bx bxs-edit-alt'></i>
-                <button class="btnSave" type="submit">Salvar</button>
+        </div>
     </div>
 </template>
 
@@ -148,7 +151,7 @@ export default {
         ModalDeleteFunil
     },
     computed: {
-        ...mapGetters(['isModalDeleteVisible']), 
+        ...mapGetters(['isModalDeleteVisible']),
     },
     data() {
         return {
@@ -185,7 +188,7 @@ export default {
             this.isModalActive = false;
         },
         async createContato() {
-            if(this.etapa_id == '' | null){
+            if (this.etapa_id == '' | null) {
                 this.etapa_id = 1;
             }
             const toast = useToast();
@@ -224,16 +227,16 @@ export default {
             const toast = useToast();
             await HttpService.put(`funil/update/${this.id}`, {
                 nome: this.funil.nome
-        })
-            .then(response => {
-                this.nome = (response.data);
-                this.closeModal();
-                toast.success('Funil atualizado com sucesso!');
             })
-            .catch(error => {
-                toast.error('Erro ao tentar atualizar funil!');
-                console.error(error);
-            });
+                .then(response => {
+                    this.nome = (response.data);
+                    this.closeModal();
+                    toast.success('Funil atualizado com sucesso!');
+                })
+                .catch(error => {
+                    toast.error('Erro ao tentar atualizar funil!');
+                    console.error(error);
+                });
         },
         async deleteFunil() {
             const toast = useToast();
@@ -417,7 +420,7 @@ h3 {
     transform: translateX(100%);
     z-index: 1;
     border-radius: 20px 0 0 20px;
-    
+
 }
 
 .flex {
@@ -469,7 +472,7 @@ h3 {
     background: white;
 }
 
-.birthday input{
+.birthday input {
     color: #707070;
 }
 
@@ -498,13 +501,13 @@ h3 {
 }
 
 .accordion-button:not(.collapsed) {
-    color: black; 
-    background-color: transparent; 
+    color: black;
+    background-color: transparent;
     box-shadow: black;
 }
 
 .accordion-button:focus {
-    box-shadow: none; 
+    box-shadow: none;
 }
 
 .formaContato,
@@ -601,7 +604,7 @@ h3 {
     transition: .3s;
 }
 
-.card-nome input:hover{
+.card-nome input:hover {
     background: #e3e3e3;
     transition: .3s;
 }
@@ -773,8 +776,8 @@ input:focus {
     background: transparent;
     position: absolute;
     left: 82%;
-    top: 39%; 
-    transform: translateY(-50%); 
+    top: 39%;
+    transform: translateY(-50%);
     font-size: 1.3em;
     color: #757575;
 }
@@ -793,7 +796,7 @@ input:focus {
     padding: 10px;
     margin-left: 30%;
     margin-top: 7%;
-    position: relative; 
+    position: relative;
 }
 
 .btnSave:hover {
