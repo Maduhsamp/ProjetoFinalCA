@@ -6,7 +6,9 @@
                     <label>Sem etapa</label>
                     <button class="reset-button"><i class='bx bx-plus'></i></button>
                 </div>
-                <CardContato :etapaId="1" />
+                <div class="scroll overflow-y-auto">
+                    <CardContato :etapaId="1" />
+                </div>
                 
             </div>
             <div class="pc">
@@ -14,25 +16,29 @@
                     <label>Prospecção</label>
                     <button class="reset-button"><i class='bx bx-plus'></i></button>
                 </div>
-                <CardContato :etapaId="2"/>
-                
+                <div class="scroll overflow-y-auto">
+                    <CardContato :etapaId="2" />
+                </div>
             </div>
             <div class="c">
                 <div class="linha">
                     <label>Contato</label>
                     <button class="reset-button"><i class='bx bx-plus'></i></button>
                 </div>
-                <CardContato :etapaId="3"/>
-                
+                <div class="scroll overflow-y-auto">
+                    <CardContato :etapaId="3" />
+                </div>
             </div>
             <div class="p">
                 <div class="linha">
                     <label>Proposta</label>
                     <button class="reset-button "><i class='bx bx-plus'></i></button>
                 </div>
-                <CardContato :etapaId="4"/>
-                
+                <div class="scroll overflow-y-auto">
+                    <CardContato :etapaId="4" />
+                </div>
             </div>
+            
         </div>
     </div>
 </template>
@@ -55,6 +61,7 @@ export default {
 </script>
 
 <style scoped>
+
 .reset-button {
     all: unset; 
     cursor: pointer; 
@@ -93,11 +100,21 @@ export default {
 .se, .pc, .c, .p {
     position: relative;
     padding-top: 23px;
-    padding-left: 8px; 
-    padding-right: 130px;
     margin-left: 15px; 
     width: 240px;
-    height: 680px;
+    max-width: 240px;
+    height: 660px;
+    background: transparent;
+    transition: .3s;
+}
+
+.scroll{
+    height: 600px;
+    padding-left: 7px;
+}
+
+.linha{
+    margin-bottom: 10px;
 }
 
 .se::before, .pc::before, .c::before, .p::before {
@@ -107,6 +124,7 @@ export default {
     left: 0;
     height: 7px;
     border-radius: 5px;
+    
 }
 
 .se::before {
@@ -133,8 +151,9 @@ export default {
     background-color: #F0F4FA;
     border-radius: 5px;
     padding-bottom: 20px;
-;
 }
+
+
 
 .scroll-container::-webkit-scrollbar {
     width: 10px;
@@ -155,10 +174,43 @@ export default {
     background-color: #83a8e0; 
 }
 
+
+    .scroll::-webkit-scrollbar {
+        width: 5px; 
+    }
+
+    .scroll::-webkit-scrollbar-track {
+        background: #ffdb79; 
+        border-radius: 10px; 
+    }
+
+    .scroll::-webkit-scrollbar-thumb {
+        background: #FFBD00; 
+        border-radius: 10px;
+    }
+
+    .scroll::-webkit-scrollbar-thumb:hover {
+        background: #e9ab00;
+        cursor: pointer; 
+    }
+
 .linha{
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 195px;
 }
+
+.card-container[data-v-1278cc91] {
+    background: transparent;
+}
+[data-v-1278cc91] {
+    background: transparent;
+}
+[data-v-1278cc91] {
+    background: transparent;
+}
+
 </style>
+
+
