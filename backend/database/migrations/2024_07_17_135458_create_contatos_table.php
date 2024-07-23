@@ -18,10 +18,10 @@ return new class extends Migration
             $table->unsignedBigInteger('etapa_id');
             $table->string('phone_number');
             $table->string('email');
-            $table->string('cpf');
-            $table->date('birth_date');
-            $table->string('address');
-            $table->decimal('value');
+            $table->string('cpf')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->string('address')->nullable();
+            $table->decimal('value')->nullable();
             $table->timestamps();
 
             $table->foreign('funil_id')->references('id')->on('funils')->onDelete('cascade');

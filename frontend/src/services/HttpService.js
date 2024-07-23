@@ -35,9 +35,19 @@ export const getFunil = async() => {
   return data.funis;
 };
 
+export const getContato = async(id) => {
+  const {data} = await HttpService.get(`funil/${id}/contato`);
+  return data.contatos;
+};
+
 export const show = async(id) => {
   const {data} = await HttpService.get(`funil/${id}`);
   return data.funil;
+};
+
+export const showContato = async(funilId, contatoId) => {
+  const {data} = await HttpService.get(`funil/${funilId}/contato/${contatoId}`);
+  return data.contato;  
 };
 
 HttpService.interceptors.request.use(config => {

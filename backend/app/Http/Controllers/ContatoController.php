@@ -11,12 +11,13 @@ class ContatoController extends Controller
     {
         $contatos = Contato::where('funil_id', $id)->get();
         return response()->json([
-            'contatos:' => $contatos
+            'contatos' => $contatos
         ]);
     }
 
-    public function show($id)
+    public function show($funil_id, $id)
     {
+        $funil_id = Contato::where('funil_id', $funil_id)->get();
         $contato = Contato::find($id);
 
         if(!$contato) {
@@ -24,7 +25,7 @@ class ContatoController extends Controller
         }
 
         return response()->json([
-            'contato:' => $contato
+            'contato' => $contato
         ]);
     }
 
