@@ -1,29 +1,30 @@
 <template>
     <div class="header">
-        <div class="funil">
-            <label>Funil</label>
-        </div>
-        <div class="nome-funil">
-            <label>{{ funil.nome }}</label>
-        </div>
-        <div class="editar">
-            <button class="reset-button" @click="openModal">
-                <i class="bx bxs-pencil"></i>
-            </button>
-        </div>
-        <div class="excluir">
-            <button class="reset-button" @click="deleteFunil">
-                <i class="bx bxs-trash"></i>
-            </button>
-        </div>
-        <div class="inputs">
-            <i class="bx bx-search-alt"></i>
-            <input type="text" placeholder="Pesquisar" />
-            <button class="btnNew" @click.prevent="openSidebar">
-                <h3>Novo Contato</h3>
-                <i class="bx bx-user-plus"></i>
-            </button>
-        </div>
+      <div class="funil">
+        <label>Funil</label>
+      </div>
+      <div class="nome-funil">
+        <label>{{ funil.nome }}</label>
+      </div>
+      <div class="editar">
+        <button class="reset-button" @click.prevent="openModal">
+          <i class="bx bxs-pencil"></i>
+        </button>
+      </div>
+      <div class="excluir">
+        <button class="reset-button" @click="showDeleteModal">
+          <i class="bx bxs-trash"></i>
+        </button>
+        <ModalDeleteFunil v-if="isModalDeleteVisible" />
+      </div>
+      <div class="inputs">
+        <i class="bx bx-search-alt"></i>
+        <input type="text" placeholder="Pesquisar" />
+        <button class="btnNew" @click.prevent="openSidebar">
+          <h3>Novo Contato</h3>
+          <i class="bx bx-user-plus"></i>
+        </button>
+      </div>
         <div class="sidebar" :class="{ 'sidebar-active': isActive }">
             <form @submit.prevent="createContato">
                 <div class="input-contato ">
@@ -48,11 +49,6 @@
                         <div class="etapas">
                             <h2>{{ funil.nome }}</h2>
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-
-
-
-
-
                                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" v-model="etapa_id"
                                     value="1" autocomplete="off" checked>
                                 <label class="btn btn-outline-primary" for="btnradio1">Sem Etapa</label>
@@ -70,7 +66,6 @@
                                 <label class="btn btn-outline-primary" for="btnradio4">Proposta</label>
                             </div>
                         </div>
-
                     </div>
                     <div class="accordion">
                         <div class="accordion-item">
@@ -128,15 +123,15 @@
             </form>
         </div>
         <div v-if="isModalActive" class="modal">
-            <div class="modal-content">
-                <span class="close" @click="closeModal">&times;</span>
-                <label>Editar Funil</label>
-                <form @submit.prevent="updateFunilModal">
-                    <input type="text" v-model="funil.nome" placeholder="Nome"><i class='bx bxs-edit-alt'></i>
-                    <button class="btnSave" type="submit" @click="updateFunil">Salvar Alterações</button>
-                </form>
+        <div class="modal-content">
+            <div class="top">
+                <p>Editar funil</p>
+                <span class="close" @click="closeModal"><i class='bx bx-x'></i></span>
             </div>
-        </div>
+            <span class="bar"></span>
+            <form @submit.prevent="updateFunil">
+                <input type="text" v-model="funil.nome" placeholder="Nome"><i class='bx bxs-edit-alt'></i>
+                <button class="btnSave" type="submit">Salvar</button>
     </div>
 </template>
 
@@ -144,9 +139,17 @@
 import { show } from '@/services/HttpService';
 import HttpService from '@/services/HttpService';
 import { useToast } from 'vue-toastification';
+import ModalDeleteFunil from './ModalDeleteFunil.vue';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     name: 'FunilInfos',
+    components: {
+        ModalDeleteFunil
+    },
+    computed: {
+        ...mapGetters(['isModalDeleteVisible']), 
+    },
     data() {
         return {
             isActive: false,
@@ -168,6 +171,7 @@ export default {
         this.funil = await show(this.$route.params.id);
     },
     methods: {
+        ...mapActions(['showDeleteModal']),
         openSidebar() {
             this.isActive = !this.isActive;
         },
@@ -398,6 +402,7 @@ h3 {
     background: transparent;
 }
 
+/* AQUI COMEÇA A ESTILIZAÇÃO DA SIDEBAR DE CRIACÃO DE CONTATOS */
 .sidebar {
     position: fixed;
     top: 0;
@@ -414,8 +419,6 @@ h3 {
     border-radius: 20px 0 0 20px;
     
 }
-
-/* AQUI FICA O MODAL DE CRIACAO DE CONTATOS */
 
 .flex {
     display: flex;
@@ -673,6 +676,7 @@ input:focus {
 
 }
 
+/* AQUI FICA A ESTILIZACÃO DO MODAL DO LOGOUT */
 .modal {
     display: flex;
     position: fixed;
@@ -681,7 +685,6 @@ input:focus {
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
     backdrop-filter: blur(5px);
     background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
@@ -692,17 +695,14 @@ input:focus {
     background-color: #fff;
     padding: 20px;
     border: none;
-    width: 80%;
-    max-width: 500px;
+    width: 100%;
+    max-width: 647px;
+    height: 329px;
     border-radius: 10px;
 }
 
-.modal-content label {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-    background: transparent;
-    font-size: 1.8em;
+.modal-content p {
+    font-size: 1.2rem;
     font-weight: 600;
 }
 
@@ -712,23 +712,69 @@ input:focus {
 
 .modal-content input {
     width: 80%;
-    height: 40px;
-    border: 1px #E1E9F4 solid;
+    height: 45px;
+    border: 2px #E1E9F4 solid;
     border-radius: 10px;
-    font-size: 16px;
-    background: white;
+    font-size: 18px;
+    background: transparent;
     cursor: text;
     padding-left: 10px;
     padding-right: 40px;
-    margin-left: 50px;
+    margin-top: 8%;
+    margin-left: 10%;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    background: transparent;
+}
+
+.top p {
+    color: #373753;
+    font-weight: 500;
+    font-size: 18px;
+    margin-left: 5px;
+    margin-top: -5px;
+}
+
+.bx-x {
+    background: transparent;
+}
+
+.top .close {
+    position: absolute;
+    width: 24px;
+    background: transparent;
+    border: none;
+    color: #6F8298;
+    font-size: 1.4em;
+    top: 4%;
+    right: 3.5%;
+    cursor: pointer;
+}
+
+.top .close:hover {
+    color: #5d6d80;
+}
+
+.bar {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #E6EDF5;
+    margin-left: -3.1%;
+    top: 17%;
 }
 
 .bxs-edit-alt {
     background: transparent;
     position: absolute;
-    left: 81%;
-    top: 58.5%;
-    transform: translateY(-50%);
+    left: 82%;
+    top: 39%; 
+    transform: translateY(-50%); 
     font-size: 1.3em;
     color: #757575;
 }
@@ -736,7 +782,7 @@ input:focus {
 .btnSave {
     width: 241px;
     height: 40px;
-    background: #3057F2;
+    background: #13a000;
     border: none;
     border-radius: 10px;
     outline: none;
@@ -745,31 +791,12 @@ input:focus {
     font-weight: 500;
     transition: .5s;
     padding: 10px;
-    margin-left: 115px;
-    margin-top: 10px;
-    position: relative;
+    margin-left: 30%;
+    margin-top: 7%;
+    position: relative; 
 }
 
 .btnSave:hover {
-    background: #1339cf;
-}
-
-.close {
-    background: #E1E9F4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 33px;
-    height: 33px;
-    border-radius: 10px;
-    color: #aaa;
-    float: right;
-    font-size: 25px;
-}
-
-.close:hover,
-.close:focus {
-    text-decoration: none;
-    cursor: pointer;
+    background: #108600;
 }
 </style>

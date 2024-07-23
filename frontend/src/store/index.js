@@ -5,10 +5,18 @@ import HttpService from '@/services/HttpService';
 export default createStore({
   state: {
     accessToken: JSON.parse(localStorage.getItem('access_token')) || '',
+    isModalVisible: false,
+    isModalDeleteVisible: false
   },
   getters: {
     Logged(state){
       return state.accessToken != null && state.accessToken !== '';
+    },
+    isModalVisible(state){
+      return state.isModalVisible;
+    },
+    isModalDeleteVisible(state){
+      return state.isModalDeleteVisible;
     }
   },
   mutations: {
@@ -20,6 +28,18 @@ export default createStore({
       state.accessToken = '';
       localStorage.removeItem('access_token');
       console.log('Token removido');
+    },
+    show_modal(state){
+      state.isModalVisible = true;
+    },
+    hide_modal(state){
+      state.isModalVisible = false;
+    },
+    show_delete_modal(state){
+      state.isModalDeleteVisible = true;
+    },
+    hide_delete_modal(state){
+      state.isModalDeleteVisible = false;
     }
   },
   actions: {
@@ -45,6 +65,18 @@ export default createStore({
           toast.error('Erro ao fazer logout, tente novamente!', error);
         }
       }
+    },
+    showModal({commit}){
+      commit('show_modal');
+    },
+    hideModal({commit}){
+      commit('hide_modal');
+    },
+    showDeleteModal({commit}){
+      commit('show_delete_modal');
+    },
+    hideDeleteModal({commit}){
+      commit('hide_delete_modal');
     }
   },
   modules: {},
