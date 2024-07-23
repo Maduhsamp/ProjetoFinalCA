@@ -2,39 +2,48 @@
     <div class="modal">
         <div class="modal-content">
             <div class="top">
-                <p>Sair</p>
-                <span class="close" @click="hideModal"><i class='bx bx-x'></i></span>
+                <p>Excluir funil</p>
+                <button class="close" @click="hideDeleteModal"><i class='bx bx-x'></i></button>
             </div>
             <span class="bar"></span>
-            <label class="label">Tem certeza que deseja sair do sistema?</label>
-            <form>
-                <button class="btnYes" type="submit" @click.prevent="logout">Sim</button>
-                <button class="btnNo" @click.prevent="hideModal">Não</button>
-            </form>
+            <label class="labelUm">Tem certeza que deseja excluir o funil?</label>
+            <label class="labelDois">A ação não poderá ser desfeita.</label>
+            <div>
+                <button class="btnYes" @click="deleteFunil">Sim</button>
+                <button class="btnNo" @click="hideDeleteModal">Não</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import HttpService from '@/services/HttpService';
+import { useToast } from 'vue-toastification';
 import { mapActions } from 'vuex';
 
 export default {
-    name: "ModalLogout",
+    name: "ModalDeleteFunil",
+    data() {
+        return {
+            id: this.$route.params.id
+        }
+    },
     methods: {
-        ...mapActions(['LogOut', 'hideModal']),
-        async logout() {
+        ...mapActions(['hideDeleteModal']),
+        async deleteFunil() {
+            const toast = useToast();
             try {
-                await this.LogOut();
-                console.log('Logout');
-                this.$router.push('/');
+                await HttpService.delete(`funil/delete/${this.id}`);
+                toast.success('Funil deletado com sucesso!');
+                this.$router.push('/dashboard');
             } catch (error) {
-                console.error('Logout error:', error);
+                toast.error('Erro ao tentar deletar funil!');
+                console.error(error);
             }
         }
     }
 }
 </script>
-
 <style scoped>
 .modal {
     display: flex;
@@ -66,22 +75,25 @@ export default {
     font-weight: 600;
 }
 
-.modal-content .label {
+.modal-content .labelUm {
     display: flex;
     justify-content: center;
     color: #373753;
     margin-top: 8%;
     background: transparent;
-    font-size: 1.8em;
     font-weight: 500;
-    font-size: 1.38em;
+    font-size: 22px;
 }
 
-.modal-content form {
+.modal-content .labelDois {
     display: flex;
-    flex-direction: column;
-    margin-top: 7%;
+    justify-content: center;
+    color: #42425C;
+    margin-top: 3%;
+    margin-bottom: 6%;
     background: transparent;
+    font-weight: 500;
+    font-size: 19px;
 }
 
 .btnYes, .btnNo {
@@ -89,6 +101,7 @@ export default {
     height: 40px;
     margin-left: 23%;
     margin-bottom: 10px;
+    font-size: 16px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -123,17 +136,19 @@ export default {
 .top p {
     color: #373753;
     font-weight: 500;
-    font-size: 1.13em;
+    font-size: 18px;
     margin-left: 5px;
     margin-top: -5px;
 }
 
 .top .close {
     position: absolute;
+    background: transparent;
+    border: none;
     color: #6F8298;
-    font-size: 1.5em;
+    font-size: 1.1em;
     top: 4%;
-    right: 4%;
+    right: 3%;
     cursor: pointer;
 }
 

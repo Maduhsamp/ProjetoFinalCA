@@ -2,13 +2,14 @@
     <div class="modal">
         <div class="modal-content">
             <div class="top">
-                <p>Sair</p>
+                <p>Excluir contato</p>
                 <span class="close" @click="hideModal"><i class='bx bx-x'></i></span>
             </div>
             <span class="bar"></span>
-            <label class="label">Tem certeza que deseja sair do sistema?</label>
+            <label class="label">Tem certeza que deseja excluir o contato?</label>
+            <label class="label">A ação não poderá ser desfeita.</label>
             <form>
-                <button class="btnYes" type="submit" @click.prevent="logout">Sim</button>
+                <button class="btnYes" type="submit" @click.prevent="deleteContato">Sim</button>
                 <button class="btnNo" @click.prevent="hideModal">Não</button>
             </form>
         </div>
@@ -19,18 +20,9 @@
 import { mapActions } from 'vuex';
 
 export default {
-    name: "ModalLogout",
+    name: "ModalDeleteContato",
     methods: {
-        ...mapActions(['LogOut', 'hideModal']),
-        async logout() {
-            try {
-                await this.LogOut();
-                console.log('Logout');
-                this.$router.push('/');
-            } catch (error) {
-                console.error('Logout error:', error);
-            }
-        }
+        ...mapActions(['hideModal'])
     }
 }
 </script>
@@ -69,7 +61,6 @@ export default {
 .modal-content .label {
     display: flex;
     justify-content: center;
-    color: #373753;
     margin-top: 8%;
     background: transparent;
     font-size: 1.8em;

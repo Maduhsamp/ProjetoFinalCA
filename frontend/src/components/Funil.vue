@@ -12,9 +12,10 @@
         </button>
       </div>
       <div class="excluir">
-        <button class="reset-button" @click="deleteFunil">
+        <button class="reset-button" @click="showDeleteModal">
           <i class="bx bxs-trash"></i>
         </button>
+        <ModalDeleteFunil v-if="isModalDeleteVisible" />
       </div>
       <div class="inputs">
         <i class="bx bx-search-alt"></i>
@@ -107,24 +108,23 @@
                         <label>Valor</label>
                         <input type="text" placeholder="R$: 0,00" v-model="value">
                     </div>
-
                 </div>
                 </div>
             </div>
-
             </div>
-
-
         </div>
         </form>
       </div>
       <div v-if="isModalActive" class="modal">
         <div class="modal-content">
-            <span class="close" @click="closeModal">&times;</span>
-            <label>Editar Funil</label>
+            <div class="top">
+                <p>Editar funil</p>
+                <span class="close" @click="closeModal"><i class='bx bx-x'></i></span>
+            </div>
+            <span class="bar"></span>
             <form @submit.prevent="updateFunil">
                 <input type="text" v-model="funil.nome" placeholder="Nome"><i class='bx bxs-edit-alt'></i>
-                <button class="btnSave" type="submit">Salvar Alterações</button>
+                <button class="btnSave" type="submit">Salvar</button>
             </form>
         </div>
     </div>
@@ -135,9 +135,17 @@
 import { show } from '@/services/HttpService';
 import HttpService from '@/services/HttpService';
 import { useToast } from 'vue-toastification';
+import ModalDeleteFunil from './ModalDeleteFunil.vue';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     name: 'FunilInfos',
+    components: {
+        ModalDeleteFunil
+    },
+    computed: {
+        ...mapGetters(['isModalDeleteVisible']), 
+    },
     data() {
         return {
             isActive: false,
@@ -164,6 +172,7 @@ export default {
         this.funil = await show(this.$route.params.id);
     },
     methods: {
+        ...mapActions(['showDeleteModal']),
         openSidebar() {
             this.isActive = !this.isActive;
         },
@@ -208,8 +217,7 @@ export default {
                         toast.error('Erro ao adicionar contato!');
                         console.error(error);
                     });
-                }
-            },
+                },
         async updateFunil() {
             const toast = useToast();
                 await HttpService.put(`funil/update/${this.id}`, {
@@ -225,23 +233,8 @@ export default {
                         console.error(error);
                     });
         },
-        async deleteFunil() {
-            const toast = useToast();
-            try {
-                await HttpService.delete(`funil/delete/${this.id}`);
-                toast.success('Funil deletado com sucesso!');
-                this.$router.push('/dashboard');
-            } catch (error) {
-                toast.error('Erro ao tentar deletar funil!');
-                console.error(error);
-            }
-        },
-        toggleDropdown(section) {
-            this.dropdowns[section] = !this.dropdowns[section];
-        }
-
     }
-
+}
 </script>
 <style scoped>
 * {
@@ -601,35 +594,31 @@ h3 {
 
 /* AQUI FICA A ESTILIZACÃO DO MODAL DO LOGOUT */
 .modal {
-    display: flex; 
-    position: fixed; 
-    z-index: 1; 
-    left: 0; 
-    top: 0; 
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     backdrop-filter: blur(5px);
-    background-color: rgba(0, 0, 0, 0.5); 
-    justify-content: center; 
-    align-items: center; 
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-content {
     background-color: #fff;
     padding: 20px;
     border: none;
-    width: 80%;
-    max-width: 500px;
+    width: 100%;
+    max-width: 647px;
+    height: 329px;
     border-radius: 10px;
 }
 
-.modal-content label {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-    background: transparent;
-    font-size: 1.8em;
+.modal-content p {
+    font-size: 1.2rem;
     font-weight: 600;
 }
 
@@ -639,22 +628,68 @@ h3 {
 
 .modal-content input {
     width: 80%;
-    height: 40px;
-    border: 1px #E1E9F4 solid;
+    height: 45px;
+    border: 2px #E1E9F4 solid;
     border-radius: 10px;
-    font-size: 16px;
-    background: white;
+    font-size: 18px;
+    background: transparent;
     cursor: text;
     padding-left: 10px;
     padding-right: 40px;
-    margin-left: 50px;
+    margin-top: 8%;
+    margin-left: 10%;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    background: transparent;
+}
+
+.top p {
+    color: #373753;
+    font-weight: 500;
+    font-size: 18px;
+    margin-left: 5px;
+    margin-top: -5px;
+}
+
+.bx-x {
+    background: transparent;
+}
+
+.top .close {
+    position: absolute;
+    width: 24px;
+    background: transparent;
+    border: none;
+    color: #6F8298;
+    font-size: 1.4em;
+    top: 4%;
+    right: 3.5%;
+    cursor: pointer;
+}
+
+.top .close:hover {
+    color: #5d6d80;
+}
+
+.bar {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #E6EDF5;
+    margin-left: -3.1%;
+    top: 17%;
 }
 
 .bxs-edit-alt {
     background: transparent;
     position: absolute;
-    left: 81%;
-    top: 58.5%; 
+    left: 82%;
+    top: 39%; 
     transform: translateY(-50%); 
     font-size: 1.3em;
     color: #757575;
@@ -663,7 +698,7 @@ h3 {
 .btnSave {
     width: 241px;
     height: 40px;
-    background: #3057F2;
+    background: #13a000;
     border: none;
     border-radius: 10px;
     outline: none;
@@ -672,31 +707,13 @@ h3 {
     font-weight: 500;
     transition: .5s;
     padding: 10px;
-    margin-left: 115px;
-    margin-top: 10px;
+    margin-left: 30%;
+    margin-top: 7%;
     position: relative; 
 }
 
 .btnSave:hover {
-    background: #1339cf;
+    background: #108600;
 }
 
-.close {
-    background: #E1E9F4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 33px;
-    height: 33px;
-    border-radius: 10px;
-    color: #aaa;
-    float: right;
-    font-size: 25px;
-}
-
-.close:hover,
-.close:focus {
-    text-decoration: none;
-    cursor: pointer;
-}
 </style>

@@ -5,7 +5,8 @@ import HttpService from '@/services/HttpService';
 export default createStore({
   state: {
     accessToken: JSON.parse(localStorage.getItem('access_token')) || '',
-    isModalVisible: false
+    isModalVisible: false,
+    isModalDeleteVisible: false
   },
   getters: {
     Logged(state){
@@ -13,6 +14,9 @@ export default createStore({
     },
     isModalVisible(state){
       return state.isModalVisible;
+    },
+    isModalDeleteVisible(state){
+      return state.isModalDeleteVisible;
     }
   },
   mutations: {
@@ -30,6 +34,12 @@ export default createStore({
     },
     hide_modal(state){
       state.isModalVisible = false;
+    },
+    show_delete_modal(state){
+      state.isModalDeleteVisible = true;
+    },
+    hide_delete_modal(state){
+      state.isModalDeleteVisible = false;
     }
   },
   actions: {
@@ -58,11 +68,15 @@ export default createStore({
     },
     showModal({commit}){
       commit('show_modal');
-      console.log('modal aberto');
     },
     hideModal({commit}){
       commit('hide_modal');
-      console.log('modal aberto');
+    },
+    showDeleteModal({commit}){
+      commit('show_delete_modal');
+    },
+    hideDeleteModal({commit}){
+      commit('hide_delete_modal');
     }
   },
   modules: {},
