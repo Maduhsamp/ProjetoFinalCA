@@ -41,7 +41,7 @@
                         </button>
                     </div>
                     <div class="card-nome">
-                        <input type="text" v-model="name" placeholder="Nome do Contato" />
+                        <input type="text" v-model="name" placeholder="Nome do Contato*" />
                         <div class="borderr">
                             <hr>
                         </div>
@@ -84,11 +84,11 @@
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <div class="telefone">
-                                        <label>Telefone</label>
+                                        <label>Telefone:<font color="red">*</font></label>
                                         <input type="text" placeholder="(99)99999-9999" v-model="phone_number">
                                     </div>
                                     <div class="email-contato">
-                                        <label>Email</label>
+                                        <label>Email:<font color="red">*</font></label>
                                         <input type="email" placeholder="example@example.com" v-model="email">
                                     </div>
                                 </div>
@@ -181,6 +181,9 @@ export default {
             this.isModalActive = false;
         },
         async createContato() {
+            if(this.etapa_id == '' | null){
+                this.etapa_id = 1;
+            }
             const toast = useToast();
             await HttpService.post(`funil/${this.id}/contato`, {
                 name: this.name,
@@ -409,6 +412,7 @@ h3 {
     transform: translateX(100%);
     z-index: 1;
     border-radius: 20px 0 0 20px;
+    
 }
 
 /* AQUI FICA O MODAL DE CRIACAO DE CONTATOS */
@@ -579,13 +583,24 @@ h3 {
     cursor: text;
     padding-left: 10px;
     padding-right: 40px;
+    transition: .3s;
+}
+
+.input-contato input[data-v-928e62a3]:hover {
+    background: #e3e3e3;
+    transition: .3s;
 }
 
 .card-nome input {
     border: 0px;
     background: #f8f8f8;
     font-size: 24px;
-    ;
+    transition: .3s;
+}
+
+.card-nome input:hover{
+    background: #e3e3e3;
+    transition: .3s;
 }
 
 input:focus {

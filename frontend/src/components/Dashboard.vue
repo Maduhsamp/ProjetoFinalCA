@@ -32,6 +32,7 @@
                 </div>
                 <div class="card-nome">
                         <h2> Bem-Vindo de volta {{ name }}</h2>
+                        <hr>
                         <input type="text" v-model="nome" placeholder="Nome do Funil">
                         <!-- <i class='bx bx-add-to-queue'></i> -->
                 </div>
@@ -319,7 +320,7 @@ h2 {
 .card-nome {
     background: #f8f8f8;
     border: 1px solid #E1E9F4;
-    height: 115px;
+    height: 160px;
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 10px;
@@ -332,7 +333,20 @@ h2 {
     border: 0px;
     background: #f8f8f8;
     font-size: 24px;
+    transition: color 0.3s ease;
     
+}
+
+
+.card-nome input:focus{
+    opacity: 100%;
+    border: 0 none;
+    outline: 0;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    color: #333;
+    transition: color 0.3s ease;
 }
 
 .card-nome h2{
