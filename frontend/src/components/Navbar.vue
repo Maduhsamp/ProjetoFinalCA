@@ -8,7 +8,7 @@
         </div>
         <div class="icons">
             <i class='bx bx-phone'></i>
-            <i class='bx bx-bar-chart-square bx-rotate-180'></i>
+            <router-link to="/dashboard"><i class='bx bx-bar-chart-square bx-rotate-180'></i></router-link>
             <button class="btnLogOut" @click="showModal">
                 <i class='bx bx-log-out'></i>
             </button>
