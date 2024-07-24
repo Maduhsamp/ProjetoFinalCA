@@ -120,12 +120,27 @@
                 </div>
             </form>
             <div class="excluir">
-                <button class="delete" @click="deleteContato(contatoUnico.id)">
+                <button class="delete" @click.prevent="openModal">
                     <i class='bx bx-trash-alt'></i>
                     <label>Excluir Contato</label>
                 </button>
             </div>
         </div>
+        <div v-if="isModalActive" class="modal">
+                <div class="modal-content">
+                    <div class="top">
+                        <p>Excluir contato</p>
+                        <span class="close" @click="closeModal"><i class='bx bx-x'></i></span>
+                    </div>
+                    <span class="bar"></span>
+                    <label class="labelUm">Tem certeza que deseja excluir o contato?</label>
+                    <label class="labelDois">A ação não poderá ser desfeita.</label>
+                    <form>
+                        <button class="btnYes" type="submit" @click.prevent="deleteContato(contatoUnico.id)">Sim</button>
+                        <button class="btnNo" @click.prevent="closeModal">Não</button>
+                    </form>
+                </div>
+            </div>
     </div>
 </template>
 
@@ -138,6 +153,7 @@ export default {
     data() {
         return {
             isActive: false,
+            isModalActive: false,
             contato: [],
             nome: '',
             funil: {},
@@ -163,6 +179,12 @@ export default {
         this.contatoUnico = await showContato(this.$route.params.id);
     },
     methods: {
+        openModal() {
+            this.isModalActive = true;
+        },
+        closeModal() {
+            this.isModalActive = false;
+        },
         async openSidebar(contatoId) {
             console.log(contatoId)
             this.isActive = !this.isActive;
@@ -204,12 +226,12 @@ export default {
                     toast.error('Erro ao tentar atualizar o contato!');
                     console.error(error);
                 });
-
         },
         async deleteContato(contatoId) {
             const toast = useToast();
             try {
                 await HttpService.delete(`/contato/${contatoId}`);
+                this.closeModal();
                 this.closeSidebar();
                 toast.success('Contato deletado com sucesso!');
                 setTimeout(() => {
@@ -219,7 +241,7 @@ export default {
                 toast.error('Erro ao deletar o Contato!');
                 console.error(error);
             }
-        },
+        }
     }
 }
 </script>
@@ -739,5 +761,134 @@ h2 {
     padding-left: 10px;
     padding-right: 40px;
 
+}
+
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border: none;
+    width: 100%;
+    max-width: 647px;
+    height: 329px;
+    border-radius: 10px;
+}
+
+.modal-content p {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.modal-content .labelUm {
+    display: flex;
+    justify-content: center;
+    color: #373753;
+    margin-top: 8%;
+    background: transparent;
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.modal-content .labelDois {
+    display: flex;
+    justify-content: center;
+    color: #42425C;
+    margin-top: 3%;
+    margin-bottom: 6%;
+    background: transparent;
+    font-weight: 500;
+    font-size: 19px;
+}
+
+.btnYes,
+.btnNo {
+    width: 328px;
+    height: 40px;
+    margin-left: 23%;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btnYes {
+    background-color: #F23F2C;
+    color: white;
+    transition: .5s;
+}
+
+.btnYes:hover {
+    background-color: #dd3926;
+}
+
+.btnNo {
+    background-color: #FFFFFF;
+    color: #778A9D;
+    transition: .5s;
+}
+
+.btnNo:hover {
+    background-color: #E6E6E6;
+    color: #000;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    background: transparent;
+}
+
+.top p {
+    color: #373753;
+    font-weight: 500;
+    font-size: 18px;
+    margin-left: 5px;
+    margin-top: -5px;
+}
+
+.top span {
+    background: transparent;
+}
+
+.top .bx-x {
+    position: absolute;
+    width: 18px;
+    background: transparent;
+    border: none;
+    color: #6F8298;
+    font-size: 1.4em;
+    top: 5%;
+    right: 4%;
+    cursor: pointer;
+}
+
+.top .bx-x:hover {
+    color: #5d6d80;
+}
+
+.bar {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #E6EDF5;
+    margin-left: -3.1%;
+    top: 17%;
 }
 </style>

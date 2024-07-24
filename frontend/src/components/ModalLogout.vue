@@ -132,9 +132,9 @@ export default {
 .top .close {
     position: absolute;
     color: #6F8298;
-    font-size: 1.5em;
+    font-size: 1.4em;
     top: 4%;
-    right: 4%;
+    right: 3%;
     cursor: pointer;
 }
 
