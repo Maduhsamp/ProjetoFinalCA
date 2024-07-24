@@ -1,5 +1,5 @@
 <template>
-    <div class="card-container">
+    <div class="card-container overflow-y-auto">
         <div class="card" v-for="funis in funil" :key="funis.id">
             <div class="nome">{{ funis.nome }}</div>
             <div class="acessar">
@@ -32,12 +32,32 @@ export default {
 * {
     background: #f8f8f8;
     height: 100%;
-    max-width: 1200px;
+    max-width: 1250px;
+    max-height: 665px;
     margin: 0 auto;
 }
 
+.card-container::-webkit-scrollbar {
+    width: 7px;
+}
+
+.card-container::-webkit-scrollbar-track {
+    background: #ffdb79;
+    border-radius: 10px;
+}
+
+.card-container::-webkit-scrollbar-thumb {
+    background: #FFBD00;
+    border-radius: 10px;
+}
+
+.card-container::-webkit-scrollbar-thumb:hover {
+    background: #e9ab00;
+    cursor: pointer;
+}
+
 .card-container {
-    padding-top: 80px;
+    padding-top: 20px;
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
