@@ -32,7 +32,7 @@ export default {
 * {
     background: #f8f8f8;
     height: 100%;
-    max-width: 1250px;
+    max-width: 100%;
     max-height: 665px;
     margin: 0 auto;
 }
@@ -61,6 +61,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
+    margin: 0px 60px;
 }
 
 .card {

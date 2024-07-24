@@ -147,6 +147,7 @@
 <script>
 import HttpService, { getContato, showContato, show } from '@/services/HttpService';
 import { useToast } from 'vue-toastification';
+import draggable from 'vuedraggable';
 
 export default {
     name: 'CardContato',

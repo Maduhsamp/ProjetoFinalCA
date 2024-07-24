@@ -23,7 +23,6 @@ export default {
     }
 }
 </script>
-
 <template>
     <div class="flex">
         <Navbar />
