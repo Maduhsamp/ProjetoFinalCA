@@ -1,14 +1,36 @@
 <template>
     <div id="nav">
         <div id="logo">
-            <router-link to="#">
+            
                 <img src="https://media.glassdoor.com/sqll/2841457/3c-plus-squareLogo-1662652407726.png"
                     alt="imagemLogo3C">
-            </router-link>
+            
         </div>
         <div class="icons">
-            <i class='bx bx-phone'></i>
-            <i class='bx bx-bar-chart-square bx-rotate-180'></i>
+            <i class='bx bx-phone' v-if="currentRoute === 'dashboard'"
+                style="border-left: transparent 5px solid;
+                padding: 0px 20px;
+                color: #ccc;
+                cursor: not-allowed">
+            </i>
+            <i class='bx bx-phone' v-else
+                style="border-left: #FFBD00 5px solid;
+                padding: 0px 20px;
+                color: black;">
+            </i>
+
+            <router-link to="/dashboard">
+                <i class='bx bx-bar-chart-square bx-rotate-180' v-if="currentRoute === 'funil'" 
+                    style="border-right: transparent 5px solid;
+                    padding: 0px 20px;
+                    color: black;">
+                </i>
+                <i class='bx bx-bar-chart-square bx-rotate-180' v-else 
+                    style="border-right: #FFBD00 5px solid;
+                    padding: 0px 20px;
+                    color: black;">
+                </i>
+            </router-link>
             <button class="btnLogOut" @click="showModal">
                 <i class='bx bx-log-out'></i>
             </button>
@@ -17,12 +39,23 @@
 </template>
 
 <script>
+import router from '@/router';
 import { mapActions } from 'vuex';
 
 export default {
     name: "Navbar",
     methods: {
         ...mapActions(['showModal'])
+    },
+    data(){
+        return {
+            currentRoute: this.$route.name
+        }
+    },
+    watch: {
+        '$route.path'(newPath) {
+        this.currentRoute = newPath;
+        }
     }
 }
 </script>
@@ -58,6 +91,7 @@ img {
     max-width: 72px;
     height: 700px;
     align-items: center;
+    /* color: black; */
 }
 
 i {
@@ -81,4 +115,10 @@ i {
     margin: 0 auto;
     display: flex;
 }
+
+.icons a{
+    text-decoration: none;
+}
+
+
 </style>

@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="sidebar" :class="{ 'sidebar-active': isActive }">
+        <div class="sidebar overflow-y-auto" :class="{ 'sidebar-active': isActive }">
             <form @submit.prevent="updateContato(contatoUnico.id)">
                 <div class="input-contato ">
                     <div class="flex">
@@ -374,6 +374,27 @@ input:focus {
     cursor: pointer;
 }
 
+.sidebar::-webkit-scrollbar {
+    width: 7px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #ffdb79;
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #FFBD00;
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #e9ab00;
+    cursor: pointer;
+}
+
+
+
 h2 {
     background: transparent;
     max-height: 70px;
@@ -583,14 +604,14 @@ h2 {
 }
 
 .etapas {
-    background: white;
+    background: transparent;
 }
 
 
 .etapas h2 {
     font-size: 16px;
     padding: 10px;
-    background: white;
+    background: transparent;
 }
 
 .btn-outline-primary {
