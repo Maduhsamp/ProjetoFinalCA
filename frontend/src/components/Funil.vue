@@ -462,14 +462,14 @@ h3 {
 }
 
 .etapas {
-    background: white;
+    background: transparent;
 }
 
 
 .etapas h2 {
     font-size: 16px;
     padding: 10px;
-    background: white;
+    background: transparent;
 }
 
 .birthday input {
