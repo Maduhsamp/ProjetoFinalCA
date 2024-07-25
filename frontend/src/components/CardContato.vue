@@ -1,22 +1,32 @@
 <template>
     <div>
-        <div class="cardsContato">
-            <div v-for="contatos in contato" :key="contatos.id">
-                <div class="card-container" v-if="contatos.etapa_id === etapaId">
+        <draggable 
+        v-model="contato" 
+        group="people" 
+        @start="drag = true" 
+        @end="drag = false" 
+        item-key="id"
+        @change="etapaUpdate"
+        >
+        <template #item="{ element }">
+            <div class="cardsContato">
+                <div class="card-container" v-if="element.etapa_id === etapaId">
                     <div class="card">
                         <div class="editName">
-                            <div class="name"> {{ contatos.name }}</div>
+                            <div class="name">{{ element.name }}</div>
                             <div class="editar">
-                                <button class="btnEdit" @click.prevent="openSidebar(contatos.id)">
+                                <button class="btnEdit" @click.prevent="openSidebar(element.id)">
                                     <i class="bx bxs-pencil"></i>
                                 </button>
                             </div>
+                            </div>
+                            <div class="valor">R$ {{ element.value }}
+                            </div>
                         </div>
-                        <div class="valor"> R$ {{ contatos.value }} </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </template>
+        </draggable>
         <div class="sidebar overflow-y-auto" :class="{ 'sidebar-active': isActive }">
             <form @submit.prevent="updateContato(contatoUnico.id)">
                 <div class="input-contato ">
@@ -151,6 +161,9 @@ import draggable from 'vuedraggable';
 
 export default {
     name: 'CardContato',
+    components: {
+        draggable
+    },
     data() {
         return {
             isActive: false,
@@ -169,6 +182,7 @@ export default {
             birth_date: '',
             etapa_id: '',
             contatoAtualId: null,
+            drag: false,
         }
     },
     props: {
@@ -180,6 +194,35 @@ export default {
         this.contatoUnico = await showContato(this.$route.params.id);
     },
     methods: {
+        async etapaUpdate(event) {
+            const {added, removed} = event
+            console.log(event)
+            if (added) {
+            const contatoId = added.element.id;
+            const novaEtapaId = this.etapaId; 
+            
+            try {
+                await HttpService.patch(`contato/${contatoId}`, { etapa_id: novaEtapaId }, {
+
+                    name: this.contatoUnico.name,
+                    phone_number: this.contatoUnico.phone_number,
+                    email: this.contatoUnico.email,
+                    cpf: this.contatoUnico.cpf,
+                    birth_date: this.contatoUnico.birth_date,
+                    address: this.contatoUnico.address,
+                    value: this.contatoUnico.value
+                });
+                this.$toast.success('Etapa do contato atualizada com sucesso!');
+            } catch (error) {
+                this.$toast.error('Erro ao atualizar a etapa do contato!');
+                console.error(error);
+            }
+        }
+        
+        if (removed) {
+            console.log('Contato removido:', removed.element);
+        }
+        },
         openModal() {
             this.isModalActive = true;
         },

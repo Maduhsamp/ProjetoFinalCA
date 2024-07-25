@@ -38,7 +38,6 @@
                     <CardContato :etapaId="4" />
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -53,7 +52,7 @@ export default {
     },
     data() {
         return {
-            etapa_id: 1
+            etapa_id: ''
         }
     }
 
