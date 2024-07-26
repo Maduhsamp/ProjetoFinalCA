@@ -202,15 +202,8 @@ export default {
             const novaEtapaId = this.etapaId; 
             
             try {
-                await HttpService.patch(`contato/${contatoId}`, { etapa_id: novaEtapaId }, {
+                await HttpService.put(`contato/etapa/${contatoId}`, { etapa_id: novaEtapaId }, {
 
-                    name: this.contatoUnico.name,
-                    phone_number: this.contatoUnico.phone_number,
-                    email: this.contatoUnico.email,
-                    cpf: this.contatoUnico.cpf,
-                    birth_date: this.contatoUnico.birth_date,
-                    address: this.contatoUnico.address,
-                    value: this.contatoUnico.value
                 });
                 this.$toast.success('Etapa do contato atualizada com sucesso!');
             } catch (error) {
@@ -218,10 +211,9 @@ export default {
                 console.error(error);
             }
         }
-        
-        if (removed) {
-            console.log('Contato removido:', removed.element);
-        }
+            if (removed) {
+                console.log('Contato removido:', removed.element);
+            }
         },
         openModal() {
             this.isModalActive = true;
