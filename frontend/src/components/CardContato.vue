@@ -4,7 +4,7 @@
         v-model="contato" 
         group="people" 
         @start="drag = true" 
-        @end="drag = false" 
+        @end="drag = onDragEnd" 
         item-key="id"
         @change="etapaUpdate"
         >
@@ -192,9 +192,23 @@ export default {
         this.contato = await getContato(this.$route.params.id);
         this.funil = await show(this.$route.params.id);
         this.contatoUnico = await showContato(this.$route.params.id);
+        this.fetchContatos;
     },
     methods: {
+        async fetchContatos() {
+            const funilId = this.$route.params.id;
+            try {
+            const response = await HttpService.get(`funil/${funilId}/contato`);
+            this.contatos = response.data;
+            console.log(this.contatos) 
+            localStorage.setItem('contatos', JSON.stringify(this.contatos));
+
+            } catch (error) {
+            console.error('Erro ao buscar contatos:', error);
+            }
+        },
         async etapaUpdate(event) {
+            // const toast = useToast();
             const {added, removed} = event
             console.log(event)
             if (added) {
@@ -202,18 +216,22 @@ export default {
             const novaEtapaId = this.etapaId; 
             
             try {
-                await HttpService.put(`contato/etapa/${contatoId}`, { etapa_id: novaEtapaId }, {
-
-                });
-                this.$toast.success('Etapa do contato atualizada com sucesso!');
+                await HttpService.put(`contato/etapa/${contatoId}`, { etapa_id: novaEtapaId });
+                this.fetchContatos();
+                window.location.reload()
+                // this.$toast.success('Etapa do contato atualizada com sucesso!');
             } catch (error) {
-                this.$toast.error('Erro ao atualizar a etapa do contato!');
+                this.fetchContatos();
+                // this.$toast.error('Erro ao atualizar a etapa do contato!');
                 console.error(error);
             }
         }
             if (removed) {
                 console.log('Contato removido:', removed.element);
             }
+        },
+        onDragEnd() {
+            this.fetchContatos();
         },
         openModal() {
             this.isModalActive = true;
