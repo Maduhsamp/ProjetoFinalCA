@@ -206,17 +206,8 @@ export default {
     align-items: center;
     justify-content: space-between;
     width: 195px;
+    margin-left: 10px
 }
 
-.card-container[data-v-1278cc91] {
-    background: transparent;
-}
 
-[data-v-1278cc91] {
-    background: transparent;
-}
-
-[data-v-1278cc91] {
-    background: transparent;
-}
 </style>

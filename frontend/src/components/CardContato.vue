@@ -7,24 +7,28 @@
         @end="drag = onDragEnd" 
         item-key="id"
         @change="etapaUpdate"
+        :animation="300"
         >
         <template #item="{ element }">
-    <div class="cardsContato">
-        <div class="card-container" v-if="contatosFiltrados.includes(element)">
-            <div class="card">
-                <div class="editName">
-                    <div class="name">{{ element.name }}</div>
-                    <div class="editar">
-                        <button class="btnEdit" @click.prevent="openSidebar(element.id)">
-                            <i class="bx bxs-pencil"></i>
-                        </button>
+            <div class="cardsContato">
+                <div class="card-container" v-if="contatosFiltrados.includes(element)">
+                    <div class="card">
+                        <div class="editName">
+                            <div class="name">{{ element.name }}</div>
+                            <div class="editar">
+                                <button class="btnEdit" @click.prevent="openSidebar(element.id)">
+                                    <i class="bx bxs-pencil"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="valor">R$ {{ element.value }}</div>
                     </div>
                 </div>
-                <div class="valor">R$ {{ element.value }}</div>
+                <div v-if="contatosFiltrados.length === 0" class="cardsContato card-fantasma">
+                        Arraste um contato aqui
+                </div>
             </div>
-        </div>
-    </div>
-</template>
+        </template>
         </draggable>
         <div class="sidebar overflow-y-auto" :class="{ 'sidebar-active': isActive }">
             <form @submit.prevent="updateContato(contatoUnico.id)">
@@ -259,9 +263,9 @@ export default {
         .then(response => {
             const updatedContato = response.data;
             const index = this.contato.findIndex(c => c.id === contatoId);
-            if (index !== -1) {
-                this.$set(this.contato, index, updatedContato);
-            }
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
             this.closeSidebar();
             toast.success('Contato atualizado com sucesso!');
         })
@@ -288,9 +292,13 @@ export default {
 </script>
 <style scoped>
 * {
-    background: #f8f8f8;
-    width: 220px;
+    width: 100%;
+}
 
+.card-fantasma {
+    display: flex;
+    opacity: 0;
+    height: 1px;
 }
 
 .input-contato input[data-v-1278cc91] {
@@ -456,8 +464,6 @@ input:focus {
     cursor: pointer;
 }
 
-
-
 h2 {
     background: transparent;
     max-height: 70px;
@@ -551,12 +557,6 @@ h2 {
 }
 
 
-
-
-* {
-    width: 100%;
-    background: #f8f8f8;
-}
 
 .cardsContato {
     width: 220px;

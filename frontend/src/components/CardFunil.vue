@@ -105,14 +105,13 @@ export default {
 }
 
 .acessar {
-    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     top: 20%;
     background: transparent;
     width: 100%;
-    margin-left: -10px;
+    height: 40px;
 }
 
 .btnAccess {
