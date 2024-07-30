@@ -52,7 +52,7 @@ export default {
     },
     data() {
         return {
-            etapa_id: 1
+            etapa_id: ''
         }
     }
 
@@ -206,17 +206,8 @@ export default {
     align-items: center;
     justify-content: space-between;
     width: 195px;
+    margin-left: 10px
 }
 
-.card-container[data-v-1278cc91] {
-    background: transparent;
-}
 
-[data-v-1278cc91] {
-    background: transparent;
-}
-
-[data-v-1278cc91] {
-    background: transparent;
-}
 </style>

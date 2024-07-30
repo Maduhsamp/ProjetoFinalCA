@@ -97,6 +97,23 @@ class ContatoController extends Controller
         return response()->json($contato, 200);
     }
 
+    public function updateEtapa(Request $request, $id)
+    {
+        $request->validate([
+            'etapa_id' => 'required|integer'
+        ]);
+        
+        $contato = Contato::where('id', $id)->first();
+        if (!$contato) {
+            return response()->json(['error' => 'Contato não encontrado.'], 404);
+        }
+
+        $contato->etapa_id = $request->etapa_id;
+        $contato->save();
+
+        return response()->json($contato, 200);
+    }
+
 
     public function destroy($id){
             $contato = Contato::where('id', $id)->first();

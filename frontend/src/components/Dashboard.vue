@@ -106,6 +106,7 @@ export default {
     padding: 8px;
     max-height: 56px;
     display: flex;
+    margin-bottom: 60px;
 }
 
 .flex {

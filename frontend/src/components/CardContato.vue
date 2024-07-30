@@ -1,23 +1,36 @@
 <template>
     <div>
-        <div class="cardsContato">
-            <div v-for="contatos in contato" :key="contatos.id">
-                <div class="card-container" v-if="contatos.etapa_id === etapaId">
+        <draggable 
+        v-model="contato" 
+        group="people" 
+        @start="drag = true" 
+        @end="drag = onDragEnd" 
+        item-key="id"
+        @change="etapaUpdate"
+        :animation="300"
+        >
+        <template #item="{ element }">
+            <div class="cardsContato">
+                <div class="card-container" v-if="contatosFiltrados.includes(element)">
                     <div class="card">
                         <div class="editName">
-                            <div class="name"> {{ contatos.name }}</div>
+                            <div class="name">{{ element.name }}</div>
                             <div class="editar">
-                                <button class="btnEdit" @click.prevent="openSidebar(contatos.id)">
+                                <button class="btnEdit" @click.prevent="openSidebar(element.id)">
                                     <i class="bx bxs-pencil"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="valor"> R$ {{ contatos.value }} </div>
+                        <div class="valor">R$ {{ element.value }}</div>
                     </div>
                 </div>
+                <div v-if="contatosFiltrados.length === 0" class="cardsContato card-fantasma">
+                        Arraste um contato aqui
+                </div>
             </div>
-        </div>
-        <div class="sidebar" :class="{ 'sidebar-active': isActive }">
+        </template>
+        </draggable>
+        <div class="sidebar overflow-y-auto" :class="{ 'sidebar-active': isActive }">
             <form @submit.prevent="updateContato(contatoUnico.id)">
                 <div class="input-contato ">
                     <div class="flex">
@@ -147,9 +160,13 @@
 <script>
 import HttpService, { getContato, showContato, show } from '@/services/HttpService';
 import { useToast } from 'vue-toastification';
+import draggable from 'vuedraggable';
 
 export default {
     name: 'CardContato',
+    components: {
+        draggable
+    },
     data() {
         return {
             isActive: false,
@@ -168,88 +185,120 @@ export default {
             birth_date: '',
             etapa_id: '',
             contatoAtualId: null,
+            drag: false,
         }
     },
     props: {
         etapaId: ''
     },
+    computed: {
+    contatosFiltrados() {
+        return this.contato.filter(c => c.etapa_id === this.etapaId);
+    }
+},
     async created() {
         this.contato = await getContato(this.$route.params.id);
         this.funil = await show(this.$route.params.id);
         this.contatoUnico = await showContato(this.$route.params.id);
+        this.fetchContatos;
     },
     methods: {
-        openModal() {
-            this.isModalActive = true;
-        },
-        closeModal() {
-            this.isModalActive = false;
-        },
-        async openSidebar(contatoId) {
-            console.log(contatoId)
-            this.isActive = !this.isActive;
-            this.contatoAtualId = contatoId;
-            this.contatoUnico = await showContato(this.$route.params.id, contatoId);
-        },
-        closeSidebar() {
-            this.isActive = false;
-            this.contatoAtualId = null;
-        },
-        async updateContato(contatoId) {
-            const toast = useToast();
-            await HttpService.patch(`contato/${contatoId}`, {
-                name: this.contatoUnico.name,
-                etapa_id: this.contatoUnico.etapa_id,
-                phone_number: this.contatoUnico.phone_number,
-                email: this.contatoUnico.email,
-                cpf: this.contatoUnico.cpf,
-                birth_date: this.contatoUnico.birth_date,
-                address: this.contatoUnico.address,
-                value: this.contatoUnico.value
-            })
-                .then(response => {
-                    this.name = (response.data);
-                    this.etapa_id = (response.data);
-                    this.phone_number = (response.data);
-                    this.email = (response.data);
-                    this.cpf = (response.data);
-                    this.birth_date = (response.data);
-                    this.address = (response.data);
-                    this.value = (response.data);
-                    this.closeSidebar();
-                    toast.success('Contato adicionado com sucesso!');
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 3000);
-                })
-                .catch(error => {
-                    toast.error('Erro ao tentar atualizar o contato!');
-                    console.error(error);
-                });
-        },
-        async deleteContato(contatoId) {
-            const toast = useToast();
+    async fetchContatos() {
+        const funilId = this.$route.params.id;
+        try {
+            const response = await HttpService.get(`funil/${funilId}/contato`);
+            this.contato = response.data;
+            localStorage.setItem('contatos', JSON.stringify(this.contato));
+        } catch (error) {
+            console.error('Erro ao buscar contatos:', error);
+        }
+    },
+    async etapaUpdate(event) {
+        const { added } = event;
+        if (added) {
+            const contatoId = added.element.id;
+            const novaEtapaId = this.etapaId;
+
             try {
-                await HttpService.delete(`/contato/${contatoId}`);
-                this.closeModal();
-                this.closeSidebar();
-                toast.success('Contato deletado com sucesso!');
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
+                await HttpService.put(`contato/etapa/${contatoId}`, { etapa_id: novaEtapaId });
+                const contato = this.contato.find(c => c.id === contatoId);
+                if (contato) {
+                    contato.etapa_id = novaEtapaId;
+                }
             } catch (error) {
-                toast.error('Erro ao deletar o Contato!');
-                console.error(error);
+                console.error('Erro ao atualizar a etapa do contato:', error);
             }
         }
+    },
+    onDragEnd() {
+        this.fetchContatos();
+    },
+    openModal() {
+        this.isModalActive = true;
+    },
+    closeModal() {
+        this.isModalActive = false;
+    },
+    async openSidebar(contatoId) {
+        this.isActive = !this.isActive;
+        this.contatoAtualId = contatoId;
+        this.contatoUnico = await showContato(this.$route.params.id, contatoId);
+    },
+    closeSidebar() {
+        this.isActive = false;
+        this.contatoAtualId = null;
+    },
+    async updateContato(contatoId) {
+        const toast = useToast();
+        await HttpService.patch(`contato/${contatoId}`, {
+            name: this.contatoUnico.name,
+            etapa_id: this.contatoUnico.etapa_id,
+            phone_number: this.contatoUnico.phone_number,
+            email: this.contatoUnico.email,
+            cpf: this.contatoUnico.cpf,
+            birth_date: this.contatoUnico.birth_date,
+            address: this.contatoUnico.address,
+            value: this.contatoUnico.value
+        })
+        .then(response => {
+            const updatedContato = response.data;
+            const index = this.contato.findIndex(c => c.id === contatoId);
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
+            this.closeSidebar();
+            toast.success('Contato atualizado com sucesso!');
+        })
+        .catch(error => {
+            toast.error('Erro ao tentar atualizar o contato!');
+            console.error(error);
+        });
+    },
+    async deleteContato(contatoId) {
+        const toast = useToast();
+        try {
+            await HttpService.delete(`/contato/${contatoId}`);
+            this.closeModal();
+            this.closeSidebar();
+            this.contato = this.contato.filter(c => c.id !== contatoId);
+            toast.success('Contato deletado com sucesso!');
+        } catch (error) {
+            toast.error('Erro ao deletar o Contato!');
+            console.error(error);
+        }
     }
+}
 }
 </script>
 <style scoped>
 * {
-    background: #f8f8f8;
-    width: 220px;
+    width: 100%;
+}
 
+.card-fantasma {
+    display: flex;
+    opacity: 0;
+    height: 1px;
 }
 
 .input-contato input[data-v-1278cc91] {
@@ -395,6 +444,25 @@ input:focus {
     cursor: pointer;
 }
 
+.sidebar::-webkit-scrollbar {
+    width: 7px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #ffdb79;
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #FFBD00;
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #e9ab00;
+    cursor: pointer;
+}
+
 h2 {
     background: transparent;
     max-height: 70px;
@@ -488,12 +556,6 @@ h2 {
 }
 
 
-
-
-* {
-    width: 100%;
-    background: #f8f8f8;
-}
 
 .cardsContato {
     width: 220px;

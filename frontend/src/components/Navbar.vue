@@ -13,7 +13,7 @@
                 color: #ccc;
                 cursor: not-allowed">
             </i>
-            <i class='bx bx-phone' v-else
+            <i class='bx bx-phone' v-else 
                 style="border-left: #FFBD00 5px solid;
                 padding: 0px 20px;
                 color: black;">
