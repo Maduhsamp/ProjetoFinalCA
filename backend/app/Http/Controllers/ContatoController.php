@@ -9,7 +9,8 @@ class ContatoController extends Controller
 {
     public function index($id)
     {
-        $contatos = Contato::where('funil_id', $id)->get();
+        $contatos = Contato::where('user_id', auth()->user()->id)
+        ->where('funil_id', $id)->get();
         return response()->json([
             'contatos' => $contatos
         ]);

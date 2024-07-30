@@ -295,7 +295,7 @@ export default {
     width: 100%;
 }
 
-.card-fantasma {
+.cardsContato .card-fantasma:first-of-type {
     display: flex;
     opacity: 0;
     height: 1px;
