@@ -4,7 +4,7 @@
             <div class="se">
                 <div class="linha">
                     <label>Sem etapa</label>
-                    <button class="reset-button" @click.prevent="openSidebar"><i class='bx bx-plus'></i></button>
+                    <button class="reset-button" @click.prevent="openSidebar1"><i class='bx bx-plus'></i></button>
                 </div>
                 <div class="scroll overflow-y-auto">
                     <CardContato :etapaId="1" />
@@ -13,7 +13,7 @@
             <div class="pc">
                 <div class="linha">
                     <label>Prospecção</label>
-                    <button class="reset-button" @click.prevent="openSidebar"><i class='bx bx-plus'></i></button>
+                    <button class="reset-button" @click.prevent="openSidebar2"><i class='bx bx-plus'></i></button>
                 </div>
                 <div class="scroll overflow-y-auto">
                     <CardContato :etapaId="2" />
@@ -22,7 +22,7 @@
             <div class="c">
                 <div class="linha">
                     <label>Contato</label>
-                    <button class="reset-button" @click.prevent="openSidebar"><i class='bx bx-plus'></i></button>
+                    <button class="reset-button" @click.prevent="openSidebar3"><i class='bx bx-plus'></i></button>
                 </div>
                 <div class="scroll overflow-y-auto">
                     <CardContato :etapaId="3" />
@@ -31,7 +31,7 @@
             <div class="p">
                 <div class="linha">
                     <label>Proposta</label>
-                    <button class="reset-button" @click.prevent="openSidebar"><i class='bx bx-plus'></i></button>
+                    <button class="reset-button" @click.prevent="openSidebar4"><i class='bx bx-plus'></i></button>
                 </div>
                 <div class="scroll overflow-y-auto">
                     <CardContato :etapaId="4" />
@@ -61,21 +61,21 @@
                             <div class="etapas">
                                 <h2>{{ funil.nome }}</h2>
                                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
+                                    <input type="radio" class="btn-check" name="btnradio" id="btn1"
                                         v-model="etapa_id" value="1" autocomplete="off" checked>
-                                    <label class="btn btn-outline-primary" for="btnradio1">Sem Etapa</label>
+                                    <label class="btn btn-outline-primary" for="btn1">Sem Etapa</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                    <input type="radio" class="btn-check" name="btnradio" id="btn2"
                                         v-model="etapa_id" value="2" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradio2">Prospecção</label>
+                                    <label class="btn btn-outline-primary" for="btn2">Prospecção</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
+                                    <input type="radio" class="btn-check" name="btnradio" id="btn3"
                                         v-model="etapa_id" value="3" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradio3">Contato</label>
+                                    <label class="btn btn-outline-primary" for="btn3">Contato</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
+                                    <input type="radio" class="btn-check" name="btnradio" id="btn4"
                                         v-model="etapa_id" value="4" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradio4">Proposta</label>
+                                    <label class="btn btn-outline-primary" for="btn4">Proposta</label>
                                 </div>
                             </div>
                         </div>
@@ -171,16 +171,37 @@ export default {
         this.funil = await show(this.$route.params.id);
     },
     methods: {
-        openSidebar() {
+        openSidebar1() {
             this.isActive = !this.isActive;
-        },
-        closeSidebar() {
-            this.isActive = false;
-        },
-        async createContato() {
             if (this.etapa_id == '' | null) {
                 this.etapa_id = 1;
             }
+        },
+        openSidebar2() {
+            this.isActive = !this.isActive;
+            if (this.etapa_id == '' | null) {
+                this.etapa_id = 2;
+            }
+        },
+        openSidebar3() {
+            this.isActive = !this.isActive;
+            if (this.etapa_id == '' | null) {
+                this.etapa_id = 3;
+            }
+        },
+        openSidebar4() {
+            this.isActive = !this.isActive;
+            if (this.etapa_id == '' | null) {
+                this.etapa_id = 4;
+            }
+        },
+        closeSidebar() {
+            this.isActive = false;
+            if (this.etapa_id != '' | null) {
+                this.etapa_id = 0;
+            }
+        },
+        async createContato() {
             const toast = useToast();
             await HttpService.post(`funil/${this.id}/contato`, {
                 name: this.name,
