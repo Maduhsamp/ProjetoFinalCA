@@ -19,7 +19,7 @@
         </div>
         <div class="inputs">
             <i class="bx bx-search-alt"></i>
-            <input type="text" placeholder="Pesquisar" />
+            <input type="text" placeholder="Pesquisar" v-model="searchQuery" @keyup.enter="searchContatos" />
             <button class="btnNew" @click.prevent="openSidebar">
                 <h3>Novo Contato</h3>
                 <i class="bx bx-user-plus"></i>
@@ -168,6 +168,8 @@ export default {
             cpf: '',
             birth_date: '',
             etapa_id: '',
+            contato: [],
+            searchQuery: ''
         }
     },
     async created() {
@@ -186,6 +188,20 @@ export default {
         },
         closeModal() {
             this.isModalActive = false;
+        },
+        async searchContatos() {
+            try {
+                const response = await HttpService.get(`funil/${this.id}/contato`, {
+                    params: {
+                        name: this.searchQuery,
+                    },
+                });
+                this.contato = response.data.contato;
+                console.log('deu certo');
+            } catch (error) {
+                toast.error('Erro ao buscar contatos:');
+                console.error('contato não encontrado:',error);
+            }
         },
         async createContato() {
             if (this.etapa_id == '' | null) {
@@ -254,7 +270,6 @@ export default {
         }
     }
 }
-
 </script>
 <style scoped>
 * {

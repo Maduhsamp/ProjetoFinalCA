@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 
 class ContatoController extends Controller
 {
-    public function index($id)
+    public function index(Request $request, $id)
     {
-        $contatos = Contato::where('funil_id', $id)->get();
+        $contatoNome = $request->input('name');
+
+        $query = Contato::where('funil_id', $id);
+
+        if (!empty($contatoNome)) {
+            $query->where('name', 'LIKE', '%' . $contatoNome . '%');
+        }
+
+        $contatos = $query->get();
+
         return response()->json([
             'contatos' => $contatos
         ]);
@@ -102,7 +111,7 @@ class ContatoController extends Controller
         $request->validate([
             'etapa_id' => 'required|integer'
         ]);
-        
+
         $contato = Contato::where('id', $id)->first();
         if (!$contato) {
             return response()->json(['error' => 'Contato não encontrado.'], 404);
