@@ -10,9 +10,16 @@ class FunilController extends Controller
 {
     public function index()
     {
-        $funis = Funil::where('user_id', auth()->user()->id)->get();
+        $funis = Funil::where('user_id', auth()->user()->id)->paginate(20);
+
         return response()->json([
-            'funis' => $funis
+            'funis' => $funis->items(),
+            'current_page' => $funis->currentPage(),
+            'next_page' => $funis->nextPageUrl(),
+            'previous_page' => $funis->previousPageUrl(),
+            'last_page' => $funis->lastPage(),
+            'per_page' => $funis->perPage(),
+            'total' => $funis->total()
         ]);
     }
 
