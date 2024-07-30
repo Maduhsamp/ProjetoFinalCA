@@ -36,12 +36,8 @@
                     <input type="text" v-model="nome" placeholder="Nome do Funil">
                     <!-- <i class='bx bx-add-to-queue'></i> -->
                 </div>
-
             </form>
         </div>
-    </div>
-    <div v-else>
-        <p>Você precisa estar logado para ver o conteúdo do dashboard.</p>
     </div>
 </template>
 

@@ -408,7 +408,6 @@ input:focus {
     display: flex;
     gap: 0px;
     margin-top: 10px;
-
 }
 
 .valor {
@@ -667,14 +666,14 @@ h2 {
 }
 
 .etapas {
-    background: transparent;
+    background: white;
 }
 
 
 .etapas h2 {
     font-size: 16px;
     padding: 10px;
-    background: transparent;
+    background: white;
 }
 
 .btn-outline-primary {

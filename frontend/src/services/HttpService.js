@@ -30,8 +30,8 @@ export const getName = async () => {
   return data.user.name;
 };
 
-export const getFunil = async () => {
-  const { data } = await HttpService.get(`funil`);
+export const getFunil = async (page) => {
+  const { data } = await HttpService.get(`funil?page=${page}`);
   return data.funis;
 };
 
