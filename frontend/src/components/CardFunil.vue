@@ -7,27 +7,46 @@
             </div>
         </div>
     </div>
+    <div class="paginacao">
+        <button class="back" @click="changePage(currentPage - 1)" :disabled="currentPage <= 1">Voltar</button>
+        <button class="page page1" @click="changePage(1)">1</button>
+        <button class="page page2" @click="changePage(2)">2</button>
+        <button class="next" @click="changePage(currentPage + 1)" :disabled="currentPage >= totalPages">Próximo</button>
+    </div>
 </template>
+
 <script>
-import HttpService, { getFunil } from '@/services/HttpService';
+import { getFunil } from '@/services/HttpService';
 
 export default {
     name: 'CardFunil',
     data() {
         return {
-            funil: ''
-        }
+            funil: [],
+            currentPage: 1,
+            totalPages: 2
+        };
     },
     async created() {
-        this.funil = await getFunil();
+        await this.fetchFunil(this.currentPage);
     },
     methods: {
+        async fetchFunil(page) {
+            this.funil = await getFunil(page);
+        },
+        async changePage(page) {
+            if (page > 0 && page <= this.totalPages) {
+                this.currentPage = page;
+                await this.fetchFunil(page);
+            }
+        },
         funilPage(id) {
             this.$router.push({ name: 'funil', params: { id } });
         }
     }
 }
 </script>
+
 <style scoped>
 * {
     background: #f8f8f8;
@@ -118,5 +137,27 @@ h2 {
     background: transparent;
     max-height: 70px;
     font-size: 24px;
+}
+
+.paginacao {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.back, .page1, .page2, .next {
+    background: #cbd2dd;
+    width: 60px;
+    height: 30px;
+    margin: 20px 10px 20px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8em;
+    font-weight: 600;
+    transition: .5s;
+}
+
+.back:hover, .page1:hover, .page2:hover, .next:hover {
+    background: #969ba3;
 }
 </style>
