@@ -1,6 +1,6 @@
 <template>
     <div>
-        <draggable 
+        <draggable ghost-class="hidden-ghost"
         v-model="contato" 
         group="people" 
         @start="drag = true" 
@@ -508,6 +508,10 @@ input:focus {
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.hidden-ghost {
+    opacity: 0.5;
 }
 
 .birthday {
