@@ -36,6 +36,7 @@ export default {
                 await HttpService.delete(`funil/delete/${this.id}`);
                 toast.success('Funil deletado com sucesso!');
                 this.$router.push('/dashboard');
+                this.hideDeleteModal();
             } catch (error) {
                 toast.error('Erro ao tentar deletar funil!');
                 console.error(error);

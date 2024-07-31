@@ -78,6 +78,7 @@ export default {
 .card-container {
     padding-top: 20px;
     display: flex;
+    height: 600px;
     flex-wrap: wrap;
     align-content: flex-start;
     margin: 0px 60px;
