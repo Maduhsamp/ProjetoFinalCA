@@ -313,7 +313,7 @@ export default {
 }
 
 .birthday input {
-    color: #707070;
+    color: #424242;
 }
 
 .card-nome input {
@@ -463,11 +463,8 @@ input:focus {
     cursor: pointer;
 }
 
-h2 {
-    background: transparent;
-    max-height: 70px;
-    font-size: 24px;
-}
+
+
 
 .formaContato,
 .dados {
@@ -666,14 +663,14 @@ h2 {
 }
 
 .etapas {
-    background: white;
+    background: transparent;
 }
 
 
 .etapas h2 {
     font-size: 16px;
     padding: 10px;
-    background: white;
+    background: transparent;
 }
 
 .btn-outline-primary {
@@ -699,77 +696,6 @@ h2 {
     align-content: center;
     font-size: 13px;
 }
-
-.formaContato,
-.dados {
-    margin-top: 10px;
-    background: white;
-    border: 1px solid #E1E9F4;
-    border-radius: 10px;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.accordion-body input {
-    width: 90%;
-}
-
-.accordion-item {
-    margin-bottom: 10px;
-}
-
-.accordion {
-    background: transparent;
-}
-
-.accordion-body {
-    display: inline-block;
-}
-
-.telefone {
-    display: inline-flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.email-contato {
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.cpf {
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.birthday {
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.endereco {
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.value {
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.birthday label {
-    font-size: 11px;
-}
-
-.accordion-body label {
-    width: 80px;
-}
-
 
 .sidebar-active {
     transform: translateX(0);
