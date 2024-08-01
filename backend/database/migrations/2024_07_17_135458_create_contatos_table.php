@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('funil_id');
             $table->unsignedBigInteger('etapa_id');
+            $table->integer('order');
             $table->string('phone_number');
             $table->string('email');
             $table->string('cpf')->nullable();

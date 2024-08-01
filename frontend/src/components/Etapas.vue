@@ -246,8 +246,8 @@ export default {
 }
 
 .scroll-container {
-    overflow-x: auto;
     padding-right: 10%;
+    
 }
 
 .colunas {
