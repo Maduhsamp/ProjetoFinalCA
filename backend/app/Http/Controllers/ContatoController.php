@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class ContatoController extends Controller
 {
-    public function index($id)
+    public function index(Request $request, $id)
     {
         $contatos = Contato::where('funil_id', $id)->orderBy('order')->get();
         return response()->json([
@@ -104,7 +104,7 @@ class ContatoController extends Controller
         $request->validate([
             'etapa_id' => 'required|integer'
         ]);
-        
+
         $contato = Contato::where('id', $id)->first();
         if (!$contato) {
             return response()->json(['error' => 'Contato não encontrado.'], 404);
