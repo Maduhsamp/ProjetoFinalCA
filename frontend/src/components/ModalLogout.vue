@@ -27,6 +27,7 @@ export default {
                 await this.LogOut();
                 console.log('Logout');
                 this.$router.push('/');
+                this.hideModal();
             } catch (error) {
                 console.error('Logout error:', error);
             }

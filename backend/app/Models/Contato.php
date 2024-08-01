@@ -26,4 +26,14 @@ class Contato extends Model
     {
         return $this->belongsTo(Etapas::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $maxOrder = static::max('order');
+            $model->order = $maxOrder + 1;
+        });
+    }
 }

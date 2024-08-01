@@ -49,19 +49,19 @@
                         <div class="etapas">
                             <h2>{{ funil.nome }}</h2>
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" v-model="etapa_id"
+                                <input type="radio" class="btn-check" name="btnradio" id="1" v-model="etapa_id"
                                     value="1" autocomplete="off" checked>
                                 <label class="btn btn-outline-primary" for="btnradio1">Sem Etapa</label>
 
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" v-model="etapa_id"
+                                <input type="radio" class="btn-check" name="btnradio" id="2" v-model="etapa_id"
                                     value="2" autocomplete="off">
                                 <label class="btn btn-outline-primary" for="btnradio2">Prospecção</label>
 
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" v-model="etapa_id"
+                                <input type="radio" class="btn-check" name="btnradio" id="3" v-model="etapa_id"
                                     value="3" autocomplete="off">
                                 <label class="btn btn-outline-primary" for="btnradio3">Contato</label>
 
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio4" v-model="etapa_id"
+                                <input type="radio" class="btn-check" name="btnradio" id="4" v-model="etapa_id"
                                     value="4" autocomplete="off">
                                 <label class="btn btn-outline-primary" for="btnradio4">Proposta</label>
                             </div>
@@ -265,9 +265,6 @@ export default {
                 console.error(error);
             }
         },
-        toggleDropdown(section) {
-            this.dropdowns[section] = !this.dropdowns[section];
-        }
     }
 }
 </script>
@@ -536,7 +533,7 @@ h3 {
 
 
 .accordion-button:not(.collapsed) {
-    color: black;
+    color: var(#000000);
     background-color: transparent;
     box-shadow: black;
 }
@@ -624,11 +621,6 @@ h3 {
     cursor: text;
     padding-left: 10px;
     padding-right: 40px;
-    transition: .3s;
-}
-
-.input-contato input[data-v-928e62a3]:hover {
-    background: #e3e3e3;
     transition: .3s;
 }
 

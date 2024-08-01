@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/funil/{id}/contato', [ContatoController::class, 'store']);
     Route::patch('contato/{id}', [ContatoController::class, 'update']);
     Route::put('contato/etapa/{id}', [ContatoController::class, 'updateEtapa']);
+    Route::put('contato/order/{id}', [ContatoController::class, 'updateOrder']);
     Route::delete('/contato/{id}', [ContatoController::class, 'destroy']);
 });
 

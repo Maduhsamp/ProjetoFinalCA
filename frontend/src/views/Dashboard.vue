@@ -12,8 +12,16 @@ export default {
         HeaderDashboard,
         CardFunil
     },
+    data() {
+        return {
+            refresh: 0
+        };
+    },
     methods: {
-        ...mapActions(['hideModal'])
+        ...mapActions(['hideModal']),
+        handleFunilAdded() {
+            this.refresh++;
+        }
     },
     computed: {
         ...mapGetters(['Logged', 'isModalVisible']),
@@ -29,8 +37,8 @@ export default {
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <div class="coluna">
             <div class="dashboard">
-                <HeaderDashboard />
-                <ModalLogout v-if="isModalVisible" />
+                <HeaderDashboard @funilAdded="updateFunilList" />
+                <ModalLogout v-if="isModalVisible" :refresh="refresh" />
             </div>
             <CardFunil />
         </div>

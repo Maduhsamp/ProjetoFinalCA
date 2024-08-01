@@ -4,21 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Contato;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ContatoController extends Controller
 {
     public function index(Request $request, $id)
     {
-        $contatoNome = $request->input('name');
-
-        $query = Contato::where('funil_id', $id);
-
-        if (!empty($contatoNome)) {
-            $query->where('name', 'LIKE', '%' . $contatoNome . '%');
-        }
-
-        $contatos = $query->get();
-
+        $contatos = Contato::where('funil_id', $id)->orderBy('order')->get();
         return response()->json([
             'contatos' => $contatos
         ]);
@@ -122,6 +115,39 @@ class ContatoController extends Controller
 
         return response()->json($contato, 200);
     }
+
+    public function updateOrder(Request $request, $id)
+    {
+        $request->validate([
+            'order' => 'required|integer'
+        ]);
+    
+        $contato = Contato::where('id', $id)->first();
+        if (!$contato) {
+            return response()->json(['error' => 'Contato não encontrado.'], 404);
+        }
+    
+        $atualOrder = $contato->order;
+        $newOrder = $request->order;
+    
+        if ($newOrder == $atualOrder) {
+            return response()->json(['message' => 'A nova posição é igual à posição atual.'], 200);
+        }
+    
+        
+        if ($newOrder > $atualOrder) {
+            Contato::whereBetween('order', [$atualOrder + 1, $newOrder])
+            ->update(['order' => \DB::raw('`order` - 1')]);
+        } elseif ($newOrder < $atualOrder) {
+            Contato::whereBetween('order', [$newOrder, $atualOrder - 1])
+            ->update(['order' => \DB::raw('`order` + 1')]);
+        }
+        
+        $contato->order = $newOrder;
+        $contato->save();
+        return response()->json($contato, 200);
+    }
+    
 
 
     public function destroy($id){
