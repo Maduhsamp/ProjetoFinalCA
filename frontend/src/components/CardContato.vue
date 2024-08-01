@@ -1,34 +1,27 @@
 <template>
     <div>
-        <draggable ghost-class="hidden-ghost"
-        v-model="contato" 
-        group="people" 
-        @start="drag = true" 
-        @end="drag = onDragEnd" 
-        item-key="id"
-        @change="etapaUpdate"
-        :animation="300"
-        >
-        <template #item="{ element }">
-            <div class="cardsContato">
-                <div class="card-container" v-if="contatosFiltrados.includes(element)">
-                    <div class="card">
-                        <div class="editName">
-                            <div class="name">{{ element.name }}</div>
-                            <div class="editar">
-                                <button class="btnEdit" @click.prevent="openSidebar(element.id)">
-                                    <i class="bx bxs-pencil"></i>
-                                </button>
+        <draggable ghost-class="hidden-ghost" v-model="contato" group="people" @start="drag = true"
+            @end="drag = onDragEnd" item-key="id" @change="etapaUpdate" :animation="300">
+            <template #item="{ element }">
+                <div class="cardsContato">
+                    <div class="card-container" v-if="contatosFiltrados.includes(element)">
+                        <div class="card">
+                            <div class="editName">
+                                <div class="name">{{ element.name }}</div>
+                                <div class="editar">
+                                    <button class="btnEdit" @click.prevent="openSidebar(element.id)">
+                                        <i class="bx bxs-pencil"></i>
+                                    </button>
+                                </div>
                             </div>
+                            <div class="valor">R$ {{ element.value }}</div>
                         </div>
-                        <div class="valor">R$ {{ element.value }}</div>
+                    </div>
+                    <div v-if="contatosFiltrados.length === 0" class="cardsContato card-fantasma">
+                        Arraste um contato aqui
                     </div>
                 </div>
-                <div v-if="contatosFiltrados.length === 0" class="cardsContato card-fantasma">
-                        Arraste um contato aqui
-                </div>
-            </div>
-        </template>
+            </template>
         </draggable>
         <div class="sidebar overflow-y-auto" :class="{ 'sidebar-active': isActive }">
             <form @submit.prevent="updateContato(contatoUnico.id)">
@@ -140,20 +133,20 @@
             </div>
         </div>
         <div v-if="isModalActive" class="modal">
-                <div class="modal-content">
-                    <div class="top">
-                        <p>Excluir contato</p>
-                        <span class="close" @click="closeModal"><i class='bx bx-x'></i></span>
-                    </div>
-                    <span class="bar"></span>
-                    <label class="labelUm">Tem certeza que deseja excluir o contato?</label>
-                    <label class="labelDois">A ação não poderá ser desfeita.</label>
-                    <form>
-                        <button class="btnYes" type="submit" @click.prevent="deleteContato(contatoUnico.id)">Sim</button>
-                        <button class="btnNo" @click.prevent="closeModal">Não</button>
-                    </form>
+            <div class="modal-content">
+                <div class="top">
+                    <p>Excluir contato</p>
+                    <span class="close" @click="closeModal"><i class='bx bx-x'></i></span>
                 </div>
+                <span class="bar"></span>
+                <label class="labelUm">Tem certeza que deseja excluir o contato?</label>
+                <label class="labelDois">A ação não poderá ser desfeita.</label>
+                <form>
+                    <button class="btnYes" type="submit" @click.prevent="deleteContato(contatoUnico.id)">Sim</button>
+                    <button class="btnNo" @click.prevent="closeModal">Não</button>
+                </form>
             </div>
+        </div>
     </div>
 </template>
 
@@ -183,19 +176,21 @@ export default {
             phone_number: '',
             cpf: '',
             birth_date: '',
+            order: '',
             etapa_id: '',
             contatoAtualId: null,
             drag: false,
         }
     },
     props: {
-        etapaId: ''
+        etapaId: '',
+        orderId: ''
     },
     computed: {
-    contatosFiltrados() {
-        return this.contato.filter(c => c.etapa_id === this.etapaId);
-    }
-},
+        contatosFiltrados() {
+            return this.contato.filter(c => c.etapa_id === this.etapaId);
+        }
+    },
     async created() {
         this.contato = await getContato(this.$route.params.id);
         this.funil = await show(this.$route.params.id);
@@ -203,91 +198,105 @@ export default {
         this.fetchContatos;
     },
     methods: {
-    async fetchContatos() {
-        const funilId = this.$route.params.id;
-        try {
-            const response = await HttpService.get(`funil/${funilId}/contato`);
-            this.contato = response.data;
-            localStorage.setItem('contatos', JSON.stringify(this.contato));
-        } catch (error) {
-            console.error('Erro ao buscar contatos:', error);
-        }
-    },
-    async etapaUpdate(event) {
-        const { added } = event;
-        if (added) {
-            const contatoId = added.element.id;
-            const novaEtapaId = this.etapaId;
-
+        async fetchContatos() {
+            const funilId = this.$route.params.id;
             try {
-                await HttpService.put(`contato/etapa/${contatoId}`, { etapa_id: novaEtapaId });
-                const contato = this.contato.find(c => c.id === contatoId);
-                if (contato) {
-                    contato.etapa_id = novaEtapaId;
-                }
+                const response = await HttpService.get(`funil/${funilId}/contato`);
+                this.contato = response.data;
+                localStorage.setItem('contatos', JSON.stringify(this.contato));
             } catch (error) {
-                console.error('Erro ao atualizar a etapa do contato:', error);
+                console.error('Erro ao buscar contatos:', error);
+            }
+        },
+        async etapaUpdate(event) {
+            const { added, moved } = event;
+            if (added) {
+                const contatoId = added.element.id;
+                const novaEtapaId = this.etapaId;
+
+                try {
+                    await HttpService.put(`contato/etapa/${contatoId}`, { etapa_id: novaEtapaId });
+                    const contato = this.contato.find(c => c.id === contatoId);
+                    if (contato) {
+                        contato.etapa_id = novaEtapaId;
+                    }
+                } catch (error) {
+                    console.error('Erro ao atualizar a etapa do contato:', error);
+                }
+            }
+            if (moved) {
+                const contatoId = moved.element.id;
+                const OrdemAtual = moved.element.order
+                try {
+                    await HttpService.put(`contato/order/${contatoId}`, { order: event.moved.newIndex });
+                    const contato = this.contato.find(c => c.id === contatoId);
+                    if (contato) {
+                        contato.order = NewIndex;
+                    }
+                }
+                catch {
+                    console.error('Erro ao atualizar a ordem do contato:', error);
+                }
+            }
+        },
+        onDragEnd() {
+            this.fetchContatos();
+        },
+        openModal() {
+            this.isModalActive = true;
+        },
+        closeModal() {
+            this.isModalActive = false;
+        },
+        async openSidebar(contatoId) {
+            this.isActive = !this.isActive;
+            this.contatoAtualId = contatoId;
+            this.contatoUnico = await showContato(this.$route.params.id, contatoId);
+        },
+        closeSidebar() {
+            this.isActive = false;
+            this.contatoAtualId = null;
+        },
+        async updateContato(contatoId) {
+            const toast = useToast();
+            await HttpService.patch(`contato/${contatoId}`, {
+                name: this.contatoUnico.name,
+                etapa_id: this.contatoUnico.etapa_id,
+                phone_number: this.contatoUnico.phone_number,
+                email: this.contatoUnico.email,
+                cpf: this.contatoUnico.cpf,
+                birth_date: this.contatoUnico.birth_date,
+                address: this.contatoUnico.address,
+                value: this.contatoUnico.value
+            })
+                .then(response => {
+                    const updatedContato = response.data;
+                    const index = this.contato.findIndex(c => c.id === contatoId);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                    this.closeSidebar();
+                    toast.success('Contato atualizado com sucesso!');
+                })
+                .catch(error => {
+                    toast.error('Erro ao tentar atualizar o contato!');
+                    console.error(error);
+                });
+        },
+        async deleteContato(contatoId) {
+            const toast = useToast();
+            try {
+                await HttpService.delete(`/contato/${contatoId}`);
+                this.closeModal();
+                this.closeSidebar();
+                this.contato = this.contato.filter(c => c.id !== contatoId);
+                toast.success('Contato deletado com sucesso!');
+            } catch (error) {
+                toast.error('Erro ao deletar o Contato!');
+                console.error(error);
             }
         }
-    },
-    onDragEnd() {
-        this.fetchContatos();
-    },
-    openModal() {
-        this.isModalActive = true;
-    },
-    closeModal() {
-        this.isModalActive = false;
-    },
-    async openSidebar(contatoId) {
-        this.isActive = !this.isActive;
-        this.contatoAtualId = contatoId;
-        this.contatoUnico = await showContato(this.$route.params.id, contatoId);
-    },
-    closeSidebar() {
-        this.isActive = false;
-        this.contatoAtualId = null;
-    },
-    async updateContato(contatoId) {
-        const toast = useToast();
-        await HttpService.patch(`contato/${contatoId}`, {
-            name: this.contatoUnico.name,
-            etapa_id: this.contatoUnico.etapa_id,
-            phone_number: this.contatoUnico.phone_number,
-            email: this.contatoUnico.email,
-            cpf: this.contatoUnico.cpf,
-            birth_date: this.contatoUnico.birth_date,
-            address: this.contatoUnico.address,
-            value: this.contatoUnico.value
-        })
-        .then(response => {
-            const updatedContato = response.data;
-            const index = this.contato.findIndex(c => c.id === contatoId);
-            setTimeout(() => {
-                window.location.reload();
-            }, 3000);
-            this.closeSidebar();
-            toast.success('Contato atualizado com sucesso!');
-        })
-        .catch(error => {
-            toast.error('Erro ao tentar atualizar o contato!');
-            console.error(error);
-        });
-    },
-    async deleteContato(contatoId) {
-        const toast = useToast();
-        try {
-            await HttpService.delete(`/contato/${contatoId}`);
-            this.closeModal();
-            this.closeSidebar();
-            this.contato = this.contato.filter(c => c.id !== contatoId);
-            toast.success('Contato deletado com sucesso!');
-        } catch (error) {
-            toast.error('Erro ao deletar o Contato!');
-            console.error(error);
-        }
     }
-}
 }
 </script>
 <style scoped>
