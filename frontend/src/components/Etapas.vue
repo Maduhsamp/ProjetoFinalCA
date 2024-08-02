@@ -61,20 +61,20 @@
                             <div class="etapas">
                                 <h2>{{ funil.nome }}</h2>
                                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btn1"
-                                        v-model="etapa_id" value="1" autocomplete="off" checked>
+                                    <input type="radio" class="btn-check" name="btnradio" id="btn1" v-model="etapa_id"
+                                        value="1" autocomplete="off" checked>
                                     <label class="btn btn-outline-primary" for="btn1">Sem Etapa</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btn2"
-                                        v-model="etapa_id" value="2" autocomplete="off">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btn2" v-model="etapa_id"
+                                        value="2" autocomplete="off">
                                     <label class="btn btn-outline-primary" for="btn2">Prospecção</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btn3"
-                                        v-model="etapa_id" value="3" autocomplete="off">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btn3" v-model="etapa_id"
+                                        value="3" autocomplete="off">
                                     <label class="btn btn-outline-primary" for="btn3">Contato</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btn4"
-                                        v-model="etapa_id" value="4" autocomplete="off">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btn4" v-model="etapa_id"
+                                        value="4" autocomplete="off">
                                     <label class="btn btn-outline-primary" for="btn4">Proposta</label>
                                 </div>
                             </div>
@@ -247,7 +247,7 @@ export default {
 
 .scroll-container {
     padding-right: 10%;
-    
+
 }
 
 .colunas {
@@ -271,22 +271,31 @@ export default {
     top: 20px;
 }
 
-.se,
-.pc,
-.c,
-.p {
-    position: relative;
-    padding-top: 23px;
-    margin-left: 15px;
-    width: 240px;
-    max-width: 240px;
-    height: 660px;
-    background: transparent;
-    transition: .3s;
-}
+    .se,
+    .pc,
+    .c,
+    .p {
+        position: relative;
+        padding-top: 23px;
+        margin-left: 25px;
+        width: 280px;
+        max-width: 280px;
+        height: 660px;
+        background: transparent;
+        transition: .3s;
+    }
+
+    .linha {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 225px;
+        margin-left: 10px
+    }
+
 
 .scroll {
-    height: 600px;
+    height: 80vh;
     padding-left: 7px;
 }
 
@@ -308,7 +317,7 @@ export default {
 }
 
 .se::before {
-    width: 240px;
+    width: 100%;
     background: #D2DDEC;
 }
 
@@ -377,13 +386,10 @@ export default {
     cursor: pointer;
 }
 
-.linha {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 195px;
-    margin-left: 10px
-}
+
+
+
+
 
 /* Sidebar */
 

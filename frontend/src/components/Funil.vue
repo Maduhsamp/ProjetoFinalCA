@@ -533,13 +533,13 @@ h3 {
 
 
 .accordion-button:not(.collapsed) {
-    color: var(#000000);
+    color: black;
     background-color: transparent;
     box-shadow: black;
 }
 
 .accordion-button:focus {
-    box-shadow: none;
+    box-shadow: none;   
 }
 
 .formaContato,

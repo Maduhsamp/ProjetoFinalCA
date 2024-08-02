@@ -52,8 +52,7 @@ export default {
     background: #f8f8f8;
     height: 100%;
     max-width: 100%;
-    max-height: 665px;
-    margin: 0 auto;
+    margin: 0 auto; 
 }
 
 .card-container::-webkit-scrollbar {
@@ -78,17 +77,17 @@ export default {
 .card-container {
     padding-top: 20px;
     display: flex;
-    height: 600px;
+    height: 80vh;
     flex-wrap: wrap;
     align-content: flex-start;
-    margin: 0px 60px;
+    margin: 0px 74px;
 }
 
 .card {
     position: relative;
     background: white;
-    width: 240px;
-    height: 130px;
+    width: 280px;
+    height: 140px;
     border-radius: 10px;
     padding: 10px;
     margin: auto 30px;
@@ -98,11 +97,30 @@ export default {
     margin-bottom: 10px;
 }
 
+@media screen and (max-width: 1440px) {
+    .card-container {
+        padding-top: 10px;
+        display: flex;
+        height: 74vh;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        margin: 0px;
+    }   
+    
+    .card{
+        width: 276px;
+        height: 130px;
+    }
+
+}
+
+
 .nome {
     background: transparent;
     max-height: 50px;
     overflow: auto;
     margin-bottom: 10px;
+
 }
 
 .nome::-webkit-scrollbar {

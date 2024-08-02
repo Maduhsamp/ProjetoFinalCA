@@ -84,15 +84,19 @@ img {
     margin-top: 5px;
 }
 
-.icons {
-    background: white;
-    display: flex;
-    flex-direction: column;
-    max-width: 72px;
-    height: 700px;
-    align-items: center;
-    /* color: black; */
-}
+
+
+    .icons {
+        background: white;
+        display: flex;
+        flex-direction: column;
+        max-width: 72px;
+        height: 92vh;
+        align-items: center;
+    }
+
+
+
 
 i {
     font-size: 1.3em;
@@ -105,7 +109,8 @@ i {
     background: #E1E9F4;
     border: none;
     border-radius: 10px;
-    margin-top: 580px;
+    margin-top: auto;
+    margin-bottom: 20px;
     height: 40px;
     width: 40px;
     cursor: pointer;

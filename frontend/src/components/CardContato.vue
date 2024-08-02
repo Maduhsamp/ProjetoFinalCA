@@ -407,17 +407,19 @@ input:focus {
     background: transparent;
 }
 
-.card {
-    position: relative;
-    background: white;
-    height: 114px;
-    border-radius: 10px;
-    padding: 15px;
-    border: #E1E9F4 solid 1px;
-    display: flex;
-    gap: 0px;
-    margin-top: 10px;
-}
+    .card {
+        position: relative;
+        background: white;
+        height: 134px;
+        border-radius: 10px;
+        padding: 15px;
+        border: #E1E9F4 solid 1px;
+        display: flex;
+        gap: 0px;
+        margin-top: 10px;
+    }
+
+
 
 .valor {
     background: transparent;
@@ -425,14 +427,18 @@ input:focus {
     font-size: 16px;
 }
 
-.name {
+
+    .name {
     background: transparent;
-    height: 60px;
-    max-height: 60px;
+    height: 75px;
+    max-height: 75px;
     overflow: auto;
     font-size: 16px;
-    max-width: 185px;
-}
+    margin-right: 10px;
+    margin-bottom: 10px;
+    }
+
+
 
 .name::-webkit-scrollbar {
     width: 7px;
@@ -567,9 +573,11 @@ input:focus {
 
 
 
-.cardsContato {
-    width: 220px;
-}
+
+    .cardsContato {
+        width: 255px;
+    }
+
 
 
 .nome-funil {
