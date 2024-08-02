@@ -87,11 +87,11 @@ img {
 
 
     .icons {
-        background: white;
+        background: rgb(255, 255, 255);
         display: flex;
         flex-direction: column;
         max-width: 72px;
-        height: 92vh;
+        height: 94.6vh;
         align-items: center;
     }
 

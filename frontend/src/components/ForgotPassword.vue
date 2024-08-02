@@ -95,7 +95,7 @@ export default {
         border-radius: 24% 76% 35% 65% / 27% 36% 64% 73%;
         transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
         transform: translate(-200px, -50px) rotate(-90deg);
-        animation: animateBlob 20s infinite alternate;
+        animation: animateBlob 15s infinite alternate;
     }
 
     .blob:hover {
@@ -112,7 +112,7 @@ export default {
     @keyframes animateBlob {
 
         100% {
-            transform: translate(1350px, 500px) rotate(-10deg);
+            transform: translate(1350px, 350px) rotate(-10deg);
             border-radius: 76% 24% 33% 67% / 68% 55% 45% 32%;
         }
 
@@ -287,8 +287,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 430px;
-    height: 550px;
+    width: 520px;
+    height: 600px;
     background: #e4e4e4;
     background-size: cover;
     background-position: center;
