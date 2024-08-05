@@ -52,6 +52,8 @@
 </template>
 <script>
 import HttpService from '@/services/HttpService';
+import { useToast } from 'vue-toastification';
+
 export default {
     name: "ResetPassword",
     data() {
@@ -67,17 +69,22 @@ export default {
     },
     methods: {
         async novaSenha() {
+            const toast = useToast();
+
             try {
-                const response = await HttpService.post('/api/reset-password', {
+                const response = await HttpService.post('/reset-password/', {
                     email: this.email,
                     token: this.token,
                     password: this.password,
                     password_confirmation: this.password_confirmation
                 });
                 console.log('Senha Alterada:', response.data);
+                toast.success('Senha atualizada com sucesso!');
                 this.$router.push('/');
             } catch (error) {
                 console.error('Registration error:', error);
+                toast.error('Falha ao tentar mudar a senha!');
+
             }
         },
     }
